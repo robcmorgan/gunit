@@ -1,0 +1,25 @@
+# =============================================================================
+#  user-dashboard service — paste under `services:` in your Portainer stack.
+#  All host-side files now live under /home/robmorgan/gunit/.
+#  Container reads config from /config and toggle state from /userprefs;
+#  those map to the host's ~/gunit/config and ~/gunit/userprefs.
+# =============================================================================
+
+  user-dashboard:
+    image: user-dashboard:latest
+    container_name: user-dashboard
+    user: "2001:2002"
+    environment:
+      - TZ=Europe/London
+      - CF_TEAM_DOMAIN=${CF_TEAM_DOMAIN}
+      - CF_ACCESS_AUD=${CF_ACCESS_AUD}
+      - DASH_CONFIG_DIR=/config
+      - DASH_STATE_DIR=/userprefs
+    volumes:
+      # host ~/gunit/config -> container /config (template.html, users.json, instructions.md)
+      - /home/robmorgan/gunit/config:/config
+      # host ~/gunit/userprefs -> container /userprefs (per-user toggle JSON; shared with the host watcher)
+      - /home/robmorgan/gunit/userprefs:/userprefs
+    restart: unless-stopped
+    networks:
+      - otis_net

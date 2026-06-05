@@ -1,0 +1,14 @@
+stacks_config/
+stacks_data/
+stacks_logs/
+userprefs/
+lists/
+tmp/
+temp.sh
+config/tag-shelf-sync.json
+*.env
+stack.env
+*.key
+*.lock
+*.swp
+.DS_Store

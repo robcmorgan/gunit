@@ -1,0 +1,254 @@
+#!/bin/bash
+# =============================================================================
+#  watch-downloads.sh
+#  Watches shelfmark's /books/<folder> subdirs. When a NEW book settles:
+#    1. map the folder -> user (from users.json)
+#    2. check that user's kindleSync toggle in userprefs/<prefEmail>.json
+#    3. if ON: `calibredb add` the file (capturing the new book ID)
+#    4. add that book ID to the user's calibre-web shelf
+#
+#  Shelf-is-boss design: this script only ADDS to the shelf. Tag mirroring is
+#  done separately by the shelf<->tag sync, which runs on the shelf state.
+#
+#  "Settled file" = size unchanged for SETTLE_SECS (safe regardless of whether
+#  shelfmark writes in place or via .part rename). If you confirm shelfmark
+#  uses a temp name + rename, you can switch the inotify events to 'moved_to'
+#  and drop the settle loop — cleaner, but this works either way.
+# =============================================================================
+
+set -uo pipefail
+
+# --- config (override via env) ---
+BOOKS_ROOT="${BOOKS_ROOT:-/Nutmeg/Media/Books/incoming/gunit_user_folders}"   # HOST path watched for new downloads
+# How the books volume is mounted into the calibre container. The watcher sees
+# files under the HOST root; calibredb (in the container) sees them under the
+# CONTAINER root. Translation replaces one prefix with the other — this must be
+# the MOUNT root, not BOOKS_ROOT, so it stays correct however deep BOOKS_ROOT is.
+MOUNT_HOST_ROOT="${MOUNT_HOST_ROOT:-/Nutmeg/Media/Books}"
+MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/books}"
+MAPPING="${MAPPING:-/home/robmorgan/gunit/config/users.json}"
+PREFS_DIR="${PREFS_DIR:-/home/robmorgan/gunit/userprefs}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CW_APP_DB="${CW_APP_DB:-/data/compose/1/calibre_web_config/app.db}"
+SETTLE_SECS="${SETTLE_SECS:-15}"                          # size must be stable this long
+# calibre library target for calibredb (TEST THIS — see notes in chat):
+CALIBRE_LIB="${CALIBRE_LIB:-/books/Calibre}"
+# Run calibredb as the SAME user the calibre app uses (abc), NOT root. Otherwise
+# `docker exec` defaults to root (uid 0) and creates root-owned book files that
+# the calibre GUI (running as abc) then cannot delete. abc == PUID/PGID here.
+CALIBRE_USER="${CALIBRE_USER:-2001:2002}"
+LOG() { echo "[$(date '+%F %T')] $*"; }
+
+command -v inotifywait >/dev/null || { LOG "FATAL: inotifywait not installed (apt install inotify-tools)"; exit 1; }
+command -v jq >/dev/null          || { LOG "FATAL: jq not installed"; exit 1; }
+
+# --- look up a mapping field by email: map_get <email> <field> ---
+map_get() {
+    jq -r --arg e "$1" --arg k "$2" \
+        '.users[] | select(.email==$e) | .[$k] // empty' "$MAPPING"
+}
+
+# --- is kindleSync on for this prefEmail? ---
+toggle_on() {
+    local email="$1"
+    local safe; safe=$(echo "$email" | sed 's/[^a-zA-Z0-9@._-]/_/g')
+    local f="$PREFS_DIR/$safe.json"
+    [ -f "$f" ] || { LOG "  no prefs file ($f) -> treat as OFF"; return 1; }
+    local v; v=$(jq -r '.kindleSync // false' "$f" 2>/dev/null)
+    [ "$v" = "true" ]
+}
+
+# --- wait until a file's size is stable, then return 0 (settled) / 1 (gone) ---
+wait_settle() {
+    local path="$1" last=-1 cur
+    while true; do
+        [ -f "$path" ] || return 1
+        cur=$(stat -c %s "$path" 2>/dev/null) || return 1
+        if [ "$cur" = "$last" ] && [ "$cur" -gt 0 ]; then return 0; fi
+        last="$cur"
+        sleep "$SETTLE_SECS"
+    done
+}
+
+process_file() {
+    local path="$1"
+    local event="${2:-}"
+    # The download folder name IS the user's email (Cloudflare login == folder
+    # == Calibre-Web username == prefs filename basis). One identifier, end to end.
+    local email; email=$(basename "$(dirname "$path")")
+    local file;  file=$(basename "$path")
+
+    # ignore temp/partial files outright
+    case "$file" in
+        *.part|*.crdownload|*.tmp|.*) LOG "  skip temp file: $file"; return ;;
+    esac
+
+    local shelf tag
+    shelf=$(map_get "$email" "shelf")
+    tag=$(map_get   "$email" "tag")
+    if [ -z "$shelf" ]; then return; fi   # not a mapped user folder — ignore silently
+
+    # email is the CW username too
+    local cwUser="$email"
+
+    if ! toggle_on "$email"; then
+        LOG "  kindleSync OFF for $email -> not shelving '$file'"
+        return
+    fi
+
+    # DEDUP: multiple inotify events can fire for one file (observed: 3 concurrent
+    # imports of the same book). Take a per-file lock (non-blocking) so only ONE
+    # process handles a given path; duplicate events bail immediately.
+    local pf_lock="/tmp/gunit-watch.$(echo "$path" | md5sum | cut -d' ' -f1).lock"
+    exec 8>"$pf_lock"
+    if ! flock -n 8; then
+        LOG "  already processing '$file' (duplicate event) — skipping"
+        return
+    fi
+    # lock held on FD 8 for the rest of this function; released on return/exit.
+
+    # moved_to means an atomic rename INTO the folder: the file is already
+    # complete, so don't wait. close_write means it may have been written in
+    # place, so settle-check to be safe. (shelfmark appears to move-in, so the
+    # fast path is the norm.)
+    if [ "$event" = "MOVED_TO" ]; then
+        LOG "  arrived atomically (moved_to) — no settle needed"
+    else
+        LOG "  written in place (close_write) — settling: $path"
+        if ! wait_settle "$path"; then LOG "  file vanished before settle: $path"; return; fi
+    fi
+    LOG "  importing to Calibre: $file"
+
+    # The watcher sees the HOST path (under $BOOKS_ROOT), but calibredb runs
+    # INSIDE the calibre container where that same dir is mounted at /books.
+    # Translate host path -> container path before handing it to calibredb.
+    local cpath="${path/#$MOUNT_HOST_ROOT/$MOUNT_CONTAINER_ROOT}"
+    LOG "  host path:      $path"
+    LOG "  container path: $cpath"
+
+    # GUI-LOCK: the calibre desktop app locks the library and makes calibredb
+    # writes fail. We do NOT kill it (it may be serving OPDS / content server /
+    # other things you depend on). Instead, skip cleanly — the 15-min sync
+    # timer will retry, and the watcher will catch the file next time you
+    # re-drop or restart the service.
+    if docker exec "$CALIBRE_CONTAINER" pgrep -f '/opt/calibre/bin/calibre$' >/dev/null 2>&1; then
+        LOG "  SKIP: calibre app is running and holding the library lock."
+        LOG "        Close the calibre GUI (or its app) and re-drop '$file' to retry."
+        LOG "        (The shelf->tag sync timer will also retry every 15 min.)"
+        return
+    fi
+
+    local out idlist
+    out=$(docker exec -u "$CALIBRE_USER" "$CALIBRE_CONTAINER" calibredb add "$cpath" \
+            --library-path "$CALIBRE_LIB" 2>&1)
+
+    # Parse the clean "Added book ids: N" line (new book — the common case).
+    idlist=$(echo "$out" \
+        | grep -oiE '(Added book ids|Merged book ids)[: ]+[0-9, ]+' \
+        | grep -oE '[0-9]+' | sort -u | tr '\n' ' ')
+
+    if [ -z "$idlist" ]; then
+        # Refused as a duplicate. Try a HARD match (exact author AND title) to
+        # find THE existing copy — but only dedupe if we're CONFIDENT (exactly
+        # one hit). Zero or multiple hits => not confident => add a fresh copy
+        # with --duplicates. Failure mode is always "an extra book", never
+        # "the wrong book shelved". (Author+title both come from the filename
+        # convention "Author - Title (year)".)
+        local base author title
+        base=$(basename "$file"); base="${base%.*}"           # drop extension
+        author="${base%% - *}"                                # text before first " - "
+        title="${base#* - }"                                  # text after first " - "
+        title="$(echo "$title" | sed -E 's/[[:space:]]*\([0-9]{4}\)[[:space:]]*$//')"  # drop trailing (year)
+        author="$(echo "$author" | sed -E 's/^[[:space:]]+|[[:space:]]+$//g')"
+        title="$(echo "$title"  | sed -E 's/^[[:space:]]+|[[:space:]]+$//g')"
+        LOG "  duplicate refused. Hard-matching author='$author' title='$title'"
+
+        local found hits
+        found=$(docker exec -u "$CALIBRE_USER" "$CALIBRE_CONTAINER" calibredb search \
+                  "authors:\"$author\" and title:\"$title\"" \
+                  --library-path "$CALIBRE_LIB" 2>/dev/null)
+        # count matches (comma-separated id list)
+        hits=$(echo "$found" | grep -oE '[0-9]+' | sort -u | wc -l)
+
+        if [ "$hits" -eq 1 ]; then
+            idlist=$(echo "$found" | grep -oE '[0-9]+')
+            LOG "  confident single match -> shelving existing book $idlist"
+        else
+            LOG "  $hits matches (not confident) -> adding a fresh copy with --duplicates"
+            out=$(docker exec -u "$CALIBRE_USER" "$CALIBRE_CONTAINER" calibredb add "$cpath" \
+                    --library-path "$CALIBRE_LIB" --duplicates 2>&1)
+            idlist=$(echo "$out" \
+                | grep -oiE 'Added book ids[: ]+[0-9, ]+' \
+                | grep -oE '[0-9]+' | sort -u | tr '\n' ' ')
+            LOG "  added fresh copy as book id(s): $idlist"
+        fi
+
+        if [ -z "$idlist" ]; then
+            LOG "  WARN: could not add or locate book. calibredb said: $out"
+            return
+        fi
+    else
+        LOG "  imported as book id(s): $idlist"
+    fi
+
+    # add to the user's shelf by writing book_shelf_link in calibre-web's db.
+    # (calibre-web has no CLI; the shelf link lives in app.db.)
+    local userid shelfid
+    userid=$(sqlite3 "file:$CW_APP_DB?mode=ro" "SELECT id FROM user WHERE name='$cwUser';")
+    shelfid=$(sqlite3 "file:$CW_APP_DB?mode=ro" "SELECT id FROM shelf WHERE name='$shelf' AND user_id=$userid;")
+    if [ -z "$userid" ] || [ -z "$shelfid" ]; then
+        LOG "  WARN: user/shelf not found in app.db (user='$cwUser' shelf='$shelf'); imported but not shelved"
+        return
+    fi
+
+    # Serialise our own backgrounded writers with a flock, AND set a SQLite
+    # busy_timeout so we also wait politely if calibre-web itself is mid-write.
+    # Two layers: flock stops US racing US; busy_timeout handles calibre-web.
+    local lockfile="${CW_APP_DB}.shelflink.lock"
+    local added=0
+    (
+      flock -w 10 9 || { LOG "  WARN: couldn't acquire write lock; skipping shelf insert"; exit 1; }
+      for bookid in $idlist; do
+        # skip if already on this shelf
+        local already
+        already=$(sqlite3 "file:$CW_APP_DB?mode=ro" "SELECT 1 FROM book_shelf_link WHERE shelf=$shelfid AND book_id=$bookid LIMIT 1;")
+        if [ -n "$already" ]; then LOG "  book $bookid already on shelf '$shelf' — skip"; continue; fi
+        local nextorder nextid
+        nextorder=$(sqlite3 "file:$CW_APP_DB?mode=ro" "SELECT COALESCE(MAX(\"order\"),0)+1 FROM book_shelf_link WHERE shelf=$shelfid;")
+        nextid=$(sqlite3 "file:$CW_APP_DB?mode=ro" "SELECT COALESCE(MAX(id),0)+1 FROM book_shelf_link;")
+        if sqlite3 "$CW_APP_DB" "PRAGMA busy_timeout=5000; INSERT INTO book_shelf_link (id, book_id, shelf, \"order\", date_added) VALUES ($nextid, $bookid, $shelfid, $nextorder, datetime('now'));" >/dev/null; then
+            LOG "  ✔ added book $bookid to shelf '$shelf' (user $cwUser)"
+            echo "added" >> "${lockfile}.added"   # signal: something was shelved
+        else
+            LOG "  WARN: failed to insert shelf link for book $bookid (db locked?)"
+        fi
+      done
+    ) 9>"$lockfile"
+
+    # NOTE: previously we triggered sync-shelf-tags here so the Calibre tag was
+    # applied immediately after a new shelf entry. That's no longer urgent: OPDS
+    # exposes calibre-web shelves DIRECTLY (per-user), so the shelf is what the
+    # Kindle sees — the Calibre tag is just organisational metadata. The 15-min
+    # sync timer keeps tags eventually-consistent; no need for an instant trigger.
+    rm -f "${lockfile}.added"
+}
+
+LOG "watch-downloads starting. Watching $BOOKS_ROOT (settle=${SETTLE_SECS}s)"
+LOG "mapping=$MAPPING  prefs=$PREFS_DIR  calibre=$CALIBRE_CONTAINER"
+
+# -m monitor, -r recursive. moved_to = atomic rename-in (complete by definition);
+# close_write = file written in place (may need a settle check). We capture the
+# event so process_file can skip waiting when the file arrived atomically.
+# Exclude Calibre's own structural dirs and hidden files — otherwise we'd fire
+# on every metadata.db / notes.db write Calibre makes, which is noise AND a
+# feedback risk (our imports update metadata.db -> more events). We only care
+# about files dropped into the per-user download subfolders.
+#   --exclude is a POSIX-extended regex matched against the full path.
+inotifywait -m -r -e close_write -e moved_to \
+    --exclude '/(Calibre|\.calnotes|metadata\.db|metadata_db_prefs_backup\.json|\.[^/]+)(/|$)' \
+    --format '%e|%w%f' "$BOOKS_ROOT" |
+while IFS='|' read -r event path; do
+    [ -f "$path" ] || continue
+    LOG "event[$event]: $path"
+    process_file "$path" "$event" &     # background so a long settle doesn't block the queue
+done

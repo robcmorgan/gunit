@@ -1,0 +1,14 @@
+[Unit]
+Description=Run gunit book sweep every 15 minutes
+After=watch-downloads.service
+
+[Timer]
+# first run 2 min after boot, then every 15 min. Persistent=true catches up one
+# missed run if the box was off at a scheduled time.
+OnBootSec=2min
+OnUnitActiveSec=15min
+Persistent=true
+Unit=sweep-books.service
+
+[Install]
+WantedBy=timers.target

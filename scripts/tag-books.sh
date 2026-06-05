@@ -1,0 +1,214 @@
+#!/usr/bin/env bash
+TAG_BOOKS_VERSION="9"   # bump on every change; echoed at startup
+# =============================================================================
+#  tag-books.sh — apply calibre tags to books that fetch-books.sh has fetched.
+#
+#  Reads the same list files. For every line marked 'done' that carries a tag
+#  (5th column), it finds the matching book in the Calibre library and adds the
+#  tag(s) via calibredb set_metadata. Idempotent: adds tags without clobbering
+#  existing ones, and records a 'tagged' marker so re-runs skip already-done work.
+#
+#  Matching to the library is, in order:
+#    1. EXACT by md5 identifier (identifiers:annas:<md5>). The first time a book
+#       is matched we stamp that identifier onto it (see below), so every later
+#       run finds it exactly — no fuzzy matching, no false positives.
+#    2. FUZZY fallback (for books matched before the identifier existed): a
+#       calibre title search, then the SHARED strict matcher from match-lib.sh
+#       (same title-gate + author rules as fetch-books). On a confident hit we
+#       stamp the md5 identifier so the next run takes path 1.
+#  A book must be in the library already — i.e. fetch-books downloaded it AND
+#  your watcher imported it. Books still downloading/failed won't be found yet;
+#  just re-run later (it's resumable).
+#
+#  USAGE:
+#     ./tag-books.sh booker.tsv
+#     ./tag-books.sh --dry-run booker.tsv      # show what would be tagged
+#     ./tag-books.sh *.tsv
+#
+#  Env:
+#     CALIBRE_CONTAINER (default: calibre)   docker container running calibredb
+#     CALIBRE_LIBRARY   (default: /books/Calibre)   library path inside container
+# =============================================================================
+set -uo pipefail
+
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_LIBRARY="${CALIBRE_LIBRARY:-/books/Calibre}"
+MAX_TAG_LEN="${MAX_TAG_LEN:-40}"   # drop existing tags longer than this (junk); 0 = keep all
+# existing tags matching these (case-insensitive, exact) are dropped as junk —
+# typical ebook-source cruft. Add your own, space-separated, via TAG_STOPLIST.
+TAG_STOPLIST="${TAG_STOPLIST:-download apple+books books+on+iphone ipad mac kindle iphone calibre unknown}"
+CONFIDENCE="${CONFIDENCE:-0.6}"    # 0..1; fuzzy fallback hit must score >= this
+ID_SCHEME="${ID_SCHEME:-annas}"    # calibre identifier scheme used to store the md5
+LOG="${LOG:-$HOME/logs/tag-books.log}"
+
+# shared confidence matcher (norm, ge, title_full_match, author_match,
+# meaningful_words, book_match_score) — same logic as fetch-books.
+. "$(dirname "$0")/match-lib.sh"
+# shared tagging logic (cdb, find_book_id, stamp_identifier, merge_tags,
+# apply_tags) — same code tag-queue.sh uses, so they never drift.
+. "$(dirname "$0")/tag-lib.sh"
+
+DRY_RUN=0
+REPLACE=0
+TAG=""
+FILES=()
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --dry-run) DRY_RUN=1; shift ;;
+        --replace-tags) REPLACE=1; shift ;;
+        --tag) TAG="$(printf '%s' "${2:-}" | sed 's/[[:space:]]*,[[:space:]]*/,/g; s/,\{2,\}/,/g; s/^[[:space:]]*//; s/[[:space:]]*$//; s/^,//; s/,$//')"; shift 2 ;;
+        --help|-h) sed -n '2,30p' "$0"; exit 0 ;;
+        -*) echo "unknown option: $1" >&2; exit 1 ;;
+        *) FILES+=("$1"); shift ;;
+    esac
+done
+[ "${#FILES[@]}" -eq 0 ] && { echo "usage: $0 [--dry-run] LIST.tsv..." >&2; exit 1; }
+
+mkdir -p "$(dirname "$LOG")" 2>/dev/null
+log() { printf '%s  %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG" >&2; }
+
+# calibredb wrapper, find_book_id, stamp_identifier, merge_tags, apply_tags all
+# come from tag-lib.sh (sourced above) — shared with tag-queue.sh, no drift.
+
+process_file() {
+    local file="$1"
+    [ -f "$file" ] || { log "skip (not found): $file"; return; }
+    local tmp; tmp="$(mktemp)"
+    local n_tag=0 n_skip=0 n_missing=0
+    local file_tag="$TAG"   # --tag overrides; else taken from #tag: header
+
+    while IFS= read -r raw || [ -n "$raw" ]; do
+        # pick up the #tag: header (unless --tag was given)
+        case "$raw" in
+            \#tag:*|\#tag\ *)
+                if [ -z "$TAG" ]; then
+                    file_tag="$(printf '%s' "$raw" | sed 's/^#tag:[[:space:]]*//; s/^#tag[[:space:]]*//; s/[[:space:]]*,[[:space:]]*/,/g; s/,\{2,\}/,/g; s/^[[:space:]]*//; s/[[:space:]]*$//; s/^,//; s/,$//')"
+                    log "  list tag from header: '$file_tag'"
+                fi
+                printf '%s\n' "$raw" >> "$tmp"; continue ;;
+        esac
+        case "$raw" in ''|\#*) printf '%s\n' "$raw" >> "$tmp"; continue;; esac
+
+        local author title status md5 date
+        author="$(printf '%s' "$raw" | cut -d'|' -f1)"
+        title="$(printf '%s' "$raw" | cut -d'|' -f2)"
+        status="$(printf '%s' "$raw" | cut -d'|' -f3)"
+        md5="$(printf '%s' "$raw" | cut -d'|' -f4)"
+        date="$(printf '%s' "$raw" | cut -d'|' -f5)"
+
+        author="$(printf '%s' "$author" | sed 's/\r$//; s/^[[:space:]]*//; s/[[:space:]]*$//')"
+        title="$(printf '%s' "$title"   | sed 's/\r$//; s/^[[:space:]]*//; s/[[:space:]]*$//')"
+        status="$(printf '%s' "$status" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+        md5="$(printf '%s' "$md5"       | tr -d ' ')"
+
+        # only tag books that have actually downloaded (in the library).
+        # 'downloaded' = fetch-books pulled it via fast-download; 'completed' =
+        # legacy Stacks status. 'tagged' = already done.
+        if [ "$status" = "tagged" ]; then
+            printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
+        fi
+        if [ "$status" != "downloaded" ] && [ "$status" != "completed" ]; then
+            printf '%s\n' "$raw" >> "$tmp"; continue
+        fi
+        if [ -z "$file_tag" ]; then
+            log "  no tag set (add a '#tag:' header line) — skipping: $author — $title"
+            printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
+        fi
+
+        local found id via
+        found="$(find_book_id "$author" "$title" "$md5")"
+        if [ -z "$found" ]; then
+            log "  not in library yet: $author — $title  (download pending/failed?)"
+            printf '%s\n' "$raw" >> "$tmp"; n_missing=$((n_missing+1)); continue
+        fi
+        id="$(printf '%s' "$found" | cut -f1)"
+        via="$(printf '%s' "$found" | cut -f2)"
+
+        # build comma-separated tag list; accept either comma- or space-separated
+        # input (older files used spaces, newer ones commas)
+        local taglist; taglist="$(printf '%s' "$file_tag" \
+            | sed 's/[[:space:]]*,[[:space:]]*/,/g; s/,\{2,\}/,/g; s/^[[:space:]]*//; s/[[:space:]]*$//; s/^,//; s/,$//')"
+
+        if [ "$DRY_RUN" -eq 1 ]; then
+            log "  DRY: would tag id $id [$via] ($author — $title) += [$taglist] (+ clear rating)"
+            printf '%s\n' "$raw" >> "$tmp"; continue
+        fi
+
+        local existing_json merged
+        if [ "$REPLACE" -eq 1 ]; then
+            # discard existing tags entirely, set only ours (de-duped)
+            merged="$(printf '%s' "$taglist" | python3 -c '
+import sys
+new=[t.strip() for t in sys.stdin.read().split(",") if t.strip()]
+seen,out=set(),[]
+for t in new:
+    if t.lower() not in seen: seen.add(t.lower()); out.append(t)
+print(",".join(out))
+' 2>/dev/null)"
+            [ -z "$merged" ] && merged="$taglist"
+        else
+        # read existing tags and merge. calibredb --for-machine returns JSON;
+        # parse it properly (sed-stripping JSON mangles multi-tag arrays).
+        # set_metadata --field tags: REPLACES, so we merge existing + new,
+        # de-duplicating, and write the full set back.
+        existing_json="$(cdb list -f tags -s "id:$id" --for-machine 2>/dev/null)"
+        # extract existing tags, merge with new taglist, trim, drop blanks,
+        # de-dupe (case-insensitive), rejoin with commas.
+        merged="$(printf '%s' "$existing_json" | python3 -c '
+import sys, json
+maxlen = int(sys.argv[2])
+# stoplist: "+" stands in for spaces in multi-word entries
+stop = {s.replace("+", " ").strip().lower() for s in sys.argv[3].split() if s.strip()}
+try:
+    data = json.load(sys.stdin)
+    existing = data[0].get("tags", []) if data else []
+except Exception:
+    existing = []
+# drop overlong existing tags and known-junk tags (case-insensitive).
+# maxlen 0 disables the length filter. New tags are never dropped.
+def keep(t):
+    t = t.strip()
+    if not t: return False
+    if t.lower() in stop: return False
+    if maxlen > 0 and len(t) > maxlen: return False
+    return True
+existing = [t for t in existing if keep(t)]
+new = [t.strip() for t in sys.argv[1].split(",") if t.strip()]
+seen, out = set(), []
+for t in list(existing) + new:
+    t = t.strip()
+    if t and t.lower() not in seen:
+        seen.add(t.lower()); out.append(t)
+print(",".join(out))
+' "$taglist" "$MAX_TAG_LEN" "$TAG_STOPLIST" 2>/dev/null)"
+        # safety: if the merge produced nothing (parse failure), fall back to
+        # just the new tags rather than wiping the field with garbage.
+        [ -z "$merged" ] && merged="$taglist"
+        fi
+
+        # set both tags and rating:0 in ONE call. Anna's imports often carry a
+        # stray star rating from the source file; we always clear it (rating:0)
+        # so the library isn't polluted with the uploader's rating. This is
+        # atomic with the tag write and costs no extra call.
+        if cdb set_metadata "$id" --field "tags:$merged" --field "rating:0" >/dev/null 2>&1; then
+            log "  tagged id $id [$via] ($author — $title) -> [$merged] (rating cleared)"
+            # on a fuzzy match, stamp the md5 so the next run finds it exactly
+            if [ "$via" = "fuzzy" ] && [ -n "$md5" ]; then
+                stamp_identifier "$id" "$md5"
+                log "    stamped ${ID_SCHEME}:${md5} onto id $id"
+            fi
+            printf '%s|%s|tagged|%s|%s\n' "$author" "$title" "$md5" "$(date '+%Y-%m-%dT%H:%M')" >> "$tmp"
+            n_tag=$((n_tag+1))
+        else
+            log "  FAILED to tag id $id ($author — $title)"
+            printf '%s\n' "$raw" >> "$tmp"
+        fi
+    done < "$file"
+
+    mv "$tmp" "$file"
+    log "FILE $file — tagged:$n_tag already/none:$n_skip not-in-library:$n_missing"
+}
+
+log "=== tag-books v$TAG_BOOKS_VERSION start (container:$CALIBRE_CONTAINER lib:$CALIBRE_LIBRARY confidence:$CONFIDENCE id-scheme:$ID_SCHEME dry-run:$DRY_RUN) ==="
+for f in "${FILES[@]}"; do process_file "$f"; done
+log "=== tag-books done ==="
