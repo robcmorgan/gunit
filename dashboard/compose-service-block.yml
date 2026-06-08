@@ -17,7 +17,7 @@
       - DASH_STATE_DIR=/userprefs
     volumes:
       # host ~/gunit/config -> container /config (template.html, users.json, instructions.md)
-      - /home/robmorgan/gunit/config:/config
+      - /home/robmorgan/gunit/web:/config
       # host ~/gunit/userprefs -> container /userprefs (per-user toggle JSON; shared with the host watcher)
       - /home/robmorgan/gunit/userprefs:/userprefs
     restart: unless-stopped

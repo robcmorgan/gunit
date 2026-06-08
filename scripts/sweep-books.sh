@@ -28,8 +28,8 @@ set -uo pipefail
 
 # --- config (match the watcher) ---------------------------------------------
 ROOT="${ROOT:-/Nutmeg/Media/Books/incoming/gunit_user_folders}"
-USERS_JSON="${USERS_JSON:-/home/robmorgan/gunit/config/users.json}"
-MAPPING="${MAPPING:-/home/robmorgan/gunit/config/users.json}"
+USERS_JSON="${USERS_JSON:-/home/robmorgan/gunit/web/users.json}"
+MAPPING="${MAPPING:-/home/robmorgan/gunit/web/users.json}"
 PREFS_DIR="${PREFS_DIR:-/home/robmorgan/gunit/userprefs}"
 CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
 CALIBRE_USER="${CALIBRE_USER:-2001:2002}"

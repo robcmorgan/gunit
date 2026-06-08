@@ -27,7 +27,7 @@ SYNC_TAG_SHELF_VERSION="7"   # bump on every change; echoed at startup
 set -uo pipefail
 
 # --- config ---
-CONFIG="${CONFIG:-/home/robmorgan/gunit/config/tag-shelf-sync.json}"
+CONFIG="${CONFIG:-/home/robmorgan/gunit/web/shelves.json}"
 CW_APP_DB="${CW_APP_DB:-/home/robmorgan/cwa_config/app.db}"
 CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
 CALIBRE_LIB="${CALIBRE_LIB:-/books/Calibre}"

@@ -10,10 +10,14 @@ The Guardian's annual summer read recommendations, combined into one shelf.
 
 <a href="https://www.theguardian.com/books/ng-interactive/2025/jun/21/summer-reading-the-50-hottest-books-to-read-now" target="_blank" rel="noopener">Guardian 2025 Summer reads</a>
 
-<a href="https://www.theguardian.com/books/article/2024/jun/22/summer-reading-50-new-books-to-dive-into
-" target="_blank" rel="noopener">Guardian 2024 Summer reads</a>
+<a href="https://www.theguardian.com/books/article/2024/jun/22/summer-reading-50-new-books-to-dive-into" target="_blank" rel="noopener">Guardian 2024 Summer reads</a>
 
-----
+---
 
+## Booker Prize [(details)](/lists/booker)
 
-> Books are tagged as categories in the library too. For example "Summer Reads", "2024 list", "Guardian"
+Winners and shortlists. [See the full list &rarr;](/lists/booker)
+
+---
+
+> Books are tagged as categories in the library too. For example "Summer Reads", "2024 list", "Guardian".

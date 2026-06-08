@@ -22,7 +22,7 @@ TAG_QUEUE_VERSION="3"   # bump on every change; echoed at startup
 set -uo pipefail
 
 # --- config ---
-QUEUE="${TAG_QUEUE:-/home/robmorgan/gunit/config/tag-queue.json}"
+QUEUE="${TAG_QUEUE:-/home/robmorgan/gunit/state/tag-queue.json}"
 # the queue is shared between root (timer) and the gunit user (fetch-books); we
 # normalise ownership after each rewrite so neither locks the other out.
 QUEUE_OWNER="${QUEUE_OWNER:-robmorgan}"

@@ -1,0 +1,23 @@
+{
+  "_comment": "Drives sync-tag-to-shelf.sh. Each entry mirrors a set of Calibre TAGS onto a Calibre-Web SHELF (one-way: tags are boss). 'tags' is a comma-separated list — a book must carry ALL listed tags to be put on the shelf (extra tags are fine). A single tag works too. The shelf ends up EXACTLY matching the set of books with all the tags: matching books are added, shelf books lacking the tags are removed. 'user' is the shelf OWNER's calibre-web username (email); a shelf is identified by name + owner. Add/remove/edit entries freely; no code change needed.",
+  "pairs": [
+    {
+      "tags": "Summer Reads,Guardian",
+      "shelf": "Summer Reads",
+      "user": "shops@rob.me.uk",
+      "enabled": true
+    },
+    {
+      "tags": "Prizewinners",
+      "shelf": "Prizewinners",
+      "user": "shops@rob.me.uk",
+      "enabled": true
+    },
+    {
+      "tags": "Top 100 Novels",
+      "shelf": "Best Ever Novels",
+      "user": "shops@rob.me.uk",
+      "enabled": true
+    }
+  ]
+}

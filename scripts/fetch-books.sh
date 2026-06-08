@@ -312,7 +312,7 @@ se_host_get() {
 # Tag queue: on each successful download, append {md5,tags,title,author,queued_at}
 # here so tag-queue.sh can tag the book once it's imported into calibre. Empty
 # tags (no #tag: header, no --tag) means nothing to enqueue. TAG_QUEUE='' disables.
-TAG_QUEUE="${TAG_QUEUE:-/home/robmorgan/gunit/config/tag-queue.json}"
+TAG_QUEUE="${TAG_QUEUE:-/home/robmorgan/gunit/state/tag-queue.json}"
 LOG="${LOG:-$HOME/logs/fetch-books.log}"
 
 ALL_MIRRORS="${MIRRORS:-\

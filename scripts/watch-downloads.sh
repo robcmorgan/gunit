@@ -26,7 +26,7 @@ BOOKS_ROOT="${BOOKS_ROOT:-/Nutmeg/Media/Books/incoming/gunit_user_folders}"   # 
 # the MOUNT root, not BOOKS_ROOT, so it stays correct however deep BOOKS_ROOT is.
 MOUNT_HOST_ROOT="${MOUNT_HOST_ROOT:-/Nutmeg/Media/Books}"
 MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/books}"
-MAPPING="${MAPPING:-/home/robmorgan/gunit/config/users.json}"
+MAPPING="${MAPPING:-/home/robmorgan/gunit/web/users.json}"
 PREFS_DIR="${PREFS_DIR:-/home/robmorgan/gunit/userprefs}"
 CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
 CW_APP_DB="${CW_APP_DB:-/data/compose/1/calibre_web_config/app.db}"
