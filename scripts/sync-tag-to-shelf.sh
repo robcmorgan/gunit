@@ -1,5 +1,5 @@
 #!/bin/bash
-SYNC_TAG_SHELF_VERSION="5"   # bump on every change; echoed at startup
+SYNC_TAG_SHELF_VERSION="7"   # bump on every change; echoed at startup
 # =============================================================================
 #  sync-tag-to-shelf.sh   (TAG IS BOSS — opposite direction to sync-shelf-tags.sh)
 #
@@ -28,7 +28,7 @@ set -uo pipefail
 
 # --- config ---
 CONFIG="${CONFIG:-/home/robmorgan/gunit/config/tag-shelf-sync.json}"
-CW_APP_DB="${CW_APP_DB:-/data/compose/1/calibre_web_config/app.db}"
+CW_APP_DB="${CW_APP_DB:-/home/robmorgan/cwa_config/app.db}"
 CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
 CALIBRE_LIB="${CALIBRE_LIB:-/books/Calibre}"
 CALIBRE_USER="${CALIBRE_USER:-2001:2002}"
@@ -79,12 +79,19 @@ sync_pair() {
     local tags="$1" shelf="$2" cwUser="$3"
     LOG "=== tags='$tags' (ALL required) -> shelf='$shelf' (owner $cwUser) ==="
 
-    # resolve owner + shelf id (shelf identified by name AND owner)
+    # resolve owner + shelf id. A shelf is normally identified by name + owner
+    # (names aren't globally unique). But a PUBLIC shelf (is_public=1) is visible
+    # to all and may be owned by a different user than configured — so if the
+    # owner-scoped lookup misses, fall back to a public shelf of that name.
     local userid shelfid
     userid=$(sqlite3 "$DBRO" "SELECT id FROM user WHERE name='$cwUser';")
     [ -z "$userid" ] && { LOG "  user '$cwUser' not found in app.db; skip"; return; }
     shelfid=$(sqlite3 "$DBRO" "SELECT id FROM shelf WHERE name='$shelf' AND user_id=$userid;")
-    [ -z "$shelfid" ] && { LOG "  shelf '$shelf' (owner $cwUser) not found; skip"; return; }
+    if [ -z "$shelfid" ]; then
+        shelfid=$(sqlite3 "$DBRO" "SELECT id FROM shelf WHERE name='$shelf' AND is_public=1 LIMIT 1;")
+        [ -n "$shelfid" ] && LOG "  (using public shelf '$shelf' id=$shelfid; owner differs from $cwUser)"
+    fi
+    [ -z "$shelfid" ] && { LOG "  shelf '$shelf' not found (owner $cwUser, or public); skip"; return; }
 
     # --- desired set: books carrying ALL of the listed tags (comma-separated) ---
     # Build an AND of EXACT-match tag terms. Use the SAME form the original
@@ -103,10 +110,15 @@ sync_pair() {
     IFS="$IFSsave"
     [ -z "$query" ] && { LOG "  no tags configured for this pair; skip"; return; }
 
-    local tagged_csv want_ids want_count rc
+    local tagged_csv want_ids want_count
     # capture stderr too so we can tell a LOCK FAILURE apart from a real zero.
-    tagged_csv=$(cdb_ro search "$query" 2>&1); rc=$?
-    if [ "$rc" -ne 0 ] || printf '%s' "$tagged_csv" | grep -qi 'Another calibre program\|Traceback\|No such'; then
+    # NOTE: calibredb EXITS NON-ZERO when it simply finds nothing ("No books
+    # matching the search expression"), so we must NOT treat a non-zero exit as a
+    # failure on its own — that wrongly aborted pairs with zero tagged books. Only
+    # genuine error signatures (lock contention, python traceback) count as a
+    # failure; "No books matching" is a clean zero and falls through to the guard.
+    tagged_csv=$(cdb_ro search "$query" 2>&1)
+    if printf '%s' "$tagged_csv" | grep -qi 'Another calibre program\|Traceback\|Permission denied'; then
         LOG "  SEARCH FAILED (calibredb error) — aborting this pair, NOT touching the shelf:"
         LOG "    ${tagged_csv%%$'\n'*}"
         return

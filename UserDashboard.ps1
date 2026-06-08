@@ -23,7 +23,12 @@
 
 Import-Module Pode
 
+# Version stamp — bump on every change so stale images are obvious in `docker logs`.
+$script:DashVersion = 'UserDashboard v5'
+
 Start-PodeServer {
+
+    "==== $script:DashVersion starting ====" | Out-Default
 
     # --- config accessor: reads $env: (set via Portainer's Environment
     #     variables box). $env: is process-level so it's visible inside Pode's
@@ -79,10 +84,28 @@ Start-PodeServer {
     # code means they're version-controlled and can't go missing). Edit here +
     # rebuild to change them. (Greetings + instructions are editable files.)
     $script:DashLinks = @(
-        @{ Title = 'Browse the library';             Url = 'https://books.rob.me.uk/discover/stored' }
-        @{ Title = 'Request a book from the server'; Url = 'https://request-books.rob.me.uk' }
+        @{ Title = 'Browse the library';             Url = 'https://books.rob.me.uk/discover/stored'; External = $true }
+        @{ Title = 'Request a book from the server'; Url = 'https://request-books.rob.me.uk';         External = $true }
+        @{ Title = 'Browse lists of books, prizes, recommendations etc'; Url = '/lists';      External = $false }
+        @{ Title = 'How to use all this';                                Url = '/how-to-use'; External = $false }
     )
     Set-PodeState -Name 'DashLinks' -Value $script:DashLinks | Out-Null
+
+    # Top nav bar items. Internal routes (/lists, /how-to-use) keep the nav bar
+    # because they're same-origin pages served by this app. External links
+    # (Browse, Request) are same-tab handoffs to the Cloudflare-Access apps —
+    # they CAN'T be framed (X-Frame-Options/CSP + Access login), so we navigate
+    # away rather than cage them. Edit text/URLs here + rebuild.
+    #   External = $true  -> full URL, leaves the dashboard
+    #   External = $false -> internal route path on this app
+    $script:NavItems = @(
+        @{ Title = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-label="Home" style="vertical-align:-3px"><path d="M12 3 2 12h3v8h6v-5h2v5h6v-8h3z"/></svg>'; Href = '/'; External = $false }
+        @{ Title = 'Library';        Href = 'https://books.rob.me.uk/discover/stored'; External = $true }
+        @{ Title = 'Request';        Href = 'https://request-books.rob.me.uk';         External = $true }
+        @{ Title = 'Lists';   Href = '/lists';                                  External = $false }
+        @{ Title = 'How To';  Href = '/how-to-use';                             External = $false }
+    )
+    Set-PodeState -Name 'NavItems' -Value $script:NavItems | Out-Null
 
     # Ensure the per-user prefs dir exists.
     $stateDir = Get-Cfg 'DASH_STATE_DIR' '/userprefs'
@@ -149,12 +172,12 @@ Start-PodeServer {
         return (& $fill $defaultTpl '')
     }
 
-    # --- instructions: render instructions.md -> HTML (editable, no rebuild) ---
-    function Get-InstructionsHtml {
+    # --- markdown -> HTML for any editable .md in the config dir (cached by
+    #     mtime so we don't re-render per hit). Returns '' if the file is absent.
+    function Get-MarkdownHtml([string]$filename) {
         $dir  = Get-PodeState -Name 'CfgDir'
-        $path = Join-Path $dir 'instructions.md'
+        $path = Join-Path $dir $filename
         if (-not (Test-Path $path)) { return '' }
-        # cache the RENDERED html keyed by mtime so we don't re-render per hit
         $mtime = (Get-Item $path).LastWriteTimeUtc.Ticks
         $cacheKey = "mdcache::$path"
         $cached = $null
@@ -165,10 +188,13 @@ Start-PodeServer {
             Set-PodeState -Name $cacheKey -Value @{ Mtime = $mtime; Html = $html } | Out-Null
             return $html
         } catch {
-            "WARN: instructions.md render failed: $_" | Out-Default
+            "WARN: $filename render failed: $_" | Out-Default
             return ''
         }
     }
+
+    # --- instructions: render instructions.md -> HTML (editable, no rebuild) ---
+    function Get-InstructionsHtml { return (Get-MarkdownHtml 'instructions.md') }
 
     # ------------------------------------------------------------------------
     #  IDENTITY: verify the Cloudflare Access JWT, return the email or $null.
@@ -332,7 +358,63 @@ Start-PodeServer {
     }
 
     # ------------------------------------------------------------------------
-    #  STATIC ROUTE: screenshots for instructions.md
+    #  SHARED RENDER HELPERS (used by /, /lists, /how-to-use so they all get the
+    #  same template + nav bar)
+    # ------------------------------------------------------------------------
+
+    # Build the top nav bar HTML. Marks the current page so CSS can highlight it.
+    # External items get target=_blank+rel=noopener (harmless for same-tab apps,
+    # and means Browse/Request open in a new tab, leaving the dashboard intact).
+    function Get-NavHtml([string]$current) {
+        $items = Get-PodeState -Name 'NavItems'
+        $parts = $items | ForEach-Object {
+            if ($_.External) {
+                "<a href=`"$($_.Href)`" class=`"nav-link`" target=`"_blank`" rel=`"noopener`">$($_.Title)</a>"
+            } else {
+                "<a href=`"$($_.Href)`" class=`"nav-link`">$($_.Title)</a>"
+            }
+        }
+        return "<nav class=`"topnav`">$($parts -join '')</nav>"
+    }
+
+    # Read template (mtime-cached) with a minimal fallback. Returns the raw
+    # template HTML with tokens still present.
+    function Get-TemplateHtml {
+        $cfgDir  = Get-PodeState -Name 'CfgDir'
+        $tplPath = Join-Path $cfgDir 'template.html'
+        $html    = Read-CachedFile $tplPath
+        if (-not $html) {
+            "TEMPLATE ERROR: $tplPath not found — serving minimal fallback page" | Out-Default
+            $html = @"
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>...Gunit!</title></head>
+<body style="font-family:sans-serif;background:#1c1f24;color:#ccc;padding:40px">
+{{NAV}}<h1>...Gunit!</h1><p>{{GREETING}}</p><p>Signed in as {{EMAIL}}</p>
+{{LINKS}}<h2>My Settings</h2>{{TOGGLES}}<p id="status"></p>
+<div>{{CONTENT}}</div>
+<p style="opacity:.5">(template file not found at $tplPath)</p>
+<script>
+async function saveToggle(el){const s=document.getElementById('status');s.innerText='Saving...';
+try{const r=await fetch('/toggle',{method:'POST',headers:{'Content-Type':'application/json'},
+body:JSON.stringify({key:el.dataset.key,value:el.checked})});s.innerText=r.ok?'Saved.':'Error saving.';
+if(!r.ok)el.checked=!el.checked;}catch(e){s.innerText='Network error.';el.checked=!el.checked;}
+setTimeout(()=>{s.innerText='';},2500);}
+</script></body></html>
+"@
+        }
+        return $html
+    }
+
+    # Substitute all tokens. Any token not supplied for a given page is replaced
+    # with '' so secondary pages (lists, how-to-use) don't show stray {{...}}.
+    function Resolve-Tokens([string]$html, [hashtable]$tok) {
+        foreach ($name in @('NAV','HOME','CONTENT','GREETING','EMAIL','LINKS','TOGGLES','INSTRUCTIONS')) {
+            $val = if ($tok.ContainsKey($name)) { [string]$tok[$name] } else { '' }
+            $html = $html.Replace("{{$name}}", $val)
+        }
+        return $html
+    }
+
+    
     #  Serves <config>/screenshots/* at /screenshots/* so markdown can use
     #  ![alt](/screenshots/foo.png) — a URL the browser can fetch, NOT a
     #  filesystem path (which the browser can't read).
@@ -345,7 +427,7 @@ Start-PodeServer {
     }
 
     # ------------------------------------------------------------------------
-    #  ROUTE: dashboard page
+    #  ROUTE: dashboard home
     # ------------------------------------------------------------------------
     Add-PodeRoute -Method Get -Path '/' -ScriptBlock {
       try {
@@ -360,7 +442,11 @@ Start-PodeServer {
         $defs     = Get-PodeState -Name 'ToggleDefs'
 
         $linksHtml = ($links | ForEach-Object {
-            "<a href=`"$($_.Url)`" class=`"custom-link`">$($_.Title)</a>"
+            if ($_.External) {
+                "<a href=`"$($_.Url)`" class=`"custom-link`" target=`"_blank`" rel=`"noopener`">$($_.Title)</a>"
+            } else {
+                "<a href=`"$($_.Url)`" class=`"custom-link`">$($_.Title)</a>"
+            }
         }) -join "`n"
 
         $togglesHtml = ($defs | Where-Object {
@@ -375,43 +461,66 @@ Start-PodeServer {
 "@
         }) -join "`n"
 
-        $instructionsHtml = Get-InstructionsHtml
-
-        # Read the editable template (cached by mtime: fast loads, edits show on
-        # refresh, no rebuild). Lives in the local config dir. Falls back to a
-        # minimal page if missing, logging where it looked.
-        $cfgDir  = Get-PodeState -Name 'CfgDir'
-        $tplPath = Join-Path $cfgDir 'template.html'
-        $html    = Read-CachedFile $tplPath
-        if (-not $html) {
-            "TEMPLATE ERROR: $tplPath not found — serving minimal fallback page" | Out-Default
-            $html = @"
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>...Gunit!</title></head>
-<body style="font-family:sans-serif;background:#1c1f24;color:#ccc;padding:40px">
-<h1>...Gunit!</h1><p>{{GREETING}}</p><p>Signed in as {{EMAIL}}</p>
-{{LINKS}}<h2>My Settings</h2>{{TOGGLES}}<p id="status"></p>
-<div>{{INSTRUCTIONS}}</div>
-<p style="opacity:.5">(template file not found at $tplPath)</p>
-<script>
-async function saveToggle(el){const s=document.getElementById('status');s.innerText='Saving...';
-try{const r=await fetch('/toggle',{method:'POST',headers:{'Content-Type':'application/json'},
-body:JSON.stringify({key:el.dataset.key,value:el.checked})});s.innerText=r.ok?'Saved.':'Error saving.';
-if(!r.ok)el.checked=!el.checked;}catch(e){s.innerText='Network error.';el.checked=!el.checked;}
-setTimeout(()=>{s.innerText='';},2500);}
-</script></body></html>
+        $html = Get-TemplateHtml
+        $homeHtml = @"
+<div class="custom-section">
+  <h1>...Gunit!</h1>
+  <p class="greeting">$greeting</p>
+  <p class="whoami">Signed in as <strong>$email</strong></p>
+  $linksHtml
+</div>
+<div class="custom-section" style="border-top: 2px solid rgba(255,255,255,0.05); padding-top: 30px;">
+  $togglesHtml
+  <p id="status"></p>
+</div>
 "@
+        $html = Resolve-Tokens $html @{
+            NAV  = (Get-NavHtml '/')
+            HOME = $homeHtml
         }
-
-        # Substitute the dynamic tokens.
-        $html = $html.Replace('{{GREETING}}',     [string]$greeting).
-                      Replace('{{EMAIL}}',        [string]$email).
-                      Replace('{{INSTRUCTIONS}}', [string]$instructionsHtml).
-                      Replace('{{LINKS}}',    $linksHtml).
-                      Replace('{{TOGGLES}}',  $togglesHtml)
-
         Write-PodeHtmlResponse -Value $html
       } catch {
         Write-PodeTextResponse -StatusCode 500 -Value "ERROR in GET /: $($_.Exception.Message)`n`n$($_.ScriptStackTrace)"
+      }
+    }
+
+    # ------------------------------------------------------------------------
+    #  ROUTE: Lists page (renders lists.md — editable, no rebuild)
+    # ------------------------------------------------------------------------
+    Add-PodeRoute -Method Get -Path '/lists' -ScriptBlock {
+      try {
+        $email = Get-VerifiedUser
+        if (-not $email) { Write-PodeTextResponse -Value 'Not authenticated.' -StatusCode 401; return }
+        $body = Get-MarkdownHtml 'lists.md'
+        if (-not $body) { $body = '<p>No lists yet. Create <code>lists.md</code> in the config dir.</p>' }
+        $html = Get-TemplateHtml
+        $html = Resolve-Tokens $html @{
+            NAV     = (Get-NavHtml '/lists')
+            CONTENT = "<div class=`"custom-section`"><h1>Lists of Books</h1><div class=`"instructions`">$body</div></div>"
+        }
+        Write-PodeHtmlResponse -Value $html
+      } catch {
+        Write-PodeTextResponse -StatusCode 500 -Value "ERROR in GET /lists: $($_.Exception.Message)`n`n$($_.ScriptStackTrace)"
+      }
+    }
+
+    # ------------------------------------------------------------------------
+    #  ROUTE: How To Use page (renders instructions.md — now its own page)
+    # ------------------------------------------------------------------------
+    Add-PodeRoute -Method Get -Path '/how-to-use' -ScriptBlock {
+      try {
+        $email = Get-VerifiedUser
+        if (-not $email) { Write-PodeTextResponse -Value 'Not authenticated.' -StatusCode 401; return }
+        $body = Get-InstructionsHtml
+        if (-not $body) { $body = '<p>No instructions yet. Create <code>instructions.md</code> in the config dir.</p>' }
+        $html = Get-TemplateHtml
+        $html = Resolve-Tokens $html @{
+            NAV     = (Get-NavHtml '/how-to-use')
+            CONTENT = "<div class=`"custom-section`"><h1>How To Use</h1><div class=`"instructions`">$body</div></div>"
+        }
+        Write-PodeHtmlResponse -Value $html
+      } catch {
+        Write-PodeTextResponse -StatusCode 500 -Value "ERROR in GET /how-to-use: $($_.Exception.Message)`n`n$($_.ScriptStackTrace)"
       }
     }
 

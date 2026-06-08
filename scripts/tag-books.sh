@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-TAG_BOOKS_VERSION="9"   # bump on every change; echoed at startup
+TAG_BOOKS_VERSION="10"   # bump on every change; echoed at startup
 # =============================================================================
 #  tag-books.sh — apply calibre tags to books that fetch-books.sh has fetched.
 #
@@ -37,6 +37,7 @@ MAX_TAG_LEN="${MAX_TAG_LEN:-40}"   # drop existing tags longer than this (junk);
 # existing tags matching these (case-insensitive, exact) are dropped as junk —
 # typical ebook-source cruft. Add your own, space-separated, via TAG_STOPLIST.
 TAG_STOPLIST="${TAG_STOPLIST:-download apple+books books+on+iphone ipad mac kindle iphone calibre unknown}"
+DEFAULT_LANG="${DEFAULT_LANG:-eng}"   # set this language when a book's language is blank (calibre-web hides blank-language books); empty disables
 CONFIDENCE="${CONFIDENCE:-0.6}"    # 0..1; fuzzy fallback hit must score >= this
 ID_SCHEME="${ID_SCHEME:-annas}"    # calibre identifier scheme used to store the md5
 LOG="${LOG:-$HOME/logs/tag-books.log}"
@@ -197,6 +198,9 @@ print(",".join(out))
                 stamp_identifier "$id" "$md5"
                 log "    stamped ${ID_SCHEME}:${md5} onto id $id"
             fi
+            # fill a blank language so calibre-web doesn't hide the book (shared
+            # logic from tag-lib; only acts when language is empty).
+            fix_blank_language "$id"; [ "$?" -eq 10 ] && log "    set language id $id -> $DEFAULT_LANG (was blank)"
             printf '%s|%s|tagged|%s|%s\n' "$author" "$title" "$md5" "$(date '+%Y-%m-%dT%H:%M')" >> "$tmp"
             n_tag=$((n_tag+1))
         else

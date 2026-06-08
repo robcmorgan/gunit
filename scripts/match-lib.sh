@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-MATCH_LIB_VERSION="4"   # bump on every change
+MATCH_LIB_VERSION="6"   # bump on every change
+# v6: book_match_fields now rejects an exact-title match when the candidate
+#     author is PRESENT and contradicts (zero author overlap) — an identical
+#     title by a different author is a different book (e.g. "The Secret History"
+#     by Donna Tartt vs Procopius). Absent/misspelled authors still pass via the
+#     title-only floor (a missing author cannot contradict).
 # =============================================================================
 #  match-lib.sh — shared confidence matcher for fetch-books.sh and tag-books.sh.
 #
@@ -191,16 +196,49 @@ book_match_score() {
 # appears only in the candidate's author can no longer satisfy a title gate, and
 # vice versa. Both list-interpretations are scored (WANT1=title or WANT2=title).
 # CAND_AUTHOR may be empty; the weak-title author requirement then fails closed.
+# For SHORT/weak titles (the dangerous case: a 1-word title like "Eragon" is a
+# subset of any longer title containing that word — "Murtagh: The World of
+# Eragon"), require the candidate title to actually START with the wanted title,
+# and not be dominated by extra meaningful words. This rejects same-author series
+# mismatches that the plain subset gate + author match would wrongly accept.
+# Returns 0 = ok, 1 = reject. Only meaningful for short titles; callers gate on mw.
+short_title_ok() {
+    local wnorm cnorm wmw cmw
+    wnorm="$(norm "$1")"; cnorm="$(norm "$2")"
+    wmw="$(meaningful_words "$1")"; cmw="$(meaningful_words "$2")"
+    [ "$wnorm" = "$cnorm" ] && return 0                       # exact title: fine
+    case "$cnorm " in "$wnorm "*) ;; *) return 1;; esac        # must lead with it
+    [ "$cmw" -le $((wmw + 3)) ]                                # not a whole other title
+}
+
 book_match_fields() {
     local want1="$1" want2="$2" ctitle="$3" cauthor="$4"
     local s1 s2 mw1 mw2 g1 g2 a1 a2
     mw1="$(meaningful_words "$want1")"
     mw2="$(meaningful_words "$want2")"
+    # is there a candidate author at all? (used by the contradiction gate below)
+    local cauthor_present=0
+    case "$(norm "$cauthor")" in "") cauthor_present=0;; *) cauthor_present=1;; esac
     # Interp 1: want1 is the title (vs candidate title),
     #           want2 is the author (vs candidate author)
     g1="$(title_full_match "$want1" "$ctitle")"
-    if [ "$mw1" -lt 2 ]; then a1="$(author_match_strict "$want2" "$cauthor")"
-    else a1="$(author_match "$want2" "$cauthor")"; fi
+    if [ "$mw1" -lt 2 ]; then
+        a1="$(author_match_strict "$want2" "$cauthor")"
+        # weak title: also require a start-anchored, length-bounded title match,
+        # so "Eragon" doesn't match "Murtagh: The World of Eragon".
+        short_title_ok "$want1" "$ctitle" || g1="0.000"
+    else
+        a1="$(author_match "$want2" "$cauthor")"
+        # STRONG title, but the candidate author is PRESENT and does not match at
+        # all -> the author actively contradicts (e.g. wanted "Donna Tartt" vs
+        # candidate "Procopius" for an identically-titled "The Secret History").
+        # Reject: an exact title alone must NOT match a different author's book.
+        # (An ABSENT candidate author can't contradict, so the title-only floor
+        # still stands — preserves SE misspelled-author / empty-author cases.)
+        if [ "$cauthor_present" -eq 1 ] && ! ge "$a1" "0.001"; then
+            g1="0.000"
+        fi
+    fi
     s1="$(awk -v g="$g1" -v a="$a1" -v mw="$mw1" \
           'BEGIN{
              if (g+0==0) { print "0.000"; exit }
@@ -209,8 +247,15 @@ book_match_fields() {
            }')"
     # Interp 2: want2 is the title, want1 is the author
     g2="$(title_full_match "$want2" "$ctitle")"
-    if [ "$mw2" -lt 2 ]; then a2="$(author_match_strict "$want1" "$cauthor")"
-    else a2="$(author_match "$want1" "$cauthor")"; fi
+    if [ "$mw2" -lt 2 ]; then
+        a2="$(author_match_strict "$want1" "$cauthor")"
+        short_title_ok "$want2" "$ctitle" || g2="0.000"
+    else
+        a2="$(author_match "$want1" "$cauthor")"
+        if [ "$cauthor_present" -eq 1 ] && ! ge "$a2" "0.001"; then
+            g2="0.000"
+        fi
+    fi
     s2="$(awk -v g="$g2" -v a="$a2" -v mw="$mw2" \
           'BEGIN{
              if (g+0==0) { print "0.000"; exit }

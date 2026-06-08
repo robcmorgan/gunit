@@ -1,0 +1,8 @@
+CURRENT VERSIONS (deploy these; verify with: grep -h '_VERSION=' scripts/*.sh)
+  match-lib          5
+  tag-lib            2
+  fetch-books        28
+  tag-books          10
+  tag-queue          3
+  sweep-books        2
+  sync-tag-to-shelf  7

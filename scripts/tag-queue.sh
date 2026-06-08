@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-TAG_QUEUE_VERSION="1"   # bump on every change; echoed at startup
+TAG_QUEUE_VERSION="3"   # bump on every change; echoed at startup
 # =============================================================================
 #  tag-queue.sh — drain the tag queue that fetch-books fills.
 #
@@ -23,6 +23,10 @@ set -uo pipefail
 
 # --- config ---
 QUEUE="${TAG_QUEUE:-/home/robmorgan/gunit/config/tag-queue.json}"
+# the queue is shared between root (timer) and the gunit user (fetch-books); we
+# normalise ownership after each rewrite so neither locks the other out.
+QUEUE_OWNER="${QUEUE_OWNER:-robmorgan}"
+QUEUE_GROUP="${QUEUE_GROUP:-robmorgan}"
 PREFS_DIR="${PREFS_DIR:-/home/robmorgan/gunit/userprefs}"
 CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
 CALIBRE_LIBRARY="${CALIBRE_LIBRARY:-/books/Calibre}"
@@ -30,6 +34,7 @@ CONFIDENCE="${CONFIDENCE:-0.6}"
 ID_SCHEME="${ID_SCHEME:-annas}"
 MAX_TAG_LEN="${MAX_TAG_LEN:-40}"
 TAG_STOPLIST="${TAG_STOPLIST:-download apple+books books+on+iphone ipad mac kindle iphone calibre unknown}"
+DEFAULT_LANG="${DEFAULT_LANG:-eng}"   # set this language when a book's language is blank (calibre-web hides blank-language books); empty disables
 EXPIRE_HOURS="${EXPIRE_HOURS:-24}"     # drop entries older than this (never imported)
 # busy-toggle (same semantics as sweep-books / watch-downloads)
 CALIBRE_BUSY_FLAG="${CALIBRE_BUSY_FLAG:-/tmp/calibre-busy}"
@@ -118,6 +123,7 @@ for line in "${entries[@]}"; do
         merged="$(apply_tags "$id" "$tags" "$md5" "$via")"
         if [ -n "$merged" ]; then
             LOG "  tagged id $id [$via] ($title — $author) -> [$merged]"
+            [ "${APPLY_TAGS_SET_LANG:-0}" -eq 1 ] && LOG "    set language id $id -> $DEFAULT_LANG (was blank)"
             n_tagged=$((n_tagged+1))
             continue   # satisfied -> drop from queue (don't add to keep_json)
         else
@@ -152,6 +158,13 @@ if [ "$DRY_RUN" -eq 0 ]; then
     # atomically replace the queue with the kept entries
     cp "$QUEUE" "${QUEUE}.bak" 2>/dev/null
     mv "$keep_json" "$QUEUE"
+    # The queue is written by BOTH this script (often as root via the timer) and
+    # fetch-books (as the normal user). mv installs a root-owned mktemp file,
+    # which then blocks the user's next enqueue (PermissionError). Make it
+    # owner+group writable and hand it to the configured owner so either can
+    # write. QUEUE_OWNER/QUEUE_GROUP default to the gunit user.
+    chmod 664 "$QUEUE" 2>/dev/null || true
+    chown "${QUEUE_OWNER:-robmorgan}:${QUEUE_GROUP:-robmorgan}" "$QUEUE" 2>/dev/null || true
 else
     rm -f "$keep_json"
 fi

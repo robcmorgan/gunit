@@ -1,16 +1,20 @@
 <!DOCTYPE html>
+<!-- template.html v3 -->
 <!--
   ===========================================================================
   Gunit homepage template.  EDIT THIS FILE FREELY — changes show on refresh,
   no Docker rebuild needed.
 
   Three placeholder tokens get replaced by the app at request time:
-    {{GREETING}}      -> the per-user greeting line (from greetings.json)
-    {{EMAIL}}         -> the signed-in user's email
-    {{LINKS}}         -> the dashboard links (defined in the script)
-    {{TOGGLES}}       -> the per-user setting checkboxes (from the script's ToggleDefs)
-    {{INSTRUCTIONS}}  -> the rendered HTML of instructions.md
-  Leave those tokens where you want that content to appear. Everything else
+    {{NAV}}      -> the top navigation bar (Browse / Request / Lists / How To Use)
+    {{HOME}}     -> the home page body: greeting, links, settings toggles.
+                    Empty on the Lists and How To Use pages.
+    {{CONTENT}}  -> the page body for secondary pages (rendered markdown).
+                    Empty on the home page.
+  This one template is shared by every page; the app fills NAV always, then
+  fills HOME (home page) OR CONTENT (Lists / How To Use). Edit the markdown in
+  lists.md / instructions.md to change those pages — no rebuild needed.
+  Leave the tokens where you want that content to appear. Everything else
   is yours to change — text, CSS, layout, sections.
   ===========================================================================
 -->
@@ -24,8 +28,11 @@
   .custom-section { margin-bottom: 40px; }
   .custom-section h1 { font-size: 2.8em; border-bottom: 2px solid rgba(255,255,255,0.05);
     padding-bottom: 10px; margin-bottom: 15px; color: #f3f4f6; }
-  .custom-link { display: block; color: #ffffff; text-decoration: none; font-size: 1.8em;
-    margin-bottom: 10px; font-weight: 500; transition: color 0.2s ease; }
+  .custom-link { display: block; color: #ffffff; text-decoration: none; font-size: 1.2em;
+    margin-bottom: 8px; font-weight: 500; transition: color 0.2s ease; }
+  .custom-link::before { content: "\2022"; color: #60a5fa; margin-right: 10px; }
+  .custom-link:first-of-type { margin-top: 24px; padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08); }
   .custom-link:hover { color: #fff; text-decoration: underline; }
   .toggle { display: flex; align-items: center; gap: 12px; font-size: 1.1em; margin-bottom: 14px; color: #9ca3af; }
   .toggle input { width: 22px; height: 22px; cursor: pointer; }
@@ -36,33 +43,38 @@
   .instructions { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 20px; line-height: 1.6; }
   .instructions img { max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0; }
   .instructions h2, .instructions h3 { color: #e5e7eb; }
+  .instructions a { color: #7dd3fc; text-decoration: underline; }
+  .instructions a:hover { color: #bae6fd; }
+  .instructions a:visited { color: #93c5fd; }
   .instructions code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; }
   .instructions blockquote { border-left: 4px solid #60a5fa; padding-left: 15px;
     font-style: italic; opacity: 0.8; margin: 20px 0 0 0; }
   details summary { cursor: pointer; font-size: 1.8em; font-weight: bold; color: #f3f4f6; outline: none; }
   details[open] summary { margin-bottom: 20px; }
+  /* top nav bar — thin, stays at top, present on every same-origin page */
+  .topnav { position: sticky; top: 0; z-index: 10; display: flex; gap: 4px;
+    flex-wrap: nowrap; align-items: center;
+    margin: -40px -40px 30px -40px; padding: 10px 40px;
+    background: rgba(0,0,0,0.25); backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .nav-link { color: #9ca3af; text-decoration: none; font-size: 1.05em;
+    padding: 6px 14px; border-radius: 8px; white-space: nowrap;
+    transition: background 0.15s, color 0.15s; }
+  .nav-link:hover { color: #fff; background: rgba(255,255,255,0.06); }
+  /* highlight only while being clicked, not as a persistent "you are here" */
+  .nav-link:active { color: #fff; background: rgba(96,165,250,0.25); }
+  @media (max-width: 600px) {
+    .topnav { gap: 2px; padding: 8px 12px; margin: -40px -40px 24px -40px;
+      justify-content: space-between; }
+    .nav-link { font-size: 0.9em; padding: 6px 8px; }
+  }
 </style></head><body>
 
-  <div class="custom-section">
-    <h1>...Gunit!</h1>
-    <p class="greeting">{{GREETING}}</p>
-    <p class="whoami">Signed in as <strong>{{EMAIL}}</strong></p>
-    {{LINKS}}
-  </div>
+  {{NAV}}
 
-  <div class="custom-section" style="border-top: 2px solid rgba(255,255,255,0.05); padding-top: 30px;">
-    {{TOGGLES}}
-    <p id="status"></p>
-  </div>
+  {{HOME}}
 
-  <div class="custom-section">
-    <details>
-      <summary>&#128295; How to use</summary>
-      <div class="instructions">
-        {{INSTRUCTIONS}}
-      </div>
-    </details>
-  </div>
+  {{CONTENT}}
 
 <script>
   async function saveToggle(el) {

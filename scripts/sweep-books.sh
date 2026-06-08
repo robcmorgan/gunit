@@ -1,5 +1,5 @@
 #!/bin/bash
-SWEEP_BOOKS_VERSION="1"   # bump on every change; echoed at startup
+SWEEP_BOOKS_VERSION="2"   # bump on every change; echoed at startup
 # =============================================================================
 #  sweep-books.sh — periodic catch-up importer for files the inotify watcher
 #  missed (events lost while the service was down, or writes the host inotify
@@ -34,7 +34,7 @@ PREFS_DIR="${PREFS_DIR:-/home/robmorgan/gunit/userprefs}"
 CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
 CALIBRE_USER="${CALIBRE_USER:-2001:2002}"
 CALIBRE_LIB="${CALIBRE_LIB:-/books/Calibre}"
-CW_APP_DB="${CW_APP_DB:-/data/compose/1/calibre_web_config/app.db}"
+CW_APP_DB="${CW_APP_DB:-/home/robmorgan/cwa_config/app.db}"
 MOUNT_HOST_ROOT="${MOUNT_HOST_ROOT:-/Nutmeg/Media/Books}"
 MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/books}"
 DONE_DIR_NAME="${DONE_DIR_NAME:-done}"

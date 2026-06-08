@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-TAG_LIB_VERSION="1"   # bump on every change
+TAG_LIB_VERSION="2"   # bump on every change
 # =============================================================================
 #  tag-lib.sh — shared calibre tagging logic for tag-books.sh and tag-queue.sh.
 #
@@ -27,6 +27,11 @@ CONFIDENCE="${CONFIDENCE:-0.6}"
 ID_SCHEME="${ID_SCHEME:-annas}"
 MAX_TAG_LEN="${MAX_TAG_LEN:-40}"
 TAG_STOPLIST="${TAG_STOPLIST:-download apple+books books+on+iphone ipad mac kindle iphone calibre unknown}"
+# When a book has a BLANK language, calibre-web's default language filter hides
+# it from the listing. Set this language when (and only when) the field is empty.
+# We never overwrite a non-empty language (so a genuine French/Italian book keeps
+# its own). DEFAULT_LANG="" disables the fixup entirely.
+DEFAULT_LANG="${DEFAULT_LANG:-eng}"
 
 cdb() { docker exec "$CALIBRE_CONTAINER" calibredb --library-path "$CALIBRE_LIBRARY" "$@"; }
 
@@ -109,14 +114,44 @@ print(",".join(out))
     printf '%s' "$merged"
 }
 
-# apply_tags id taglist md5 via -> merge + set tags + clear rating + stamp md5.
-# Returns 0 on success (echoes the merged taglist), 1 on calibredb failure.
+# If a book's language is BLANK, set it to DEFAULT_LANG (calibre-web hides
+# language-less books behind its language filter). Never overwrites a non-empty
+# language. No-op if DEFAULT_LANG is empty. Best-effort; echoes a note via the
+# caller's logging is left to the caller (this stays quiet to keep the lib clean).
+fix_blank_language() {
+    local id="$1"
+    [ -n "$DEFAULT_LANG" ] || return 0
+    local lang_json has_lang
+    lang_json="$(cdb list -f languages -s "id:$id" --for-machine 2>/dev/null)"
+    has_lang="$(printf '%s' "$lang_json" | python3 -c '
+import sys, json
+try:
+    d = json.load(sys.stdin)
+    print("1" if (d and d[0].get("languages")) else "0")
+except Exception:
+    print("0")
+' 2>/dev/null)"
+    if [ "$has_lang" = "0" ]; then
+        cdb set_metadata "$id" --field "languages:$DEFAULT_LANG" >/dev/null 2>&1 \
+            && return 10   # 10 = "we set it" so caller can log; 0 = nothing to do
+    fi
+    return 0
+}
+
+# apply_tags id taglist md5 via -> merge + set tags + clear rating + stamp md5 +
+# fix blank language. Returns 0 on success (echoes the merged taglist), 1 on
+# calibredb failure. Sets APPLY_TAGS_SET_LANG=1 if it filled a blank language
+# (so the caller can log it); cleared to 0 otherwise.
+APPLY_TAGS_SET_LANG=0
 apply_tags() {
     local id="$1" taglist="$2" md5="$3" via="${4:-fuzzy}" merged
+    APPLY_TAGS_SET_LANG=0
     merged="$(merge_tags "$id" "$taglist")"
     if cdb set_metadata "$id" --field "tags:$merged" --field "rating:0" >/dev/null 2>&1; then
         # stamp md5 on a fuzzy match so the next lookup is exact
         if [ "$via" = "fuzzy" ] && [ -n "$md5" ]; then stamp_identifier "$id" "$md5"; fi
+        # fill a blank language so calibre-web doesn't hide the book
+        fix_blank_language "$id"; [ "$?" -eq 10 ] && APPLY_TAGS_SET_LANG=1
         printf '%s' "$merged"; return 0
     fi
     return 1
