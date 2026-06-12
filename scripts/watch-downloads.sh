@@ -1,4 +1,20 @@
 #!/bin/bash
+WATCH_DOWNLOADS_VERSION="1"   # bump on every change; echoed at startup so you can
+                              # confirm the running service matches the latest edit.
+#                              (version stamp also at end of file.)
+# v1: first version stamp added (this script previously had NONE, which is how a
+#     Jun-08 stale copy ran unnoticed for days). Also in this version:
+#     * success now DELETES the source file (was: move to done/). The book is in
+#       the Calibre library; the loose file is redundant.
+#     * failures move to a sibling witherrors/ folder instead of being left loose
+#       to retrigger every event. Move a file back out to retry it.
+#     * inotify --exclude swapped done -> witherrors so parked failures don't
+#       refire the watcher.
+#     * CW_APP_DB default corrected to the live CWA db (/home/robmorgan/cwa_config/
+#       app.db). NOTE: the systemd unit's Environment= line overrides this, so the
+#       unit MUST be fixed too — the default here is only a fallback for manual runs.
+#     * logs additionally to the shared ~/logs/gunit.log with the [w] source tag,
+#       matching the other pipeline scripts.
 # =============================================================================
 #  watch-downloads.sh
 #  Watches shelfmark's /books/<folder> subdirs. When a NEW book settles:
@@ -29,7 +45,9 @@ MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/books}"
 MAPPING="${MAPPING:-/home/robmorgan/gunit/web/users.json}"
 PREFS_DIR="${PREFS_DIR:-/home/robmorgan/gunit/userprefs}"
 CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
-CW_APP_DB="${CW_APP_DB:-/data/compose/1/calibre_web_config/app.db}"
+# Live CWA database. The OLD /data/compose/1/calibre_web_config/app.db is the
+# dead calibre-web container's db — shelving there silently does nothing.
+CW_APP_DB="${CW_APP_DB:-/home/robmorgan/cwa_config/app.db}"
 SETTLE_SECS="${SETTLE_SECS:-15}"                          # size must be stable this long
 # calibre library target for calibredb (TEST THIS — see notes in chat):
 CALIBRE_LIB="${CALIBRE_LIB:-/books/Calibre}"
@@ -40,10 +58,19 @@ CALIBRE_USER="${CALIBRE_USER:-2001:2002}"
 # Global import lock: serialises calibredb writes so concurrent imports queue
 # instead of colliding on calibre's single-writer library lock.
 IMPORT_LOCK="${IMPORT_LOCK:-/tmp/gunit-import.lock}"
-# Processed books are moved into this per-user subfolder after import+shelve.
-# The inotify --exclude below ignores it so the move doesn't retrigger.
-DONE_DIR_NAME="${DONE_DIR_NAME:-done}"
-LOG() { echo "[$(date '+%F %T')] $*"; }
+# Failed imports are parked in this per-user subfolder (was previously a done/
+# folder for SUCCESSES — successes are now deleted). The inotify --exclude below
+# ignores it so the move doesn't retrigger.
+ERROR_DIR_NAME="${ERROR_DIR_NAME:-witherrors}"
+# Shared pipeline log (all gunit scripts append here, tagged by source). [w] = watcher.
+GUNIT_LOG="${GUNIT_LOG:-/home/robmorgan/logs/gunit.log}"
+LOG() {
+    local line="[$(date '+%F %T')] $*"
+    echo "$line"
+    # best-effort append to the shared log with the [w] source tag; never fail
+    # the run if the log dir is missing or unwritable.
+    printf '%s [w] %s\n' "$(date '+%F %T')" "$*" >> "$GUNIT_LOG" 2>/dev/null || true
+}
 
 command -v inotifywait >/dev/null || { LOG "FATAL: inotifywait not installed (apt install inotify-tools)"; exit 1; }
 command -v jq >/dev/null          || { LOG "FATAL: jq not installed"; exit 1; }
@@ -151,6 +178,21 @@ calibredb_add() {
     echo "$out"
 }
 
+# --- park a file that failed to import into a sibling witherrors/ folder, so it
+#     is NOT retriggered on every event. Move it back out manually to re-attempt.
+#     Best-effort: if the move fails, leave the file in place rather than lose it.
+park_error() {
+    local path="$1" file err_dir mverr mvrc
+    file=$(basename "$path")
+    err_dir="$(dirname "$path")/${ERROR_DIR_NAME:-witherrors}"
+    mverr=$( { mkdir -p "$err_dir" && mv "$path" "$err_dir/"; } 2>&1 ); mvrc=$?
+    if [ "$mvrc" -eq 0 ]; then
+        LOG "  import FAILED — moved to: ${ERROR_DIR_NAME:-witherrors}/$file"
+    else
+        LOG "  import FAILED and could not move to ${ERROR_DIR_NAME:-witherrors}/ — leaving in place. Error: $mverr"
+    fi
+}
+
 process_file() {
     local path="$1"
     local event="${2:-}"
@@ -250,7 +292,7 @@ process_file() {
     out=$(calibredb_add "$cpath")
 
     # If the import was deferred (calibre busy + flag set), leave the book in
-    # place (not shelved, not moved to done/) so the periodic sweep retries it.
+    # place (not shelved, not deleted, not parked) so the periodic sweep retries it.
     if echo "$out" | grep -q '__GUNIT_DEFER__'; then
         LOG "  deferred '$file' (calibre busy) — left in place for the sweep"
         flock -u 7 2>/dev/null
@@ -299,7 +341,8 @@ process_file() {
 
         if [ -z "$idlist" ]; then
             LOG "  WARN: could not add or locate book. calibredb said: $out"
-            flock -u 7 2>/dev/null   # release import lock before returning
+            flock -u 7 2>/dev/null   # release import lock before parking
+            park_error "$path"       # park the failure so it doesn't refire
             return
         fi
     else
@@ -351,38 +394,39 @@ process_file() {
     # Kindle sees — the Calibre tag is just organisational metadata. The 15-min
     # sync timer keeps tags eventually-consistent; no need for an instant trigger.
 
-    # Move the processed book into a per-user done/ folder, so it's out of the
-    # active queue and a later backfill run won't re-import it. (The inotify
-    # watcher EXCLUDES /done/ so this move does not trigger a fresh event.)
-    # Only move if we actually have ids (i.e. it imported); failures stay put.
+    # Processed OK — DELETE the source file. The book is now in the Calibre
+    # library (and shelved if kindleSync was on); the loose download is redundant.
+    # (Was previously: move to a done/ folder. Deleting keeps the tree clean and
+    # there's nothing we need from the original file afterwards.) Failures never
+    # reach here — they were parked in witherrors/ above.
     if [ -n "$idlist" ]; then
-        local done_dir="$(dirname "$path")/${DONE_DIR_NAME:-done}"
-        local mverr mvrc
-        mverr=$( { mkdir -p "$done_dir" && mv "$path" "$done_dir/"; } 2>&1 ); mvrc=$?
-        if [ "$mvrc" -eq 0 ]; then
-            LOG "  moved to: ${DONE_DIR_NAME:-done}/$file"
+        if rm -f "$path" 2>/dev/null; then
+            LOG "  deleted source: $file"
         else
-            LOG "  WARN: imported OK but could not move to ${DONE_DIR_NAME:-done}/ — leaving in place. Error: $mverr"
+            LOG "  WARN: imported OK but could not delete '$file' — leaving in place"
         fi
     fi
 }
 
-LOG "watch-downloads starting. Watching $BOOKS_ROOT (settle=${SETTLE_SECS}s)"
-LOG "mapping=$MAPPING  prefs=$PREFS_DIR  calibre=$CALIBRE_CONTAINER"
+LOG "watch-downloads v$WATCH_DOWNLOADS_VERSION starting. Watching $BOOKS_ROOT (settle=${SETTLE_SECS}s)"
+LOG "mapping=$MAPPING  prefs=$PREFS_DIR  calibre=$CALIBRE_CONTAINER  cw_db=$CW_APP_DB"
 
 # -m monitor, -r recursive. moved_to = atomic rename-in (complete by definition);
 # close_write = file written in place (may need a settle check). We capture the
 # event so process_file can skip waiting when the file arrived atomically.
 # Exclude Calibre's own structural dirs and hidden files — otherwise we'd fire
 # on every metadata.db / notes.db write Calibre makes, which is noise AND a
-# feedback risk (our imports update metadata.db -> more events). We only care
-# about files dropped into the per-user download subfolders.
+# feedback risk (our imports update metadata.db -> more events). We also exclude
+# witherrors/ so parked failures don't refire the watcher. We only care about
+# files dropped into the per-user download subfolders.
 #   --exclude is a POSIX-extended regex matched against the full path.
 inotifywait -m -r -e close_write -e moved_to \
-    --exclude '/(Calibre|done|\.calnotes|metadata\.db|metadata_db_prefs_backup\.json|\.[^/]+)(/|$)' \
+    --exclude '/(Calibre|witherrors|\.calnotes|metadata\.db|metadata_db_prefs_backup\.json|\.[^/]+)(/|$)' \
     --format '%e|%w%f' "$BOOKS_ROOT" |
 while IFS='|' read -r event path; do
     [ -f "$path" ] || continue
     LOG "event[$event]: $path"
     process_file "$path" "$event" &     # background so a long settle doesn't block the queue
 done
+
+# version: WATCH_DOWNLOADS_VERSION 1

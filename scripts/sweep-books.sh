@@ -1,5 +1,23 @@
 #!/bin/bash
-SWEEP_BOOKS_VERSION="2"   # bump on every change; echoed at startup
+SWEEP_BOOKS_VERSION="5"   # bump on every change; echoed at startup
+#                          (version stamp also at end of file.)
+# v5: success now DELETES the processed file (was: move to done/) — the book is
+#     in the Calibre library, the loose copy is redundant. Import FAILURES now
+#     move to a sibling witherrors/ folder (was: left loose to retry every slot).
+#     Rationale: the watcher leaves its own misses loose, and THIS sweep is the
+#     retry for them; so a failure HERE is the second attempt failing -> park it
+#     for inspection rather than loop on it forever. Move a file out of
+#     witherrors/ to retry. find scan now prunes witherrors/ (was done/).
+#     Matches watch-downloads.sh v1 (same delete + witherrors convention).
+# v4: also append to shared $GUNIT_LOG (~/logs/gunit.log), tagged [s]; keeps
+#     journal output too.
+# v3: (1) read users.json from web/ (the real path) not the non-existent config/
+#     — previously every folder was "unmapped" so NOTHING was shelved/tagged.
+#     (2) tag each user's imports with their users.json 'tag' (robm/robw) via
+#     calibredb --tags at add (and set_metadata for dup-refused existing books).
+#     (3) quieter logs: one outcome line per book, per-book shelve chatter folded
+#     into a single "+N shelved" line, idle cycles (nothing to sweep) stay silent,
+#     done-move logged only on failure. Every action line names the user.
 # =============================================================================
 #  sweep-books.sh — periodic catch-up importer for files the inotify watcher
 #  missed (events lost while the service was down, or writes the host inotify
@@ -16,10 +34,11 @@ SWEEP_BOOKS_VERSION="2"   # bump on every change; echoed at startup
 #      add actually fails with "Another calibre program", and only when NOT busy.
 #    * imports to library always; shelves only if the user's kindleSync is ON
 #      (matches the watcher's do_shelve logic exactly).
-#    * moves processed files to per-user done/ (skipped on re-run); failures stay.
+#    * deletes processed files after a successful import; parks FAILED imports in
+#      a sibling witherrors/ folder (skipped on re-run) instead of retrying forever.
 #
-#  Idempotent and safe to run every 15 min: done/ files are skipped, only loose
-#  (new/failed) files are considered, so no duplicate imports.
+#  Idempotent and safe to run every 15 min: imported files are gone, parked
+#  failures (witherrors/) are skipped, only loose (new) files are considered.
 #
 #  USAGE:  ./sweep-books.sh            # real run
 #          ./sweep-books.sh --dry-run  # show what it WOULD do
@@ -28,8 +47,13 @@ set -uo pipefail
 
 # --- config (match the watcher) ---------------------------------------------
 ROOT="${ROOT:-/Nutmeg/Media/Books/incoming/gunit_user_folders}"
+# users.json lives under web/ (it's the dashboard's per-user file: greeting,
+# shelf, tag — all keyed by the Cloudflare email = folder name = CW username).
+# It was previously defaulted to config/users.json, which doesn't exist, so every
+# folder was treated as unmapped and NOTHING was shelved or tagged. Point at the
+# real path; override with USERS_JSON/MAPPING if it ever moves.
 USERS_JSON="${USERS_JSON:-/home/robmorgan/gunit/web/users.json}"
-MAPPING="${MAPPING:-/home/robmorgan/gunit/web/users.json}"
+MAPPING="${MAPPING:-$USERS_JSON}"
 PREFS_DIR="${PREFS_DIR:-/home/robmorgan/gunit/userprefs}"
 CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
 CALIBRE_USER="${CALIBRE_USER:-2001:2002}"
@@ -37,7 +61,7 @@ CALIBRE_LIB="${CALIBRE_LIB:-/books/Calibre}"
 CW_APP_DB="${CW_APP_DB:-/home/robmorgan/cwa_config/app.db}"
 MOUNT_HOST_ROOT="${MOUNT_HOST_ROOT:-/Nutmeg/Media/Books}"
 MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/books}"
-DONE_DIR_NAME="${DONE_DIR_NAME:-done}"
+ERROR_DIR_NAME="${ERROR_DIR_NAME:-witherrors}"   # failed imports parked here
 EXTS="${EXTS:-epub azw3 mobi fb2}"            # formats to sweep
 # busy-toggle config (identical semantics to watch-downloads.sh)
 CALIBRE_BUSY_FLAG="${CALIBRE_BUSY_FLAG:-/tmp/calibre-busy}"
@@ -48,7 +72,16 @@ SWEEP_LOCK="${SWEEP_LOCK:-/tmp/gunit-sweep.lock}"
 DRY_RUN=0
 [ "${1:-}" = "--dry-run" ] && DRY_RUN=1
 
-LOG() { echo "[$(date '+%F %T')] $*"; }
+# LOG: keep stdout (the systemd journal captures it) AND append to the shared
+# gunit log on disk, tagged [s]. The journal format stays as-is for
+# `journalctl -u sweep-books.service`; the file line is timestamped + tagged.
+GUNIT_LOG="${GUNIT_LOG:-/home/robmorgan/logs/gunit.log}"
+mkdir -p "$(dirname "$GUNIT_LOG")" 2>/dev/null || true
+LOG() {
+    local ts; ts="$(date '+%F %T')"
+    echo "[$ts] $*"
+    printf '%s  [s] %s\n' "$ts" "$*" >> "$GUNIT_LOG" 2>/dev/null || true
+}
 
 command -v jq >/dev/null      || { LOG "FATAL: jq not installed"; exit 1; }
 command -v sqlite3 >/dev/null || { LOG "FATAL: sqlite3 not installed"; exit 1; }
@@ -136,6 +169,22 @@ if ! docker ps --filter "name=^${CALIBRE_CONTAINER}$" --filter "status=running" 
     sleep 5
 fi
 
+# --- park a file whose import FAILED into a sibling witherrors/ folder, so it
+#     isn't re-swept every slot. The watcher leaves its misses loose and this
+#     sweep retries them; a failure here is that retry failing -> park for
+#     inspection. Move a file back out of witherrors/ to retry. Best-effort: if
+#     the move fails, leave it in place rather than lose track of it.
+park_error() {
+    local file="$1" fname err_dir
+    fname="$(basename "$file")"
+    err_dir="$(dirname "$file")/${ERROR_DIR_NAME:-witherrors}"
+    if mkdir -p "$err_dir" 2>/dev/null && mv "$file" "$err_dir/" 2>/dev/null; then
+        LOG "  import FAILED — moved to $ERROR_DIR_NAME/$fname"
+    else
+        LOG "  import FAILED and could not move to $ERROR_DIR_NAME/ — leaving in place"
+    fi
+}
+
 import_one() {
     local file="$1"
     local email; email=$(basename "$(dirname "$file")")
@@ -147,22 +196,31 @@ import_one() {
     local shelf; shelf=$(map_get "$email" "shelf")
     [ -z "$shelf" ] && return 0   # unmapped folder — ignore
 
+    # the user's tag from users.json (e.g. robm / robw). Applied to the book at
+    # import so each user's downloads are tagged with their own tag. Empty tag =
+    # import untagged (still shelved). Tags are comma-separated if ever multiple.
+    local usertag; usertag=$(map_get "$email" "tag")
+
     local do_shelve=1
     toggle_on "$email" || do_shelve=0
 
     local cpath="${file/#$MOUNT_HOST_ROOT/$MOUNT_CONTAINER_ROOT}"
-    LOG "  importing: $fname  (user=$email shelf=$shelf shelve=$do_shelve)"
+    LOG "import: '$fname' for $email (shelf=$shelf tag=${usertag:-none} shelve=$do_shelve)"
     if [ "$DRY_RUN" -eq 1 ]; then
         if [ "$do_shelve" -eq 1 ]; then
-            LOG "    [dry-run] would import + shelve to '$shelf'"
+            LOG "  [dry-run] would import${usertag:+ tagged '$usertag'} + shelve to '$shelf'"
         else
-            LOG "    [dry-run] would import to library only (kindleSync off — not shelved)"
+            LOG "  [dry-run] would import${usertag:+ tagged '$usertag'} to library only (kindleSync off — not shelved)"
         fi
         return 0
     fi
 
+    # build the --tags arg only when there's a tag (avoids passing an empty value)
+    local tagargs=()
+    [ -n "$usertag" ] && tagargs=(--tags "$usertag")
+
     local out idlist
-    out=$(calibredb_add "$cpath")
+    out=$(calibredb_add "$cpath" "${tagargs[@]}")
     idlist=$(echo "$out" | grep -oiE '(Added book ids|Merged book ids)[: ]+[0-9, ]+' \
              | grep -oE '[0-9]+' | sort -u | tr '\n' ' ')
 
@@ -180,16 +238,23 @@ import_one() {
         hits=$(echo "$found" | grep -oE '[0-9]+' | sort -u | wc -l)
         if [ "$hits" -eq 1 ]; then
             idlist=$(echo "$found" | grep -oE '[0-9]+')
-            LOG "    confident single match -> shelving existing book $idlist"
+            LOG "  already in library (id $idlist) — shelving existing"
+            # the existing copy may lack this user's tag — add it (non-destructive,
+            # calibredb merges tags) so per-user tagging holds for dup-refused books.
+            if [ -n "$usertag" ]; then
+                docker exec -u "$CALIBRE_USER" "$CALIBRE_CONTAINER" calibredb set_metadata \
+                    "$idlist" --field tags:"$usertag" --library-path "$CALIBRE_LIB" >/dev/null 2>&1 \
+                    || LOG "  WARN: could not add tag '$usertag' to existing id $idlist"
+            fi
         else
-            LOG "    $hits matches (not confident) -> adding fresh copy with --duplicates"
-            out=$(calibredb_add "$cpath" --duplicates)
+            LOG "  $hits matches (not confident) — adding fresh copy"
+            out=$(calibredb_add "$cpath" --duplicates "${tagargs[@]}")
             idlist=$(echo "$out" | grep -oiE 'Added book ids[: ]+[0-9, ]+' \
                      | grep -oE '[0-9]+' | sort -u | tr '\n' ' ')
         fi
-        [ -z "$idlist" ] && { LOG "    WARN: could not add/locate. calibredb: $out"; return 1; }
+        [ -z "$idlist" ] && { LOG "  WARN: could not add/locate '$fname'. calibredb: $out"; return 1; }
     else
-        LOG "    imported as book id(s): $idlist"
+        LOG "  imported id(s) $idlist${usertag:+ tagged '$usertag'}"
     fi
 
     # shelve only if kindleSync on
@@ -198,39 +263,40 @@ import_one() {
         userid=$(sqlite3 "file:$CW_APP_DB?mode=ro" "SELECT id FROM user WHERE name='$email';")
         shelfid=$(sqlite3 "file:$CW_APP_DB?mode=ro" "SELECT id FROM shelf WHERE name='$shelf' AND user_id=$userid;")
         if [ -z "$userid" ] || [ -z "$shelfid" ]; then
-            LOG "    WARN: user/shelf not found (user=$email shelf=$shelf) — imported, not shelved"
+            LOG "  WARN: user/shelf not found (user=$email shelf=$shelf) — imported, not shelved"
         else
             local lockfile="${CW_APP_DB}.shelflink.lock"
+            local added=0 already=0 sfail=0
             (
-              flock -w 10 8 || { LOG "    WARN: no shelf write lock; skipping shelf insert"; exit 1; }
+              flock -w 10 8 || { LOG "  WARN: no shelf write lock; skipping shelf insert"; exit 1; }
               local bid
               for bid in $idlist; do
                 local exists
                 exists=$(sqlite3 "file:$CW_APP_DB?mode=ro" "SELECT 1 FROM book_shelf_link WHERE book_id=$bid AND shelf=$shelfid LIMIT 1;")
-                [ -n "$exists" ] && { LOG "    book $bid already on '$shelf' — skip"; continue; }
+                [ -n "$exists" ] && { already=$((already+1)); continue; }
                 local newid maxord
                 newid=$(sqlite3 "file:$CW_APP_DB?mode=ro" "SELECT COALESCE(MAX(id),0)+1 FROM book_shelf_link;")
                 maxord=$(sqlite3 "file:$CW_APP_DB?mode=ro" "SELECT COALESCE(MAX(\"order\"),0)+1 FROM book_shelf_link WHERE shelf=$shelfid;")
                 if sqlite3 "$CW_APP_DB" "PRAGMA busy_timeout=5000; INSERT INTO book_shelf_link (id,book_id,\"order\",shelf,date_added) VALUES ($newid,$bid,$maxord,$shelfid,datetime('now'));" >/dev/null; then
-                    LOG "    ✔ added book $bid to shelf '$shelf' (user $email)"
+                    added=$((added+1))
                 else
-                    LOG "    WARN: failed shelf insert for book $bid (db locked?)"
+                    sfail=$((sfail+1))
                 fi
               done
+              # one summary line per book (not per shelf-row). Only mention
+              # already/failed when non-zero, to keep it quiet on the common path.
+              LOG "  shelved to '$shelf' (user $email): +$added${already:+, $already already}${sfail:+, $sfail FAILED}"
             ) 8>"$lockfile"
         fi
-    else
-        LOG "    (kindleSync off) imported $idlist to library — not shelved"
     fi
 
-    # move processed file to per-user done/ (only on success)
+    # processed OK -> delete the loose file (its content is now in the Calibre
+    # library, shelved if kindleSync was on). Quiet on success; only log a
+    # failure to delete (the case you'd want to know about). Failures never reach
+    # here — they return 1 earlier and are parked in witherrors/ by the caller.
     if [ -n "$idlist" ]; then
-        local done_dir; done_dir="$(dirname "$file")/$DONE_DIR_NAME"
-        if mkdir -p "$done_dir" 2>/dev/null && mv "$file" "$done_dir/" 2>/dev/null; then
-            LOG "    moved to: $DONE_DIR_NAME/$fname"
-        else
-            LOG "    WARN: imported OK but could not move to $DONE_DIR_NAME/ — leaving in place"
-        fi
+        rm -f "$file" 2>/dev/null \
+            || LOG "  WARN: imported OK but could not delete '$fname' — leaving in place"
     fi
     return 0
 }
@@ -243,12 +309,24 @@ for e in $EXTS; do
     else find_args+=( -o -iname "*.$e" ); fi
 done
 
-LOG "=== sweep-books v$SWEEP_BOOKS_VERSION starting under $ROOT (dry-run=$DRY_RUN, formats='$EXTS') ==="
 total=0; ok=0; fail=0
 while IFS= read -r -d '' file; do
-    case "$file" in */"$DONE_DIR_NAME"/*) continue;; esac
+    case "$file" in */"$ERROR_DIR_NAME"/*) continue;; esac   # don't re-sweep parked failures
+    # announce the run only once we actually have a file to import, so an idle
+    # 15-min cycle (nothing to sweep) stays silent instead of logging a banner
+    # + "considered=0" every time.
+    if [ "$total" -eq 0 ]; then
+        LOG "=== sweep-books v$SWEEP_BOOKS_VERSION (under $ROOT, formats='$EXTS'${DRY_RUN:+, dry-run}) ==="
+    fi
     total=$((total+1))
-    if import_one "$file"; then ok=$((ok+1)); else fail=$((fail+1)); fi
+    if import_one "$file"; then
+        ok=$((ok+1))
+    else
+        fail=$((fail+1))
+        # park the failure so it isn't retried every slot (dry-run never gets
+        # here — import_one returns 0 on the dry-run path before any add).
+        [ "$DRY_RUN" -eq 0 ] && park_error "$file"
+    fi
     # re-check busy between files: if you start using the GUI mid-sweep, stop.
     if calibre_is_busy; then
         LOG "calibre became BUSY mid-sweep — stopping; remaining files wait for next slot"
@@ -256,6 +334,11 @@ while IFS= read -r -d '' file; do
     fi
 done < <(find "$ROOT" -type f \( "${find_args[@]}" \) -print0 2>/dev/null | sort -z)
 
-LOG "sweep complete. considered=$total ok=$ok failed=$fail"
-[ "$fail" -gt 0 ] && LOG "failures left in place; will retry next slot."
+# summarize only if we did something; silent on an idle cycle.
+if [ "$total" -gt 0 ]; then
+    LOG "sweep done: imported=$ok failed=$fail (of $total)"
+    [ "$fail" -gt 0 ] && LOG "failures moved to $ERROR_DIR_NAME/ — inspect, then move back to retry."
+fi
 exit 0
+
+# version: SWEEP_BOOKS_VERSION 5
