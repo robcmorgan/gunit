@@ -13,3 +13,4 @@ stack.env
 .DS_Store
 state/tag-queue.json
 state/*.lock
+config/calibre-server.env

@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
-MATCH_LIB_VERSION="6"   # bump on every change
+MATCH_LIB_VERSION="7"   # bump on every change (version stamp also at end of file)
+# v7: SUBTITLE-TOLERANT title gate, merged ON TOP of v6's author-contradiction
+#     gate (both kept). title_full_match requires every meaningful word of the
+#     WANTED title in the candidate; a subtitle on the WANTED side (curated lists
+#     carry full titles like "Romeo and/or Juliet: A Choosable-Path Adventure"
+#     while shadow-lib entries store only "Romeo and/or Juliet") sinks an
+#     otherwise-perfect match. book_match_fields now retries the gate on the MAIN
+#     title (pre-subtitle) when the full gate fails — but ONLY if the author also
+#     matches, so it can't loosen into a prefix false positive. New helper
+#     main_title splits on the first subtitle separator (colon / spaced dash).
+#     ORDER MATTERS: the fallback runs AFTER v6's contradiction gate, and its own
+#     author requirement means a contradicting-author exact-title (which v6
+#     zeroes) can never be rescued — verified by test.
 # v6: book_match_fields now rejects an exact-title match when the candidate
 #     author is PRESENT and contradicts (zero author overlap) — an identical
 #     title by a different author is a different book (e.g. "The Secret History"
@@ -57,6 +69,27 @@ print(s)
 
 # numeric a >= b ?  (works on the "0.000".."1.000" strings these fns emit)
 ge() { awk -v a="$1" -v b="$2" 'BEGIN{exit !(a>=b)}'; }
+
+# main_title: the part of a title BEFORE its first subtitle separator. Curated
+# lists carry full titles with subtitles ("Romeo and/or Juliet: A Choosable-Path
+# Adventure") while shadow-library entries frequently store only the main title
+# ("Romeo and/or Juliet"). title_full_match requires EVERY meaningful WANTED word
+# in the candidate, so the extra subtitle words sink an otherwise-perfect match.
+# book_match_fields uses this to retry the gate on the main title alone — but
+# ONLY when the author also matches, so it can't loosen into false positives.
+# Operates on the RAW string (norm strips the colon by match time). Separators
+# recognised: colon, en/em dash surrounded by spaces, " - " hyphen. Returns the
+# input unchanged when no separator is present (so non-subtitled titles are
+# unaffected and the caller can detect "no subtitle" by string equality).
+main_title() {
+    printf '%s' "$1" | python3 -c '
+import sys, re
+s = sys.stdin.read()
+# split on the FIRST subtitle separator: colon, or a spaced dash (-, en, em).
+m = re.split(r"\s*[:\u2013\u2014]\s*|\s+-\s+", s, maxsplit=1)
+sys.stdout.write(m[0].strip() if m and m[0].strip() else s.strip())
+' 2>/dev/null
+}
 
 # author_match: confirms the author field against candidate text, with strictness
 # scaled to how many words the author has (case-insensitive, words >= 3 chars):
@@ -239,6 +272,30 @@ book_match_fields() {
             g1="0.000"
         fi
     fi
+    # SUBTITLE FALLBACK (v7): the gate failed (incl. via the v6 contradiction
+    # zero), but the WANTED title has a subtitle the candidate lacks (curated
+    # lists carry full titles; shadow-lib entries often store only the main
+    # title). Retry the gate on the MAIN title (pre-subtitle), and credit it ONLY
+    # if the author also matches — so a contradicting author (which v6 just
+    # zeroed) can NEVER be rescued here, and a bare prefix without author support
+    # stays rejected. Strong main title keeps the forgiving author rule; a weak
+    # main title still demands the strict author match. Only attempted when the
+    # main title differs from the full title.
+    if [ "$(printf '%s' "$g1" | cut -c1)" = "0" ]; then
+        local mt1; mt1="$(main_title "$want1")"
+        if [ "$(norm "$mt1")" != "$(norm "$want1")" ]; then
+            local gm1 am1 mmw1
+            gm1="$(title_full_match "$mt1" "$ctitle")"
+            mmw1="$(meaningful_words "$mt1")"
+            if [ "$mmw1" -lt 2 ]; then
+                am1="$(author_match_strict "$want2" "$cauthor")"
+                short_title_ok "$mt1" "$ctitle" || gm1="0.000"
+            else am1="$(author_match "$want2" "$cauthor")"; fi
+            if [ "$(printf '%s' "$gm1" | cut -c1)" != "0" ] && ge "$am1" "0.001"; then
+                g1="$gm1"; a1="$am1"
+            fi
+        fi
+    fi
     s1="$(awk -v g="$g1" -v a="$a1" -v mw="$mw1" \
           'BEGIN{
              if (g+0==0) { print "0.000"; exit }
@@ -256,6 +313,22 @@ book_match_fields() {
             g2="0.000"
         fi
     fi
+    # SUBTITLE FALLBACK (v7, interp 2): mirror of interp 1 with want2 as title.
+    if [ "$(printf '%s' "$g2" | cut -c1)" = "0" ]; then
+        local mt2; mt2="$(main_title "$want2")"
+        if [ "$(norm "$mt2")" != "$(norm "$want2")" ]; then
+            local gm2 am2 mmw2
+            gm2="$(title_full_match "$mt2" "$ctitle")"
+            mmw2="$(meaningful_words "$mt2")"
+            if [ "$mmw2" -lt 2 ]; then
+                am2="$(author_match_strict "$want1" "$cauthor")"
+                short_title_ok "$mt2" "$ctitle" || gm2="0.000"
+            else am2="$(author_match "$want1" "$cauthor")"; fi
+            if [ "$(printf '%s' "$gm2" | cut -c1)" != "0" ] && ge "$am2" "0.001"; then
+                g2="$gm2"; a2="$am2"
+            fi
+        fi
+    fi
     s2="$(awk -v g="$g2" -v a="$a2" -v mw="$mw2" \
           'BEGIN{
              if (g+0==0) { print "0.000"; exit }
@@ -264,3 +337,8 @@ book_match_fields() {
            }')"
     if ge "$s1" "$s2"; then echo "$s1"; else echo "$s2"; fi
 }
+
+# =============================================================================
+# match-lib.sh version 7  (footer stamp — must match MATCH_LIB_VERSION at top;
+# if these disagree the deployed copy on otis is a stale partial paste.)
+# =============================================================================

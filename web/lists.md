@@ -1,22 +1,40 @@
-Here are various lists of books, best-ofs, prizewinners etc. I've tried to add **most** of these books in these lists to the shelves.
+## Lists of prizewinners, best books ever, summer reads etc. 
+I'm gradually adding the books on these lists.
 
-I'm going to be adding more lists over the next few weeks.
-
----
-
-## Guardian Summer Reads [(shelf)](https://books.rob.me.uk/shelf/5)
-
-The Guardian's annual summer read recommendations, combined into one shelf.
-
-<a href="https://www.theguardian.com/books/ng-interactive/2025/jun/21/summer-reading-the-50-hottest-books-to-read-now" target="_blank" rel="noopener">Guardian 2025 Summer reads</a>
-
-<a href="https://www.theguardian.com/books/article/2024/jun/22/summer-reading-50-new-books-to-dive-into" target="_blank" rel="noopener">Guardian 2024 Summer reads</a>
+> If there's a cover and a link, it's in the library.
 
 ---
 
-## Booker Prize [(details)](/lists/booker)
+## Adults and Young Adults
 
-Winners and shortlists. [See the full list &rarr;](/lists/booker)
+[Alex Prize](/lists/alex_prize)
+
+10 books each year **written for adults** that teens and young adults might like.
+
+
+---
+
+## Summer Reads [📚](https://books.rob.me.uk/shelf/5)
+
+The Guardian's annual summer read recommendations. Original links in the list.
+
+[Guardian Summer Reads](/lists/guardian_summer_reads)
+
+---
+
+## Literary Prizes
+
+### Booker Prize
+
+The Booker Prize is a literary award given each year for the best fiction book written in English.
+
+[Booker Prize winners 1969-date](/lists/booker)
+
+### Nobel Prize for Literature
+
+The Nobel Prize for literature is given to the person, not the book.
+
+
 
 ---
 

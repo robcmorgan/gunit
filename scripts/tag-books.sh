@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-TAG_BOOKS_VERSION="10"   # bump on every change; echoed at startup
+TAG_BOOKS_VERSION="11"   # bump on every change; echoed at startup
+# v11: log to shared $GUNIT_LOG (~/logs/gunit.log), lines tagged [t].
 # =============================================================================
 #  tag-books.sh — apply calibre tags to books that fetch-books.sh has fetched.
 #
@@ -40,7 +41,7 @@ TAG_STOPLIST="${TAG_STOPLIST:-download apple+books books+on+iphone ipad mac kind
 DEFAULT_LANG="${DEFAULT_LANG:-eng}"   # set this language when a book's language is blank (calibre-web hides blank-language books); empty disables
 CONFIDENCE="${CONFIDENCE:-0.6}"    # 0..1; fuzzy fallback hit must score >= this
 ID_SCHEME="${ID_SCHEME:-annas}"    # calibre identifier scheme used to store the md5
-LOG="${LOG:-$HOME/logs/tag-books.log}"
+LOG="${LOG:-${GUNIT_LOG:-$HOME/logs/gunit.log}}"   # shared log for all gunit scripts
 
 # shared confidence matcher (norm, ge, title_full_match, author_match,
 # meaningful_words, book_match_score) — same logic as fetch-books.
@@ -66,7 +67,7 @@ done
 [ "${#FILES[@]}" -eq 0 ] && { echo "usage: $0 [--dry-run] LIST.tsv..." >&2; exit 1; }
 
 mkdir -p "$(dirname "$LOG")" 2>/dev/null
-log() { printf '%s  %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG" >&2; }
+log() { local ts; ts="$(date '+%F %T')"; printf '%s  [t] %s\n' "$ts" "$*" >> "$LOG"; printf '%s  %s\n' "$ts" "$*" >&2; }
 
 # calibredb wrapper, find_book_id, stamp_identifier, merge_tags, apply_tags all
 # come from tag-lib.sh (sourced above) — shared with tag-queue.sh, no drift.

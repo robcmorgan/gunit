@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
-TAG_QUEUE_VERSION="3"   # bump on every change; echoed at startup
+TAG_QUEUE_VERSION="5"   # bump on every change; echoed at startup
+# v5: REMOVE the GUI-lock skip. v4 (and earlier) bailed ("calibre app holds the
+#     library lock — skipping tag-queue this cycle") whenever the always-on Calibre
+#     GUI was running — which is ALWAYS — so the tag queue NEVER drained and
+#     downloaded books stayed untagged. Same false-lock lesson as sweep-books v8
+#     and sync-tag-to-shelf: the GUI's lock is shareable when calibredb runs AS
+#     ROOT, which cdb() (from tag-lib.sh) already does. So the GUI is not a reason
+#     to skip — removed that guard. The explicit calibre_is_busy FLAG check (a real
+#     "heavy op in progress" signal, set via the homepage toggle / flag file) is
+#     KEPT — that's intentional and distinct from the idle GUI.
+# v4: also append to shared $GUNIT_LOG (~/logs/gunit.log), tagged [tq]; keeps journal output.
 # =============================================================================
 #  tag-queue.sh — drain the tag queue that fetch-books fills.
 #
@@ -13,8 +23,11 @@ TAG_QUEUE_VERSION="3"   # bump on every change; echoed at startup
 #  Designed to run right after sweep-books in the same service: the sweep imports
 #  whatever's waiting, then this tags it — same cycle, no inter-run lag.
 #
-#  BUSY-AWARE: aborts if the calibre GUI is flagged busy (homepage toggle / flag
-#  file), same as the sweep, so it never fights an active desktop session.
+#  BUSY-AWARE: aborts if the calibre GUI is flagged BUSY (homepage toggle / flag
+#  file), same as the sweep, so it never fights an active desktop session. NOTE
+#  (v5): it does NOT abort merely because the GUI process is running — calibredb
+#  runs as root and shares the GUI's library lock, so the queue drains while the
+#  GUI is up.
 #
 #  USAGE:  ./tag-queue.sh            # drain the queue
 #          ./tag-queue.sh --dry-run  # show what it WOULD tag, no writes
@@ -22,7 +35,7 @@ TAG_QUEUE_VERSION="3"   # bump on every change; echoed at startup
 set -uo pipefail
 
 # --- config ---
-QUEUE="${TAG_QUEUE:-/home/robmorgan/gunit/state/tag-queue.json}"
+QUEUE="${TAG_QUEUE:-/home/robmorgan/gunit/config/tag-queue.json}"
 # the queue is shared between root (timer) and the gunit user (fetch-books); we
 # normalise ownership after each rewrite so neither locks the other out.
 QUEUE_OWNER="${QUEUE_OWNER:-robmorgan}"
@@ -44,7 +57,13 @@ QUEUE_LOCK="${QUEUE_LOCK:-/run/gunit-tagqueue.lock}"
 DRY_RUN=0
 [ "${1:-}" = "--dry-run" ] && DRY_RUN=1
 
-LOG() { echo "[$(date '+%F %T')] $*"; }
+GUNIT_LOG="${GUNIT_LOG:-/home/robmorgan/logs/gunit.log}"
+mkdir -p "$(dirname "$GUNIT_LOG")" 2>/dev/null || true
+LOG() {
+    local ts; ts="$(date '+%F %T')"
+    echo "[$ts] $*"
+    printf '%s  [tq] %s\n' "$ts" "$*" >> "$GUNIT_LOG" 2>/dev/null || true
+}
 HERE="$(dirname "$0")"
 
 command -v jq >/dev/null      || { LOG "FATAL: jq not installed"; exit 1; }
@@ -85,10 +104,14 @@ if calibre_is_busy; then
     LOG "calibre flagged BUSY — skipping tag-queue this cycle"; exit 0
 fi
 
-# GUI-lock: if the desktop app holds the library lock, skip cleanly (next cycle).
-if docker exec "$CALIBRE_CONTAINER" pgrep -f '/opt/calibre/bin/calibre$' >/dev/null 2>&1; then
-    LOG "calibre app holds the library lock — skipping tag-queue this cycle"; exit 0
-fi
+# v5: NO GUI-lock skip. The always-on GUI holds the library lock continuously;
+# calibredb run as root (via cdb() / find_book_id / apply_tags from tag-lib.sh)
+# shares that lock fine — proven by sweep-books v8 and sync-tag-to-shelf. The old
+# guard here ("calibre app holds the library lock — skipping") meant the queue
+# NEVER drained while the GUI was up (i.e. always), leaving books untagged. If a
+# read genuinely hits a transient lock, find_book_id/apply_tags handle it per
+# entry (a failed tag is kept in the queue for next cycle); we no longer abort the
+# whole run for the mere existence of the GUI process.
 
 LOG "=== tag-queue v$TAG_QUEUE_VERSION start (queue=$QUEUE dry-run=$DRY_RUN expire=${EXPIRE_HOURS}h) ==="
 
@@ -170,3 +193,6 @@ else
 fi
 
 LOG "tag-queue done: tagged=$n_tagged waiting=$n_wait expired=$n_expired (of $total)"
+# =============================================================================
+# version: TAG_QUEUE_VERSION 5
+# =============================================================================

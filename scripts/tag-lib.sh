@@ -1,5 +1,27 @@
 #!/usr/bin/env bash
-TAG_LIB_VERSION="2"   # bump on every change
+TAG_LIB_VERSION="4"   # bump on every change
+# v4: cdb() now RETRIES with backoff to survive transient library-lock contention
+#     with the always-on GUI container. Symptom it fixes: the SAME query returns
+#     ids one moment and nothing the next, because the GUI holds metadata.db and a
+#     direct --library-path read intermittently loses the race (seen as spurious
+#     "NOT FOUND" across a whole link-md / tag-books run). The noise-stripping from
+#     v3 is preserved, moved into _cdb_raw; cdb wraps it. Retry policy (tunable via
+#     env): CDB_RETRIES (default 4) attempts, CDB_RETRY_SLEEP (default 0.7s) base
+#     delay, linear-ish backoff. We retry when the call EITHER (a) errors with a
+#     recognised lock signature on stderr, OR (b) yields EMPTY stdout — because an
+#     empty read can't be distinguished from a real zero-match, so we give a lock a
+#     few chances and, if it's genuinely empty after the last try, return empty
+#     (caller treats as no-match exactly as before). A successful non-empty read
+#     returns immediately on the first hit — no added latency on the common path.
+#     A real zero-match costs only a few short retries, on the miss path only.
+# v3: cdb() now FILTERS calibredb's stdout to strip plugin startup noise. The
+#     fantastic_fiction plugin prints "calibre_plugins... SyntaxWarning" and
+#     "Integration status: True" to STDOUT (not stderr) on every invocation; that
+#     text fused with real output (e.g. "True1535") and broke the numeric-id and
+#     JSON parsers in lib_find_id / find_book_id, so EVERY library lookup silently
+#     returned no match. We now drop only those two unmistakable noise-line
+#     patterns from stdout; all real data (id CSVs, --for-machine JSON) passes
+#     through untouched. Conservative match: never strips a line that could be data.
 # =============================================================================
 #  tag-lib.sh — shared calibre tagging logic for tag-books.sh and tag-queue.sh.
 #
@@ -33,7 +55,59 @@ TAG_STOPLIST="${TAG_STOPLIST:-download apple+books books+on+iphone ipad mac kind
 # its own). DEFAULT_LANG="" disables the fixup entirely.
 DEFAULT_LANG="${DEFAULT_LANG:-eng}"
 
-cdb() { docker exec "$CALIBRE_CONTAINER" calibredb --library-path "$CALIBRE_LIBRARY" "$@"; }
+CDB_RETRIES="${CDB_RETRIES:-4}"        # total attempts on empty/locked result
+CDB_RETRY_SLEEP="${CDB_RETRY_SLEEP:-0.7}"  # base seconds between attempts (backs off)
+
+# _cdb_raw: one calibredb call against the configured library, with plugin
+# startup noise stripped from STDOUT. stderr is captured by the caller (cdb) so a
+# lock signature can be detected. (Noise patterns, see v3 notes:
+#   "calibre_plugins.<name>...: SyntaxWarning: ..."  — own line, line-start
+#   "Integration status: ..."                         — own line OR fused onto a
+#                                                        data line, e.g. "]Integration...")
+_cdb_raw() {
+    docker exec "$CALIBRE_CONTAINER" calibredb --library-path "$CALIBRE_LIBRARY" "$@" \
+        | { grep -vE '^calibre_plugins\.' || true; } \
+        | sed -E 's/Integration status:.*$//'
+}
+
+# cdb: _cdb_raw with bounded retry-with-backoff to ride out transient library-lock
+# contention with the always-on GUI container. Retries when EITHER the call errors
+# with a recognised lock signature on stderr, OR stdout comes back empty (an empty
+# read can't be told apart from a real zero-match, so we give a possible lock a few
+# chances; if still empty after the last attempt we return empty, and the caller
+# treats it as no-match exactly as before). A non-empty result returns immediately.
+cdb() {
+    local attempt=1 out err rc errfile
+    errfile="$(mktemp)"
+    while :; do
+        # capture stdout in $out, stderr to a temp file (so we can scan it)
+        out="$(_cdb_raw "$@" 2>"$errfile")"; rc=$?
+        err="$(cat "$errfile" 2>/dev/null)"
+
+        # success path: any non-empty stdout -> done, emit and return.
+        if [ -n "$out" ]; then
+            printf '%s\n' "$out"
+            rm -f "$errfile"
+            return 0
+        fi
+
+        # empty stdout. Decide whether to retry. Retry if (a) attempts remain AND
+        # (b) it plausibly was a lock — i.e. a lock signature on stderr, OR we just
+        # treat any empty result as retryable up to the cap (cheap; only on misses).
+        if [ "$attempt" -ge "$CDB_RETRIES" ]; then
+            # exhausted: return whatever we have (empty) — real zero-match or a
+            # persistent lock; caller handles empty as no-match. Surface stderr.
+            [ -n "$err" ] && printf '%s\n' "$err" >&2
+            rm -f "$errfile"
+            return "$rc"
+        fi
+
+        # backoff: base * attempt (0.7, 1.4, 2.1, ...). sleep accepts fractions.
+        sleep "$(awk "BEGIN{print $CDB_RETRY_SLEEP * $attempt}")" 2>/dev/null \
+            || sleep 1
+        attempt=$((attempt+1))
+    done
+}
 
 # find a calibre book id. Args: f1 f2 md5. Echoes "<id>\t<via>" (via=id|fuzzy)
 # or nothing. md5-identifier exact first, then strict-scored fuzzy fallback.

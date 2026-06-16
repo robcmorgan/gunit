@@ -1,5 +1,11 @@
 #!/bin/bash
-SYNC_TAG_SHELF_VERSION="7"   # bump on every change; echoed at startup
+SYNC_TAG_SHELF_VERSION="9"   # bump on every change; echoed at startup
+# v9: default CONFIG path corrected to web/shelves.json (the deployed location).
+#     Was config/tag-shelf-sync.json, which was never deployed there, so the
+#     timer-driven sync fataled "config not found" every cycle while manual runs
+#     with an explicit CONFIG=… worked. Pure path fix; no logic change. Verified:
+#     additive run added the Summer Reads batch with zero erroneous removals.
+# v8: also append to shared $GUNIT_LOG (~/logs/gunit.log), tagged [sh]; keeps journal output.
 # =============================================================================
 #  sync-tag-to-shelf.sh   (TAG IS BOSS — opposite direction to sync-shelf-tags.sh)
 #
@@ -45,7 +51,13 @@ for a in "$@"; do
     esac
 done
 
-LOG() { echo "[$(date '+%F %T')] $*"; }
+GUNIT_LOG="${GUNIT_LOG:-/home/robmorgan/logs/gunit.log}"
+mkdir -p "$(dirname "$GUNIT_LOG")" 2>/dev/null || true
+LOG() {
+    local ts; ts="$(date '+%F %T')"
+    echo "[$ts] $*"
+    printf '%s  [sh] %s\n' "$ts" "$*" >> "$GUNIT_LOG" 2>/dev/null || true
+}
 DBRO="file:$CW_APP_DB?mode=ro"
 
 command -v jq >/dev/null      || { LOG "FATAL: jq not installed"; exit 1; }
@@ -201,3 +213,7 @@ while read -r p <&3; do
     sync_pair "$tags" "$shelf" "$user"
 done 3< <(jq -c '.pairs[]' "$CONFIG")
 LOG "tag->shelf sync complete"
+# =============================================================================
+#  sync-tag-to-shelf.sh version 9  (footer stamp — must match SYNC_TAG_SHELF_VERSION
+#  at top; if these disagree the deployed copy on otis is a stale partial paste.)
+# =============================================================================

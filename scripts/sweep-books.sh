@@ -1,6 +1,64 @@
 #!/bin/bash
-SWEEP_BOOKS_VERSION="5"   # bump on every change; echoed at startup
+SWEEP_BOOKS_VERSION="8"   # bump on every change; echoed at startup
 #                          (version stamp also at end of file.)
+# v8: RUN calibredb AS ROOT (drop -u 2001:2002). The sweep was the ONLY script
+#     still invoking calibredb as uid 2001:2002; every other gunit script runs it
+#     as root. Against this library that uid STRUCTURALLY collides with the
+#     always-on GUI's root-held lock and returns "Another calibre program is
+#     running" even when the db is NOT actually locked — so the sweep deferred
+#     every add (e.g. 11 witherrors epubs deferred 11x while a root `calibredb
+#     add` of the SAME file succeeded instantly). It was never a real lock or a
+#     race; it was the forbidden -u invocation. All calibredb calls now go through
+#     a single cdb() helper that runs as root (no -u), matching tag-lib.sh et al.
+#     The lock-retry logic stays as a genuine-transient-lock backstop, but in
+#     practice root adds no longer hit the false lock at all.
+#     NOTE: new book files are now written into the library as root (as they
+#     already are for every other script's adds) — consistent with the rest of
+#     the stack; the old -u was protecting on-disk ownership that root adds across
+#     the stack have not found to be a problem.
+# v7: DON'T EXILE LOCK-CASUALTIES + SWEEP witherrors/ AS A RETRY SOURCE.
+#     Two linked fixes to a v5 regression exposed by a GUI-lock storm:
+#     (1) DEFER != FAIL. A deferred add (transient library lock — calibredb_add
+#         exhausted its retries) returned non-zero exactly like a genuinely
+#         failed add (corrupt/odd file). park_error then moved BOTH to witherrors/,
+#         and the find-prune meant witherrors/ files were NEVER retried — so a
+#         brief GUI lock permanently exiled perfectly good books. Now import_one
+#         distinguishes: rc=2 = DEFERRED (lock) -> file left LOOSE to retry next
+#         slot (nothing parked); rc=1 = REAL failure -> parked in witherrors/.
+#     (2) SWEEP witherrors/ TOO. witherrors/ is now a retry SOURCE, not a dead
+#         letter: each slot also scans it, so even genuinely-parked files get a
+#         periodic re-attempt (a later-fixed lock, a re-added epub edition, etc.).
+#         A witherrors file that imports is deleted like any other; one that fails
+#         for real stays put (re-parked into the same dir = no-op). This makes the
+#         sweep the universal safety net for BOTH its own deferrals and anything
+#         that lands in witherrors, so nothing strands silently.
+#     (3) Tidy: delete AppleDouble '._*' stubs (SMB/AFP cruft from a Mac touching
+#         the share) on sight — they're not books and only cause confusion.
+#     (4) Banner fix: the v6 startup banner used ${DRY_RUN:+, dry-run}, which
+#         appended ", dry-run" whenever DRY_RUN was SET — and "0" is set — so every
+#         REAL run mislabelled itself as a dry-run in the log. Cosmetic only (the
+#         actual dry-run guards correctly test [ "$DRY_RUN" -eq 1 ]), but it sent
+#         debugging down a false path. Now tests the value, not set-ness.
+#     (5) EXCLUDE done/ FROM THE SWEEP. Since v5 a successful import DELETES the
+#         file (no move to done/), so done/ should not grow — but pre-v5 runs left
+#         hundreds of already-imported files in done/, and NOTHING excluded them
+#         (v5 swapped the find-prune from done/ to witherrors/). So every sweep was
+#         re-importing the entire legacy done/ set each slot — the "imported=350
+#         every 15 min" churn, which also kept the library busy enough to feed the
+#         lock contention that deferred real new imports. done/ is now skipped
+#         again; witherrors/ remains swept. (The legacy done/ files can be deleted
+#         at leisure — they're already in the library.)
+# v6: STOP KILLING CALIBRE. calibredb_add no longer kills the GUI/server/parallel
+#     to break a library lock — it waits and retries instead. WHY: the calibre
+#     content server is EMBEDDED in the GUI process, and fetch-books' library
+#     check reads THROUGH that server (--with-library). The old pkill killed the
+#     GUI to win a write-lock race, which ALSO took down the content server, so
+#     fetch-books reads then failed with "library check unavailable — deferring"
+#     and the whole pipeline froze until the GUI rebooted. Lock sampling showed
+#     the library free 30/30s — held only in brief, rare bursts — so a few short
+#     retries clear essentially every real collision without killing anything. On
+#     a persistent lock the add returns non-zero and the file is parked/retried
+#     next slot. Matches watch-downloads.sh v2 (same no-kill calibredb_add).
 # v5: success now DELETES the processed file (was: move to done/) — the book is
 #     in the Calibre library, the loose copy is redundant. Import FAILURES now
 #     move to a sibling witherrors/ folder (was: left loose to retry every slot).
@@ -30,15 +88,16 @@ SWEEP_BOOKS_VERSION="5"   # bump on every change; echoed at startup
 #      file) — never disturbs an active GUI session.
 #    * handles ALL ebook formats (epub azw3 mobi fb2, configurable).
 #    * imports STRICTLY ONE AT A TIME (no concurrency, no library-lock collisions).
-#    * reuses the watcher's REACTIVE lock handling: only kills a lock-holder if an
-#      add actually fails with "Another calibre program", and only when NOT busy.
+#    * waits out a transient library lock on add and retries — NEVER kills (v6).
 #    * imports to library always; shelves only if the user's kindleSync is ON
 #      (matches the watcher's do_shelve logic exactly).
-#    * deletes processed files after a successful import; parks FAILED imports in
-#      a sibling witherrors/ folder (skipped on re-run) instead of retrying forever.
+#    * deletes processed files after a successful import. A TRANSIENT-LOCK defer
+#      leaves the file LOOSE to retry next slot; a REAL import failure is parked
+#      in a sibling witherrors/ folder — which is ITSELF re-swept each slot (v7),
+#      so even parked files get periodic retries and nothing strands forever.
 #
-#  Idempotent and safe to run every 15 min: imported files are gone, parked
-#  failures (witherrors/) are skipped, only loose (new) files are considered.
+#  Idempotent and safe to run every 15 min: imported files are gone; loose files
+#  (new, or lock-deferred) and witherrors/ files are both reconsidered each slot.
 #
 #  USAGE:  ./sweep-books.sh            # real run
 #          ./sweep-books.sh --dry-run  # show what it WOULD do
@@ -61,8 +120,14 @@ CALIBRE_LIB="${CALIBRE_LIB:-/books/Calibre}"
 CW_APP_DB="${CW_APP_DB:-/home/robmorgan/cwa_config/app.db}"
 MOUNT_HOST_ROOT="${MOUNT_HOST_ROOT:-/Nutmeg/Media/Books}"
 MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/books}"
-ERROR_DIR_NAME="${ERROR_DIR_NAME:-witherrors}"   # failed imports parked here
+ERROR_DIR_NAME="${ERROR_DIR_NAME:-witherrors}"   # failed imports parked here; ALSO re-swept (v7)
 EXTS="${EXTS:-epub azw3 mobi fb2}"            # formats to sweep
+# Lock-retry tuning: re-attempts for an add that hit a transient library lock,
+# and the wait between tries. The lock is rarely held, so these small defaults
+# clear almost every collision; a still-locked add after this is deferred (left
+# loose, retried next slot) — NOT parked.
+LOCK_RETRIES="${LOCK_RETRIES:-5}"
+LOCK_WAIT="${LOCK_WAIT:-2}"
 # busy-toggle config (identical semantics to watch-downloads.sh)
 CALIBRE_BUSY_FLAG="${CALIBRE_BUSY_FLAG:-/tmp/calibre-busy}"
 BUSY_TTL_MIN="${BUSY_TTL_MIN:-30}"
@@ -142,23 +207,34 @@ toggle_on() {
     [ "$v" = "true" ]
 }
 
-# --- reactive calibredb add (kill lock-holders ONLY on real conflict, and only
-#     because we already confirmed NOT busy above) -----------------------------
+# --- reactive calibredb add (WAIT OUT a transient lock; NEVER kill) ----------
+#     The library lock is held only in brief, rare bursts by the GUI (sampling
+#     showed it free 30/30s). The old code killed all calibre processes to break
+#     the lock — but the content server is EMBEDDED in the GUI, so that kill took
+#     down the server fetch-books reads through, freezing the pipeline. We now
+#     wait-and-retry; on a lock that persists past all retries we return the
+#     output (no ids) and rc=2 so the caller DEFERS (leaves the file loose for
+#     the next slot) rather than parking it. Nothing is ever killed.
+#     Return: 0 = add ran (parse output for ids); 2 = lock persisted (defer).
+# Single calibredb entry point — runs as ROOT in the container (NO -u), the only
+# invocation that co-exists with the always-on GUI's lock. Mirrors tag-lib.sh's
+# cdb(). CALIBRE_USER is retained for reference/other uses but is NO LONGER passed
+# to calibredb (that was the false-lock bug fixed in v8).
+cdb() { docker exec "$CALIBRE_CONTAINER" calibredb "$@" --library-path "$CALIBRE_LIB"; }
+
 calibredb_add() {
     local path="$1"; shift
-    local out
-    out=$(docker exec -u "$CALIBRE_USER" "$CALIBRE_CONTAINER" calibredb add "$path" \
-            --library-path "$CALIBRE_LIB" "$@" 2>&1)
-    if echo "$out" | grep -qi 'Another calibre program'; then
-        # not busy (checked at top) — safe to clear the lock-holder and retry once
-        LOG "  library lock held — killing lock-holders (not busy) and retrying"
-        docker exec "$CALIBRE_CONTAINER" sh -c \
-            "pkill -f '/opt/calibre/bin/calibre(\$| )'; pkill -f 'calibre-server'; pkill -f 'calibre-parallel'" 2>/dev/null
-        sleep 3
-        out=$(docker exec -u "$CALIBRE_USER" "$CALIBRE_CONTAINER" calibredb add "$path" \
-                --library-path "$CALIBRE_LIB" "$@" 2>&1)
-    fi
+    local out attempt
+    for (( attempt=1; attempt<=LOCK_RETRIES; attempt++ )); do
+        out=$(cdb add "$path" "$@" 2>&1)
+        # success / any non-lock outcome -> return it for the caller to parse
+        echo "$out" | grep -qi 'Another calibre program' || { echo "$out"; return 0; }
+        LOG "  library locked (attempt $attempt/$LOCK_RETRIES) — waiting ${LOCK_WAIT}s, NOT killing"
+        sleep "$LOCK_WAIT"
+    done
+    LOG "  library still locked after $LOCK_RETRIES retries — deferring (will re-import next sweep)"
     echo "$out"
+    return 2   # v7: distinct 'deferred (lock)' code so the caller leaves the file LOOSE, not parked
 }
 
 # --- ensure calibre container up (do NOT kill GUI up front) ------------------
@@ -169,26 +245,42 @@ if ! docker ps --filter "name=^${CALIBRE_CONTAINER}$" --filter "status=running" 
     sleep 5
 fi
 
-# --- park a file whose import FAILED into a sibling witherrors/ folder, so it
-#     isn't re-swept every slot. The watcher leaves its misses loose and this
-#     sweep retries them; a failure here is that retry failing -> park for
-#     inspection. Move a file back out of witherrors/ to retry. Best-effort: if
-#     the move fails, leave it in place rather than lose track of it.
+# --- park a file whose import REALLY failed (not a lock defer) into a sibling
+#     witherrors/ folder. v7: this is only ever called for genuine failures; a
+#     transient-lock defer leaves the file loose (handled in the caller). Since
+#     v7 also RE-SWEEPS witherrors/, a parked file still gets retried each slot —
+#     so parking is "set aside, keep trying" rather than "exile forever".
+#     If the file is ALREADY under witherrors/ (a re-swept parked file that
+#     failed again), parking is a no-op move onto itself — skip the move, just
+#     leave it where it is.
 park_error() {
     local file="$1" fname err_dir
     fname="$(basename "$file")"
+    # already in a witherrors/ dir? leave it; re-parking onto itself is pointless.
+    case "$file" in
+        */"$ERROR_DIR_NAME"/*) LOG "  still failing — left in $ERROR_DIR_NAME/$fname (will retry next slot)"; return 0;;
+    esac
     err_dir="$(dirname "$file")/${ERROR_DIR_NAME:-witherrors}"
     if mkdir -p "$err_dir" 2>/dev/null && mv "$file" "$err_dir/" 2>/dev/null; then
-        LOG "  import FAILED — moved to $ERROR_DIR_NAME/$fname"
+        LOG "  import FAILED — moved to $ERROR_DIR_NAME/$fname (will retry next slot)"
     else
         LOG "  import FAILED and could not move to $ERROR_DIR_NAME/ — leaving in place"
     fi
 }
 
+# import_one return codes (v7):
+#   0 = imported OK (or confidently matched existing) — file deleted
+#   1 = REAL failure (add ran but produced/located no book) — caller parks it
+#   2 = DEFERRED (transient library lock) — caller leaves file LOOSE for next slot
 import_one() {
     local file="$1"
-    local email; email=$(basename "$(dirname "$file")")
-    local fname; fname=$(basename "$file")
+    local email fname
+    # email = the user folder this file belongs to. For a file under
+    # .../<email>/witherrors/<f>, the parent dir is witherrors, so walk up one
+    # more level to recover the real email when needed.
+    email=$(basename "$(dirname "$file")")
+    [ "$email" = "$ERROR_DIR_NAME" ] && email=$(basename "$(dirname "$(dirname "$file")")")
+    fname=$(basename "$file")
 
     # skip temp/partial files (same set as the watcher)
     case "$fname" in *.part|*.crdownload|*.tmp|.*) return 0;; esac
@@ -219,22 +311,26 @@ import_one() {
     local tagargs=()
     [ -n "$usertag" ] && tagargs=(--tags "$usertag")
 
-    local out idlist
-    out=$(calibredb_add "$cpath" "${tagargs[@]}")
+    local out add_rc idlist
+    out=$(calibredb_add "$cpath" "${tagargs[@]}"); add_rc=$?
+    # v7: a deferred add (lock persisted) is NOT a failure — bail with rc=2 so the
+    # caller leaves the file loose for the next slot, instead of parking it.
+    if [ "$add_rc" -eq 2 ]; then
+        return 2
+    fi
     idlist=$(echo "$out" | grep -oiE '(Added book ids|Merged book ids)[: ]+[0-9, ]+' \
              | grep -oE '[0-9]+' | sort -u | tr '\n' ' ')
 
     if [ -z "$idlist" ]; then
         # duplicate refused -> confident single hard-match shelves existing,
-        # else add a fresh copy (failure mode = extra book, never wrong book)
+        # else add a fresh copy (failure mode = extra book, never wrong book).
         local base author title
         base="${fname%.*}"; author="${base%% - *}"; title="${base#* - }"
         title="$(echo "$title" | sed -E 's/[[:space:]]*\([0-9]{4}\)[[:space:]]*$//')"
         author="$(echo "$author" | sed -E 's/^[[:space:]]+|[[:space:]]+$//g')"
         title="$(echo "$title"  | sed -E 's/^[[:space:]]+|[[:space:]]+$//g')"
         local found hits
-        found=$(docker exec -u "$CALIBRE_USER" "$CALIBRE_CONTAINER" calibredb search \
-                  "authors:\"$author\" and title:\"$title\"" --library-path "$CALIBRE_LIB" 2>/dev/null)
+        found=$(cdb search "authors:\"$author\" and title:\"$title\"" 2>/dev/null)
         hits=$(echo "$found" | grep -oE '[0-9]+' | sort -u | wc -l)
         if [ "$hits" -eq 1 ]; then
             idlist=$(echo "$found" | grep -oE '[0-9]+')
@@ -242,13 +338,15 @@ import_one() {
             # the existing copy may lack this user's tag — add it (non-destructive,
             # calibredb merges tags) so per-user tagging holds for dup-refused books.
             if [ -n "$usertag" ]; then
-                docker exec -u "$CALIBRE_USER" "$CALIBRE_CONTAINER" calibredb set_metadata \
-                    "$idlist" --field tags:"$usertag" --library-path "$CALIBRE_LIB" >/dev/null 2>&1 \
+                cdb set_metadata "$idlist" --field tags:"$usertag" >/dev/null 2>&1 \
                     || LOG "  WARN: could not add tag '$usertag' to existing id $idlist"
             fi
         else
             LOG "  $hits matches (not confident) — adding fresh copy"
-            out=$(calibredb_add "$cpath" --duplicates "${tagargs[@]}")
+            out=$(calibredb_add "$cpath" --duplicates "${tagargs[@]}"); add_rc=$?
+            if [ "$add_rc" -eq 2 ]; then
+                return 2   # lock came back on the duplicates add — defer, don't park
+            fi
             idlist=$(echo "$out" | grep -oiE 'Added book ids[: ]+[0-9, ]+' \
                      | grep -oE '[0-9]+' | sort -u | tr '\n' ' ')
         fi
@@ -293,7 +391,7 @@ import_one() {
     # processed OK -> delete the loose file (its content is now in the Calibre
     # library, shelved if kindleSync was on). Quiet on success; only log a
     # failure to delete (the case you'd want to know about). Failures never reach
-    # here — they return 1 earlier and are parked in witherrors/ by the caller.
+    # here — they return 1/2 earlier and are parked/deferred by the caller.
     if [ -n "$idlist" ]; then
         rm -f "$file" 2>/dev/null \
             || LOG "  WARN: imported OK but could not delete '$fname' — leaving in place"
@@ -309,24 +407,47 @@ for e in $EXTS; do
     else find_args+=( -o -iname "*.$e" ); fi
 done
 
-total=0; ok=0; fail=0
+# v7: opportunistically delete AppleDouble '._*' stubs (SMB/AFP cruft a Mac
+# leaves when it touches the share). They're not books, they confuse listings,
+# and the importer skips dotfiles anyway — so just remove them up front. Quiet.
+while IFS= read -r -d '' stub; do
+    [ "$DRY_RUN" -eq 1 ] && { LOG "  [dry-run] would remove AppleDouble stub: $(basename "$stub")"; continue; }
+    rm -f "$stub" 2>/dev/null || true
+done < <(find "$ROOT" -type f -name '._*' -print0 2>/dev/null)
+
+total=0; ok=0; fail=0; deferred=0
+# dry-run banner label. Use a value test, not ${DRY_RUN:+...} — that expansion
+# fires whenever DRY_RUN is merely SET ("0" is set), which is why the v6 banner
+# mislabelled every real run as ", dry-run". Test the actual value.
+drylbl=""; [ "$DRY_RUN" -eq 1 ] && drylbl=", dry-run"
+# v7: scan BOTH loose files AND witherrors/ files. witherrors/ is no longer
+# pruned — it's a retry source. A successfully-imported parked file is deleted;
+# one that fails again is left in place (park_error no-ops on a witherrors path).
+# Everything else (busy re-check, one-at-a-time, dedupe) is unchanged.
 while IFS= read -r -d '' file; do
-    case "$file" in */"$ERROR_DIR_NAME"/*) continue;; esac   # don't re-sweep parked failures
+    # Skip the legacy done/ folders. Since v5, a successful import DELETES the
+    # file rather than moving it to done/, so done/ should no longer accumulate —
+    # but pre-v5 runs left hundreds of already-imported files there, and nothing
+    # excluded them, so every sweep was re-importing the whole legacy done/ set
+    # (the "imported=350 every slot" churn). done/ is processed-and-finished;
+    # never re-sweep it. (witherrors/, by contrast, IS swept — it's a retry source.)
+    case "$file" in */done/*) continue;; esac
     # announce the run only once we actually have a file to import, so an idle
     # 15-min cycle (nothing to sweep) stays silent instead of logging a banner
     # + "considered=0" every time.
     if [ "$total" -eq 0 ]; then
-        LOG "=== sweep-books v$SWEEP_BOOKS_VERSION (under $ROOT, formats='$EXTS'${DRY_RUN:+, dry-run}) ==="
+        LOG "=== sweep-books v$SWEEP_BOOKS_VERSION (under $ROOT, formats='$EXTS', incl. $ERROR_DIR_NAME/$drylbl) ==="
     fi
     total=$((total+1))
-    if import_one "$file"; then
-        ok=$((ok+1))
-    else
-        fail=$((fail+1))
-        # park the failure so it isn't retried every slot (dry-run never gets
-        # here — import_one returns 0 on the dry-run path before any add).
-        [ "$DRY_RUN" -eq 0 ] && park_error "$file"
-    fi
+    import_one "$file"; rc=$?
+    case "$rc" in
+        0) ok=$((ok+1)) ;;
+        2) deferred=$((deferred+1)) ;;   # transient lock — leave loose, retry next slot
+        *) fail=$((fail+1))
+           # park genuine failures (no-op if already under witherrors/). dry-run
+           # never reaches here (import_one returns 0 on the dry-run path).
+           [ "$DRY_RUN" -eq 0 ] && park_error "$file" ;;
+    esac
     # re-check busy between files: if you start using the GUI mid-sweep, stop.
     if calibre_is_busy; then
         LOG "calibre became BUSY mid-sweep — stopping; remaining files wait for next slot"
@@ -336,9 +457,10 @@ done < <(find "$ROOT" -type f \( "${find_args[@]}" \) -print0 2>/dev/null | sort
 
 # summarize only if we did something; silent on an idle cycle.
 if [ "$total" -gt 0 ]; then
-    LOG "sweep done: imported=$ok failed=$fail (of $total)"
-    [ "$fail" -gt 0 ] && LOG "failures moved to $ERROR_DIR_NAME/ — inspect, then move back to retry."
+    LOG "sweep done: imported=$ok deferred=$deferred failed=$fail (of $total)"
+    [ "$deferred" -gt 0 ] && LOG "$deferred deferred on a library lock — left loose, will retry next slot."
+    [ "$fail" -gt 0 ] && LOG "failures in $ERROR_DIR_NAME/ — re-swept each slot; inspect if one persists."
 fi
 exit 0
 
-# version: SWEEP_BOOKS_VERSION 5
+# version: SWEEP_BOOKS_VERSION 8

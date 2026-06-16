@@ -19,5 +19,12 @@
       "user": "shops@rob.me.uk",
       "enabled": true
     }
+    ,
+    {
+      "tags": "Best for Teens",
+      "shelf": "Young Adults",
+      "user": "shops@rob.me.uk",
+      "enabled": true
+    }
   ]
 }

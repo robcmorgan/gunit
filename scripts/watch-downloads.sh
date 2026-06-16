@@ -1,7 +1,20 @@
 #!/bin/bash
-WATCH_DOWNLOADS_VERSION="1"   # bump on every change; echoed at startup so you can
+WATCH_DOWNLOADS_VERSION="2"   # bump on every change; echoed at startup so you can
                               # confirm the running service matches the latest edit.
 #                              (version stamp also at end of file.)
+# v2: STOP KILLING CALIBRE. calibredb_add no longer kills the GUI/server/parallel
+#     to break a library lock — it waits and retries instead. WHY: the calibre
+#     content server is EMBEDDED in the GUI process, and fetch-books' library
+#     check now reads THROUGH that server (--with-library). The old pkill killed
+#     the GUI to win a write-lock race, which ALSO took down the content server,
+#     so every fetch-books read then failed with "library check unavailable —
+#     deferring" and the whole pipeline froze for 1-2 min until the GUI rebooted
+#     (the [w] "killing lock-holders" lines lined up exactly with the stalls).
+#     Lock sampling showed the library free 30/30s — the lock is held only in
+#     brief, rare bursts — so a few short retries clear essentially every real
+#     collision without killing anything. On a persistent lock (or the calibre-
+#     busy flag) we defer via __GUNIT_DEFER__ and the sweep retries later. No data
+#     loss, nothing killed, server stays up.
 # v1: first version stamp added (this script previously had NONE, which is how a
 #     Jun-08 stale copy ran unnoticed for days). Also in this version:
 #     * success now DELETES the source file (was: move to done/). The book is in
@@ -62,6 +75,12 @@ IMPORT_LOCK="${IMPORT_LOCK:-/tmp/gunit-import.lock}"
 # folder for SUCCESSES — successes are now deleted). The inotify --exclude below
 # ignores it so the move doesn't retrigger.
 ERROR_DIR_NAME="${ERROR_DIR_NAME:-witherrors}"
+# Lock-retry tuning: how many times to re-attempt an add that hit a transient
+# library lock, and how long to wait between tries. The lock is rarely held, so
+# these small defaults clear almost every collision; a still-locked add after
+# this defers to the sweep.
+LOCK_RETRIES="${LOCK_RETRIES:-5}"
+LOCK_WAIT="${LOCK_WAIT:-2}"
 # Shared pipeline log (all gunit scripts append here, tagged by source). [w] = watcher.
 GUNIT_LOG="${GUNIT_LOG:-/home/robmorgan/logs/gunit.log}"
 LOG() {
@@ -112,6 +131,8 @@ wait_settle() {
 #      BUSY_TTL_MIN, as a terminal fallback.
 #  (Automatic activity detection was tried — CPU/mtime/WAL/netstat — and none
 #  were reliable in this container, so we use these explicit signals instead.)
+#  NB: as of v2 nothing is ever killed, so "busy" now only means "defer
+#  immediately instead of retrying", to stay out of the way of an active session.
 CALIBRE_BUSY_FLAG="${CALIBRE_BUSY_FLAG:-/tmp/calibre-busy}"
 BUSY_TTL_MIN="${BUSY_TTL_MIN:-30}"
 # Whose prefs carry the homepage busy toggle (only the desktop-GUI user).
@@ -137,45 +158,55 @@ calibre_is_busy() {
     return 1
 }
 
-# --- run `calibredb add`, killing any lock-holder and retrying if the library
-#     lock blocks us. Echoes calibredb's output; caller parses the ids.
-#     Extra args (e.g. --duplicates) are passed through.
-#     The lock can be held by the desktop GUI (/opt/calibre/bin/calibre), the
-#     content server (calibre-server), or calibre-parallel — launched however
-#     (incl. via Selkies). We can't reliably predict which, so we react: if the
-#     add fails with calibre's "Another calibre program is running" message, we
-#     kill those lock-holders (NOT calibredb itself) and retry once.
+# --- run `calibredb add`, WAITING OUT a transient library lock. NEVER kills. -
+#     Echoes calibredb's output; caller parses the ids. Extra args (e.g.
+#     --duplicates) pass through.
+#
+#     The library lock is held only in brief, rare bursts by the GUI (sampling
+#     showed it free 30/30s). The OLD code reacted to "Another calibre program is
+#     running" by killing the GUI / content server / parallel workers — but the
+#     content server is EMBEDDED in the GUI, and fetch-books' library check reads
+#     THROUGH that server. Killing it froze the whole pipeline until the GUI
+#     rebooted. So we now wait-and-retry instead:
+#       * success / any non-lock output  -> return it immediately
+#       * calibre-busy flag set on a lock -> defer at once (user is in the GUI)
+#       * transient lock                  -> wait LOCK_WAIT and retry, up to
+#                                            LOCK_RETRIES times
+#       * still locked after all retries  -> defer (__GUNIT_DEFER__); the sweep
+#                                            re-imports later. Nothing killed.
 calibredb_add() {
     local path="$1"; shift
     local extra=( "$@" )
-    local out
-    out=$(docker exec -u "$CALIBRE_USER" "$CALIBRE_CONTAINER" calibredb add "$path" \
-            --library-path "$CALIBRE_LIB" "${extra[@]}" 2>&1)
+    local out attempt
 
-    # If a calibre program holds the library lock, decide what to do.
-    if echo "$out" | grep -qi 'Another calibre program'; then
+    for (( attempt=1; attempt<=LOCK_RETRIES; attempt++ )); do
+        out=$(docker exec -u "$CALIBRE_USER" "$CALIBRE_CONTAINER" calibredb add "$path" \
+                --library-path "$CALIBRE_LIB" "${extra[@]}" 2>&1)
+
+        # success or any non-lock outcome -> hand back for the caller to parse
+        if ! echo "$out" | grep -qi 'Another calibre program'; then
+            echo "$out"
+            return 0
+        fi
+
+        # locked. If the user flagged calibre busy, defer immediately (don't even
+        # spend the retries — they're actively using the GUI).
         if calibre_is_busy; then
-            # The user has flagged that they're actively using Calibre — do NOT
-            # kill. Signal a deferral; the caller leaves the book in place and
-            # the periodic sweep retries later (once the flag expires / is cleared).
-            LOG "  library locked AND calibre-busy flag is set — NOT killing; deferring '$path' for a later sweep"
+            LOG "  library locked AND calibre-busy flag set — deferring '$path' for a later sweep"
             echo "__GUNIT_DEFER__"
             return 0
         fi
-        LOG "  library lock held by a calibre program (no busy flag) — killing lock-holders and retrying"
-        # Kill GUI / server / parallel workers, but NOT calibredb (our importer).
-        docker exec "$CALIBRE_CONTAINER" sh -c \
-            "pkill -f '/opt/calibre/bin/calibre(\$| )'; \
-             pkill -f 'calibre-server'; \
-             pkill -f 'calibre-parallel'" 2>/dev/null
-        sleep 3   # let the lock release
-        out=$(docker exec -u "$CALIBRE_USER" "$CALIBRE_CONTAINER" calibredb add "$path" \
-                --library-path "$CALIBRE_LIB" "${extra[@]}" 2>&1)
-        if echo "$out" | grep -qi 'Another calibre program'; then
-            LOG "  WARN: library still locked after kill+retry — something is persistently holding it"
-        fi
-    fi
-    echo "$out"
+
+        # transient lock — wait and retry. NEVER kill: killing the GUI kills the
+        # embedded content server the read path depends on.
+        LOG "  library locked (attempt $attempt/$LOCK_RETRIES) — waiting ${LOCK_WAIT}s, NOT killing"
+        sleep "$LOCK_WAIT"
+    done
+
+    # still locked after all retries — defer to the next sweep rather than kill.
+    LOG "  library still locked after $LOCK_RETRIES retries — deferring '$path' (will re-import next sweep)"
+    echo "__GUNIT_DEFER__"
+    return 0
 }
 
 # --- park a file that failed to import into a sibling witherrors/ folder, so it
@@ -281,20 +312,19 @@ process_file() {
         fi
     fi
 
-    # GUI-LOCK is now handled REACTIVELY: instead of trying to predict and kill
-    # the lock-holder up front (which missed cases — calibre-server, GUI launched
-    # via a different path through Selkies, etc.), we run calibredb and, IF it
-    # fails with "Another calibre program is running", kill the lock-holders and
-    # retry. See calibredb_add() above. This works regardless of HOW the GUI/server
-    # got started, and only kills when there's an actual conflict.
+    # GUI-LOCK handling: as of v2 we NEVER kill. calibredb_add waits out a
+    # transient lock and retries; a persistent lock (or an active GUI session via
+    # the busy flag) defers the import to the sweep. This keeps the GUI's embedded
+    # content server alive, which fetch-books' library check reads through.
 
     local out idlist
     out=$(calibredb_add "$cpath")
 
-    # If the import was deferred (calibre busy + flag set), leave the book in
-    # place (not shelved, not deleted, not parked) so the periodic sweep retries it.
+    # If the import was deferred (busy flag, or lock persisted past retries),
+    # leave the book in place (not shelved, not deleted, not parked) so the
+    # periodic sweep retries it.
     if echo "$out" | grep -q '__GUNIT_DEFER__'; then
-        LOG "  deferred '$file' (calibre busy) — left in place for the sweep"
+        LOG "  deferred '$file' (calibre busy/locked) — left in place for the sweep"
         flock -u 7 2>/dev/null
         return
     fi
@@ -333,6 +363,12 @@ process_file() {
         else
             LOG "  $hits matches (not confident) -> adding a fresh copy with --duplicates"
             out=$(calibredb_add "$cpath" --duplicates)
+            # a deferred dup-add also yields no ids; treat it as a deferral too.
+            if echo "$out" | grep -q '__GUNIT_DEFER__'; then
+                LOG "  deferred '$file' (calibre busy/locked) on dup-add — left in place for the sweep"
+                flock -u 7 2>/dev/null
+                return
+            fi
             idlist=$(echo "$out" \
                 | grep -oiE 'Added book ids[: ]+[0-9, ]+' \
                 | grep -oE '[0-9]+' | sort -u | tr '\n' ' ')
@@ -429,4 +465,4 @@ while IFS='|' read -r event path; do
     process_file "$path" "$event" &     # background so a long settle doesn't block the queue
 done
 
-# version: WATCH_DOWNLOADS_VERSION 1
+# version: WATCH_DOWNLOADS_VERSION 2
