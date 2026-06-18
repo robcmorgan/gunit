@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-TAG_BOOKS_VERSION="11"   # bump on every change; echoed at startup
+TAG_BOOKS_VERSION="12"   # bump on every change; echoed at startup
+# v12: INTERACTIVE MODE (nnn TSV picker). Running with no file args opens nnn
+#      in $TSV_DIR (default ../tsv-lists), you select a .tsv, and that list is
+#      processed — mirrors fetch-books v61's picker exactly. nnn is required
+#      in this mode; a non-.tsv pick or quitting without a selection aborts
+#      cleanly. All flags (--dry-run, --replace-tags, --tag) still apply.
 # v11: log to shared $GUNIT_LOG (~/logs/gunit.log), lines tagged [t].
 # =============================================================================
 #  tag-books.sh — apply calibre tags to books that fetch-books.sh has fetched.
@@ -42,6 +47,9 @@ DEFAULT_LANG="${DEFAULT_LANG:-eng}"   # set this language when a book's language
 CONFIDENCE="${CONFIDENCE:-0.6}"    # 0..1; fuzzy fallback hit must score >= this
 ID_SCHEME="${ID_SCHEME:-annas}"    # calibre identifier scheme used to store the md5
 LOG="${LOG:-${GUNIT_LOG:-$HOME/logs/gunit.log}}"   # shared log for all gunit scripts
+# Interactive-mode (no file args) nnn picker start dir. Relative paths resolve
+# against the script's own dir, so the default points at /gunit/tsv-lists/.
+TSV_DIR="${TSV_DIR:-../tsv-lists}"
 
 # shared confidence matcher (norm, ge, title_full_match, author_match,
 # meaningful_words, book_match_score) — same logic as fetch-books.
@@ -64,10 +72,41 @@ while [ $# -gt 0 ]; do
         *) FILES+=("$1"); shift ;;
     esac
 done
-[ "${#FILES[@]}" -eq 0 ] && { echo "usage: $0 [--dry-run] LIST.tsv..." >&2; exit 1; }
+# No file args: enter interactive mode (nnn picker) rather than erroring.
+if [ "${#FILES[@]}" -eq 0 ]; then
+    INTERACTIVE=1
+else
+    INTERACTIVE=0
+fi
 
 mkdir -p "$(dirname "$LOG")" 2>/dev/null
 log() { local ts; ts="$(date '+%F %T')"; printf '%s  [t] %s\n' "$ts" "$*" >> "$LOG"; printf '%s  %s\n' "$ts" "$*" >&2; }
+
+# ---- interactive mode: nnn TSV picker --------------------------------------
+if [ "${INTERACTIVE:-0}" -eq 1 ]; then
+    HERE="$(cd "$(dirname "$0")" && pwd)"
+    command -v nnn >/dev/null || {
+        log "FATAL: no list args and nnn not installed for the picker. Install it on otis:  sudo apt install nnn   (or pass a LIST.tsv explicitly)"
+        exit 1
+    }
+    case "$TSV_DIR" in /*) tsvdir="$TSV_DIR" ;; *) tsvdir="$HERE/$TSV_DIR" ;; esac
+    [ -d "$tsvdir" ] || { log "FATAL: TSV dir not found: $tsvdir"; exit 1; }
+
+    pickfile="$(mktemp)"
+    nnn -p "$pickfile" "$tsvdir"
+    picked_tsv="$(tr '\0' '\n' < "$pickfile" 2>/dev/null | head -n1)"
+    rm -f "$pickfile"
+
+    [ -z "$picked_tsv" ] && { log "no file selected — aborting"; exit 0; }
+    case "$picked_tsv" in
+        *.tsv) : ;;
+        *) log "selection is not a .tsv: $picked_tsv — aborting"; exit 1 ;;
+    esac
+    [ -f "$picked_tsv" ] || { log "selected file does not exist: $picked_tsv"; exit 1; }
+
+    log "interactive: selected $picked_tsv"
+    FILES=( "$picked_tsv" )
+fi
 
 # calibredb wrapper, find_book_id, stamp_identifier, merge_tags, apply_tags all
 # come from tag-lib.sh (sourced above) — shared with tag-queue.sh, no drift.

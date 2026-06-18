@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 # =============================================================================
 #  UserDashboard.ps1
-#  Version v30
+#  Version v31
 #  Single Pode app that replaces Glance: serves the dashboard AND handles
 #  per-user toggles, with identity from Cloudflare Access (JWT verify).
 #
@@ -73,7 +73,7 @@ Import-Module Pode
 #      title. The wrapper bounds each h4 to its book so it rides up and clears.
 #      The original short-book pinning fear is moot now the template's JS slot-
 #      tracker (v77) drives the h4 offset from the live section-bar height.
-$script:DashVersion = 'UserDashboard v30'
+$script:DashVersion = 'UserDashboard v31'
 
 Start-PodeServer {
 
@@ -379,9 +379,7 @@ Start-PodeServer {
                 $coverHtml = if ($cover) { "<div class=`"book-cover`">$cover</div>" } else { '' }
                 $metaHtml  = "<div class=`"book-meta`">$($metaSb.ToString())</div>"
                 $headHtml  = "<div class=`"book-head`">$coverHtml$metaHtml</div>"
-                # Mark coverless books so the template can indent their body to
-                # rail 2 (with a cover, the body sits below it at rail 1).
-                $flowClass = if ($cover) { 'book-flow' } else { 'book-flow nocover' }
+                $flowClass = 'book-flow'
                 # v30: RESTORED the <div class="book"> wrapper (v29 had removed it).
                 # The wrapper bounds each sticky h4 to its own book, which is what
                 # makes a finished title ride up and clear instead of overlapping
@@ -600,11 +598,12 @@ Start-PodeServer {
 <div>{{CONTENT}}</div>
 <p style="opacity:.5">(template file not found at $tplPath)</p>
 <script>
-async function saveToggle(el){const s=document.getElementById('status');s.innerText='Saving...';
+let statusTimeout;
+async function saveToggle(el){const s=document.getElementById('status');clearTimeout(statusTimeout);s.innerText='Saving...';
 try{const r=await fetch('/toggle',{method:'POST',headers:{'Content-Type':'application/json'},
 body:JSON.stringify({key:el.dataset.key,value:el.checked})});s.innerText=r.ok?'Saved.':'Error saving.';
 if(!r.ok)el.checked=!el.checked;}catch(e){s.innerText='Network error.';el.checked=!el.checked;}
-setTimeout(()=>{s.innerText='';},2500);}
+statusTimeout=setTimeout(()=>{s.innerText='';},2500);}
 </script></body></html>
 "@
         }
@@ -833,5 +832,5 @@ setTimeout(()=>{s.innerText='';},2500);}
 
 # =============================================================================
 #  UserDashboard.ps1
-#  Version v30
+#  Version v31
 # =============================================================================

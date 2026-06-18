@@ -13,6 +13,7 @@ User=root
 # import -> tag -> shelf in a single cycle. The '-' on steps 2 and 3 means an
 # earlier step's failure doesn't abort the later ones.
 ExecStart=/home/robmorgan/gunit/scripts/sweep-books.sh
+ExecStart=-/bin/bash -c '/home/robmorgan/gunit/scripts/tag-books.sh /home/robmorgan/gunit/tsv-lists/*.tsv'
 ExecStart=-/home/robmorgan/gunit/scripts/tag-queue.sh
 ExecStart=-/home/robmorgan/gunit/scripts/sync-tag-to-shelf.sh
 # don't let a slow sweep run forever; the single-instance flock also guards overlap

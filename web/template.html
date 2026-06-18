@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- template.html v79 -->
+<!-- template.html v80 -->
 <!--
   ===========================================================================
   Gunit homepage template.  EDIT THIS FILE FREELY — changes show on refresh,
@@ -147,13 +147,13 @@
 
   .booklist-page h1 { color: #14304d; border: none;
     font-size: 2.1em; font-weight: 700; letter-spacing: -0.01em;
-    margin-top: 0; margin-bottom: 14px; padding: 6px 22px 10px 22px;
+    margin-top: 0; margin-bottom: 0; padding: 6px 22px 24px 22px;
     border-bottom: 2px solid rgba(20,48,77,0.12); }
   .booklist-page h2 { color: #1d4e7c; font-size: 1.5em; font-weight: 650;
-    margin-top: 30px; margin-bottom: 10px; padding: 6px 22px 8px 22px; }
+    margin-top: 30px; margin-bottom: 0; padding: 6px 22px 18px 22px; }
   .booklist-page h2:first-child { margin-top: 0; }
   .booklist-page h3 { color: #356492; font-size: 1.2em; font-weight: 600;
-    margin-top: 22px; margin-bottom: 6px; padding: 5px 22px 5px 22px; }
+    margin-top: 22px; margin-bottom: 0; padding: 5px 22px 11px 22px; }
   /* (h4 is the book title — styled separately below) */
   /* ---- book entry layout (head row + body below) -----------------------
      Renderer emits:
@@ -203,8 +203,8 @@
   .booklist-page .book-cover { flex: 0 0 auto; }
   .booklist-page .book-meta  { flex: 1 1 auto; min-width: 0; }
   /* coverless: .book-head has no cover child, so the meta sits alone at rail 2
-     (the head's margin-left). That's intended — coverless entries align their
-     meta + body at rail 2 (see .nocover body rule below). */
+     (the head's margin-left). Rail 2 alignment for body/quotes is handled
+     universally via .book-flow > p and .book-flow > blockquote margin-left. */
 
   /* book cover */
   .booklist-page .bookcover { display: block; width: 168px; height: auto;
@@ -267,8 +267,7 @@
   .booklist-page code { background: rgba(27,58,91,0.1); color: #1b3a5b; padding: 2px 6px; border-radius: 4px; }
   /* blockquote — use markdown '> ...' for an attributed pull-quote as a book's
      opener, e.g.  > The Booker judges called it dazzling.
-     Renders italic with a big decorative quotemark hanging in the left margin.
-     Works as a coverless book's lead too: inside .nocover it indents to rail 2. */
+     Renders italic with a big decorative quotemark hanging in the left margin. */
   .booklist-page blockquote { position: relative;
     padding: 2px 0 2px 0; margin: 6px 0 12px 0;
     font-style: italic; color: #2d557e; font-size: 1.05em; }
@@ -279,8 +278,6 @@
     pointer-events: none; }
   .booklist-page blockquote p { margin: 0 0 4px 0; }
   .booklist-page blockquote p:last-child { margin-bottom: 0; }
-  /* coverless: shift the whole quote to rail 2 (the quotemark, positioned
-     relative to the blockquote, moves with it — no double indent). */
   /* quote sits at rail 2 like the body; its quotemark hangs to the left of that */
   .booklist-page .book-flow > blockquote { margin-left: 40px; }
   .booklist-page hr { border: none; border-top: 1px solid rgba(27,58,91,0.18); margin: 22px 0; }
@@ -340,7 +337,7 @@
     /* rail-2 is 28px here, so the number must be pulled out by 28 (not the base
        -40) to land on rail 1. .booknum is inline-block, not positioned, so its
        horizontal offset comes from margin-left — `left:` would be inert. */
-    .booklist-page h4 .booknum { margin-left: -28px; width: 26px; font-size: 0.92em; }
+    .booklist-page h4 .booknum { margin-left: -28px; width: 28px; font-size: 0.92em; }
   }
 </style></head><body>
 
@@ -351,8 +348,10 @@
   {{CONTENT}}
 
 <script>
+  let statusTimeout;
   async function saveToggle(el) {
     const status = document.getElementById('status');
+    clearTimeout(statusTimeout);
     status.innerText = 'Saving...';
     try {
       const res = await fetch('/toggle', {
@@ -366,7 +365,7 @@
       status.innerText = 'Network error.';
       el.checked = !el.checked;
     }
-    setTimeout(() => { status.innerText = ''; }, 2500);
+    statusTimeout = setTimeout(() => { status.innerText = ''; }, 2500);
   }
 </script>
 <script>
@@ -419,4 +418,4 @@
 </script>
 </body></html>
 
-<!-- template.html v79 -->
+<!-- template.html v80 -->
