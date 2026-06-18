@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- template.html v71 -->
+<!-- template.html v79 -->
 <!--
   ===========================================================================
   Gunit homepage template.  EDIT THIS FILE FREELY — changes show on refresh,
@@ -84,36 +84,76 @@
   .booklist-page { background: #e8eef6; color: #1c2733; border-radius: 12px;
     padding: 22px 22px; line-height: 1.65; font-size: 1.05em;
     counter-reset: bookcount;
+    /* --- sticky bar geometry (two slots) ---------------------------------
+       Two pinned bars at most: a SECTION slot (h1/h2/h3 share it) directly
+       under the nav, and a BOOK slot (h4) directly under that. Offsets are
+       derived from these vars, NOT hand-stacked per level, so there's one
+       number to tune (--section-h) and h1/h2/h3 can't collide — whichever
+       section header is current simply occupies the single section slot.
+       --section-h is the section bar's height. It's set live by the script at
+       the bottom of this file (which measures the actually-pinned header, so a
+       wrapping h3 is handled); the value here is just the initial fallback used
+       before the first scroll/measure. Paired with a box-shadow seam-cover so a
+       few px of mismatch never shows through. */
+    --nav-h: 44px;
+    --section-h: 46px;
+    /* the section headers cast a solid 9px downward box-shadow (0 9px 0 0) to
+       cover the band between their box bottom and h4's top. h4 pins at
+       nav + section-h + section-shadow, so it clears that band exactly and the
+       shadow fills it with no flicker. Keep this equal to the section headers'
+       box-shadow Y-offset. */
+    --section-shadow: 9px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
   /* each book title advances the counter; [resetnum] in markdown emits a
      .num-reset div that restarts it (its inline counter-reset does the work). */
-  /* per-book wrapper: bounds each sticky h4 title to its own book so a finished
-     book's title is pushed out by the next book instead of ghosting. Purely
-     structural — no padding/margin/overflow (overflow would break the sticky). */
+  /* per-book wrapper (template v78 / renderer v30): bounds each sticky h4 to its
+     own book so a finished title rides UP and clears as the book ends, instead
+     of overlapping the next book's title. Essential: h4s all share the same
+     sticky `top`, and same-`top` sticky siblings overlap rather than evict each
+     other — without this bound, a two-line title's second line shows below the
+     next (one-line) title. Purely structural: NO padding/margin/overflow
+     (overflow would break the sticky containment). */
   .booklist-page .book { /* containment boundary only */ }
   .booklist-page h4 { counter-increment: bookcount; }
-  /* Heading hierarchy — each level visually distinct.
-     h1: page title. NOT sticky — it scrolls away once you pass it. (The sticky
-         pair is h2 + h4: a page with both an h1 and an h2 would otherwise pile
-         the h1 and h2 in the same pinned slot. So h2 is the section header that
-         pins, and the book h4 pins under it.) */
+  /* Heading hierarchy — TWO STICKY SLOTS (robust; no hand-stacked offsets).
+     ----------------------------------------------------------------------
+     SECTION slot: h1, h2 and h3 ALL pin at top:var(--nav-h). They share the
+       ONE slot, so they can never collide — whichever section header you've
+       most recently scrolled past occupies it (CSS sticky keeps the last
+       in-scope one of each, and since they share a `top` the deepest/newest
+       visually wins as it pushes up under the nav). This is "current section
+       context", whether that context is an h1 page-title, an h2 section, or
+       an h3 subsection.
+     BOOK slot: h4 pins just below, at top:calc(nav + section bar height).
+     Result: at most two bars — section + current book — which is the goal.
+
+     Robustness choices:
+       * Offsets come from --nav-h / --section-h (set on .booklist-page), not
+         from summing measured bar heights level-by-level. One knob.
+       * Every bar has a SOLID background + a 6px downward box-shadow. The
+         shadow paints over the seam between bars and over content scrolling
+         beneath, so a few px of height mismatch can never read as see-through.
+       * Section headers share z-index (5) and sit ABOVE the book bar (z-index
+         4), so the section bar always covers the book bar where they meet. */
+
+  /* shared look for the three section-slot headers */
+  .booklist-page h1, .booklist-page h2, .booklist-page h3 {
+    position: sticky; top: var(--nav-h); z-index: 5;
+    margin-left: -22px; margin-right: -22px;
+    background: #e8eef6;
+    box-shadow: 0 9px 0 0 #e8eef6; /* solid 9px cover — fills the gap below the
+      section box down to h4's top (h4 offset includes --section-shadow:9px), so
+      no body line flickers in the band between the two bars. */ }
+
   .booklist-page h1 { color: #14304d; border: none;
     font-size: 2.1em; font-weight: 700; letter-spacing: -0.01em;
-    margin: 0 0 14px 0; padding: 0 0 10px 0;
+    margin-top: 0; margin-bottom: 14px; padding: 6px 22px 10px 22px;
     border-bottom: 2px solid rgba(20,48,77,0.12); }
-  /* h2: major section / list-page title. Sticky like h1 — pins under the nav
-     (top:44px) with an opaque full-width bar so content scrolls cleanly beneath.
-     On a page where h2 is the sole title this gives the same pinned-header effect
-     as h1. */
   .booklist-page h2 { color: #1d4e7c; font-size: 1.5em; font-weight: 650;
-    margin: 30px -22px 10px -22px; padding: 6px 22px 8px 22px;
-    position: sticky; top: 44px; z-index: 5;
-    background: #e8eef6; }
-  /* first h2 on the page sits flush at the top (no big top margin before the bar) */
+    margin-top: 30px; margin-bottom: 10px; padding: 6px 22px 8px 22px; }
   .booklist-page h2:first-child { margin-top: 0; }
-  /* h3: subsection — medium, semibold, slightly muted, no rule */
   .booklist-page h3 { color: #356492; font-size: 1.2em; font-weight: 600;
-    margin: 22px 0 6px 0; }
+    margin-top: 22px; margin-bottom: 6px; padding: 5px 22px 5px 22px; }
   /* (h4 is the book title — styled separately below) */
   /* ---- book entry layout (head row + body below) -----------------------
      Renderer emits:
@@ -130,15 +170,19 @@
        CENTRED against the cover's height
      - body: always starts BELOW the cover, full width at rail 1 */
 
-  /* book title (h4) — sticky, pins just below the sticky h2 (see h2 rule). Kept
-     fairly small. Opaque full-width bar (negative margins span the card) so body
-     scrolls cleanly beneath; z-index below the h2 so the h2 stays on top.
-     Title text sits at rail 2 (40px past the card edge). */
+  /* book title (h4) — sticky in the BOOK slot, directly below the section bar
+     at top = nav + section-bar height (the JS sets --section-h from the live
+     section-bar height, so a wrapping h3 is handled). z-index 4 keeps it under
+     the section headers (z-index 5). Bounded to its own <div class="book"> so a
+     finished (possibly two-line) title rides up and clears as the book ends,
+     rather than overlapping the next title. Solid bg + 6px seam shadow covers
+     the join to body content. Title text sits at rail 2 (40px past card edge). */
   .booklist-page h4 { color: #14304d; font-size: 1.02em; font-weight: 600;
     margin: 22px -22px 8px -22px; clear: both;
     padding: 5px 22px 5px 62px; /* 62 = 22 card pad + 40 rail-2 indent */
-    position: sticky; top: 98px; z-index: 4;
-    background: #e8eef6; }
+    position: sticky; top: calc(var(--nav-h) + var(--section-h) + var(--section-shadow)); z-index: 4;
+    background: #e8eef6;
+    box-shadow: 0 6px 6px -3px #e8eef6; }
   /* number: kept in the NORMAL FLOW of the h4 (inline-block, not absolutely
      positioned) so the browser baseline-aligns it with the title's first line
      automatically — no magic top/centring that skews across browsers. It's the
@@ -269,8 +313,12 @@
     .booklist-page .book-head { gap: 14px; }
     /* card padding is now 16px (was 22) — keep the sticky bars' negative margins
        and the h4 number/title rails in sync with that, or the number overlaps
-       the title. Rail-2 indent stays 40px here. */
-    .booklist-page h2 { margin-left: -16px; margin-right: -16px;
+       the title. Rail-2 indent stays 40px here. Also retune the sticky-slot
+       vars: nav bar is a touch shorter here, and section headers wrap more
+       readily on narrow widths, so give the book slot a bit more room. */
+    .booklist-page { --nav-h: 40px; --section-h: 52px; }
+    .booklist-page h1, .booklist-page h2, .booklist-page h3 {
+      margin-left: -16px; margin-right: -16px;
       padding-left: 16px; padding-right: 16px; }
     .booklist-page h4 { margin-left: -16px; margin-right: -16px;
       padding-left: 56px; padding-right: 16px; } /* 16 card + 40 rail-2 */
@@ -283,6 +331,10 @@
     .booklist-page .bookcover { width: 126px; }
     .booklist-page .book-head { gap: 12px; margin-left: 28px; }
     .booklist-page .book-flow > p { margin-left: 28px; }
+    /* lead para has a more-specific base rule (.book-flow > p.lead = 40px) that
+       outranks the plain-p override above; restate it here or the first paragraph
+       stays at 40px on phone while the rest drop to 28px (skews right). */
+    .booklist-page .book-flow > p.lead { margin-left: 28px; }
     .booklist-page .book-flow > blockquote { margin-left: 28px; }
     .booklist-page h4 { padding-left: 44px; } /* 16 card + 28 rail-2 */
     /* rail-2 is 28px here, so the number must be pulled out by 28 (not the base
@@ -317,6 +369,54 @@
     setTimeout(() => { status.innerText = ''; }, 2500);
   }
 </script>
+<script>
+  /* Sticky book-slot tracker (template v77).
+     h4 pins at top = nav + --section-h. A wrapping h3 (or h2/h1) is taller than
+     any fixed --section-h guess, so h4 would overlap it. CSS can't read a sticky
+     element's wrapped height, so we do it here: find the section header currently
+     pinned in the section slot, measure its REAL height, and write it to
+     --section-h. h4's calc() offset then always lands just beneath it.
+     Throttled with requestAnimationFrame; re-runs on scroll + resize. */
+  (function () {
+    const page = document.querySelector('.booklist-page');
+    if (!page) return;
+
+    const navH = () => {
+      const v = getComputedStyle(page).getPropertyValue('--nav-h').trim();
+      return parseFloat(v) || 44;
+    };
+
+    function update() {
+      const heads = page.querySelectorAll('h1, h2, h3');
+      if (!heads.length) return;
+      const slotTop = navH();
+      // The pinned section header is the last one whose top has reached the slot
+      // line (rect.top <= slotTop + 1px tolerance). If none has yet (you're above
+      // the first section), fall back to the first header's height so h4 still
+      // clears it when it arrives.
+      let pinned = null;
+      for (const h of heads) {
+        if (h.getBoundingClientRect().top <= slotTop + 1) pinned = h;
+      }
+      const ref = pinned || heads[0];
+      const h = Math.ceil(ref.getBoundingClientRect().height);
+      page.style.setProperty('--section-h', h + 'px');
+    }
+
+    let queued = false;
+    function onScrollOrResize() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; update(); });
+    }
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize);
+    // recompute once fonts have loaded (metrics shift, esp. the Gill Sans stack)
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
+    update();
+  })();
+</script>
 </body></html>
 
-<!-- template.html v71 -->
+<!-- template.html v79 -->

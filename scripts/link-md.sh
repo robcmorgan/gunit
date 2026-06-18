@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
-LINK_MD_VERSION="13"  # bump on every change; echoed at startup AND footer below.
+LINK_MD_VERSION="14"  # bump on every change; echoed at startup AND footer below.
+# v14: FIX nnn multi-select reader. v13 read the -p selection file with
+#      `mapfile -d ''` (NUL-delimited), but nnn's selection separator depends on
+#      the build/config — robmorgan's writes NEWLINE-separated, so all three
+#      picks arrived as ONE blob ending ".../2026.tsv" with embedded newlines,
+#      failing the *.tsv glob ("selection is not a .tsv ... aborting"). Now we
+#      normalise NUL -> newline and read one path per line, so both NUL- and
+#      newline-separated nnn builds work.
 # v13: MULTI-TSV INTO ONE REPORT + nnn multi-select + tmux title.
 #      (1) MULTI-TSV: --tsv may now be passed MORE THAN ONCE, and in interactive
 #          mode nnn may SELECT several .tsv files (space-mark in nnn, then Enter).
@@ -345,12 +352,17 @@ if [ "$INTERACTIVE" -eq 1 ]; then
 
     pickfile="$(mktemp)"
     # -p <file>: write selection(s) here and quit; open nnn at the TSV dir.
-    # Space-mark several .tsv files in nnn then Enter to select them all; nnn
-    # writes the marked set NUL-separated. (A single Enter on one file works too.)
+    # Space-mark several .tsv files in nnn then Enter to select them all.
+    # (A single Enter on one file works too.)
     nnn -p "$pickfile" "$tsvdir"
 
-    # read ALL NUL-separated picks (was: head -n1, first only)
-    mapfile -d '' -t _picks < "$pickfile" 2>/dev/null
+    # read ALL picks. nnn's selection separator varies by build/config: some
+    # write NUL-separated, some newline-separated. Normalise NUL -> newline,
+    # then read one path per line so both layouts work.
+    _picks=()
+    while IFS= read -r _p; do
+        [ -n "$_p" ] && _picks+=("$_p")
+    done < <(tr '\0' '\n' < "$pickfile" 2>/dev/null)
     rm -f "$pickfile"
 
     # validate every pick is an existing .tsv; collect into sel_tsvs
@@ -762,6 +774,6 @@ done
 log "=== link-md v$LINK_MD_VERSION done ===" "$C_BOLD"
 
 # =============================================================================
-#  link-md.sh version 13  (footer stamp — must match LINK_MD_VERSION at top;
+#  link-md.sh version 14  (footer stamp — must match LINK_MD_VERSION at top;
 #  if these disagree the deployed copy on otis is a stale partial paste.)
 # =============================================================================

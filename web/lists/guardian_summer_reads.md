@@ -1,9 +1,9 @@
-# Guardian Summer Reads
+## Guardian Summer Reads
 
-### The Guardian picks Summer Reads each year.
+The Guardian picks Summer Reads each year.
 There's a link to the original pieces too.
 
-## Summer Reads 2026
+### Summer Reads 2026
 
 <a href="https://www.theguardian.com/books/ng-interactive/2026/jun/13/70-brilliant-books-for-the-summer" target="_blank">Original Guardian piece here</a>
 

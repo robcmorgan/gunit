@@ -14,3 +14,4 @@ stack.env
 state/tag-queue.json
 state/*.lock
 config/calibre-server.env
+web/lists/covers

@@ -1,8 +1,8 @@
-# Alex Awards (2015 – 2026)
+## Alex Award winners
 
-### *The Alex Awards are a list of 10 books each year, given to adult books which they think teens and young adults will particularly enjoy.*
+*The Alex Awards are a list of 10 books each year, given to adult books which they think teens and young adults will particularly enjoy.*
 
-## 2026 Alex prize
+### 2026 Alex prize
 
 #### [The Girls Who Grew Big](https://books.rob.me.uk/book/1883)
 [![](covers/1883.jpg)](https://books.rob.me.uk/book/1883)
@@ -125,7 +125,7 @@ Forget standard nature documentaries; this is sequential art at its absolute fin
 
 ---
 
-## 2025 Alex prize
+### 2025 Alex prize
 
 #### [I Was a Teenage Slasher](https://books.rob.me.uk/book/1895)
 [![](covers/1895.jpg)](https://books.rob.me.uk/book/1895)
@@ -246,7 +246,7 @@ A warm, validating hug for anyone overwhelmed by "adulting," offering a deeply s
 
 ---
 
-## 2024 Alex prize
+### 2024 Alex prize
 
 #### [Chain-Gang All-Stars](https://books.rob.me.uk/book/1913)
 [![](covers/1913.jpg)](https://books.rob.me.uk/book/1913)
@@ -370,7 +370,7 @@ If you ever need a reminder of what the human spirit is truly capable of endurin
 
 ---
 
-## 2023 Alex prize
+### 2023 Alex prize
 
 #### [A Lady's Guide to Fortune-Hunting](https://books.rob.me.uk/book/1901)
 [![](covers/1901.jpg)](https://books.rob.me.uk/book/1901)
@@ -493,7 +493,7 @@ Featuring one of the most uniquely endearing protagonists to hit the genre in ye
 
 ---
 
-## 2022 Alex prize
+### 2022 Alex prize
 
 #### [Light from Uncommon Stars](https://books.rob.me.uk/book/1910)
 [![](covers/1910.jpg)](https://books.rob.me.uk/book/1910)
@@ -614,7 +614,7 @@ Ever felt guilty about binge-watching trashy TV? This brilliant, highly accessib
 
 ---
 
-## 2021 Alex prize
+### 2021 Alex prize
 
 #### [Black Sun](https://books.rob.me.uk/book/1918)
 [![](covers/1918.jpg)](https://books.rob.me.uk/book/1918)
@@ -736,7 +736,7 @@ Grab your Aqua Net hairspray and get ready for a witchy nostalgia trip that uses
 
 ---
 
-## 2020 Alex prize
+### 2020 Alex prize
 
 #### [The Nickel Boys](https://books.rob.me.uk/book/1931)
 [![](covers/1931.jpg)](https://books.rob.me.uk/book/1931)
@@ -858,7 +858,7 @@ A story so vibrant you can practically smell the spices through the pages, provi
 
 ---
 
-## 2019 Alex prize
+### 2019 Alex prize
 
 #### [The Cruel Prince](https://books.rob.me.uk/book/1937)
 [![](covers/1937.jpg)](https://books.rob.me.uk/book/1937)
@@ -981,7 +981,7 @@ An intricate, winter-chilled fairy tale where wit replaces swords, rewarding rea
 
 ---
 
-## 2018 Alex prize
+### 2018 Alex prize
 
 #### [All Systems Red](https://books.rob.me.uk/book/1953)
 [![](covers/1953.jpg)](https://books.rob.me.uk/book/1953)
@@ -1104,7 +1104,7 @@ Using the vastness of space to examine the deeply entrenched roots of American s
 
 ---
 
-## 2017 Alex prize
+### 2017 Alex prize
 
 #### [The Invisible Life of Ivan Isaenko](https://books.rob.me.uk/book/1975)
 [![](covers/1975.jpg)](https://books.rob.me.uk/book/1975)
@@ -1227,7 +1227,7 @@ Crackling with unrelenting suspense from the very first page, it forces you to q
 
 ---
 
-## 2016 Alex prize
+### 2016 Alex prize
 
 #### [All the Single Ladies](https://books.rob.me.uk/book/1922)
 [![](covers/1922.jpg)](https://books.rob.me.uk/book/1922)
@@ -1351,7 +1351,7 @@ Injecting the urban fantasy genre with a dose of pure, chaotic punk-rock energy,
 
 ---
 
-## 2015 Alex prize
+### 2015 Alex prize
 
 #### [All the Light We Cannot See](https://books.rob.me.uk/book/1736)
 [![](covers/1736.jpg)](https://books.rob.me.uk/book/1736)

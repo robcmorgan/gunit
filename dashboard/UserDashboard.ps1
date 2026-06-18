@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 # =============================================================================
 #  UserDashboard.ps1
-#  Version v28
+#  Version v30
 #  Single Pode app that replaces Glance: serves the dashboard AND handles
 #  per-user toggles, with identity from Cloudflare Access (JWT verify).
 #
@@ -62,7 +62,18 @@ Import-Module Pode
 #      fixed-width inline-block spanning rail-1→rail-2, so the space pushed the
 #      title ~4px past rail 2 (visibly misaligned on coverless books). Title now
 #      sits flush at rail 2 with the body.
-$script:DashVersion = 'UserDashboard v28'
+# v29: REVERTED the v27 .book wrapper. Bounding h4 to a per-book div meant short
+#      books gave the title no scroll range to pin over. h4 + .book-flow are now
+#      direct children of .booklist-page again, so h4 sticks continuously and the
+#      next book's h4 evicts it (same sticky top). Ghosting now handled in CSS
+#      (template v76: opaque bg + seam box-shadow on h4).
+# v30: RE-RESTORED the .book wrapper. v29's premise was wrong: same-`top` sticky
+#      siblings don't evict each other, they overlap, so a one-line h4 painting
+#      over a two-line one left the old title's 2nd line showing below the new
+#      title. The wrapper bounds each h4 to its book so it rides up and clears.
+#      The original short-book pinning fear is moot now the template's JS slot-
+#      tracker (v77) drives the h4 offset from the live section-bar height.
+$script:DashVersion = 'UserDashboard v30'
 
 Start-PodeServer {
 
@@ -371,15 +382,20 @@ Start-PodeServer {
                 # Mark coverless books so the template can indent their body to
                 # rail 2 (with a cover, the body sits below it at rail 1).
                 $flowClass = if ($cover) { 'book-flow' } else { 'book-flow nocover' }
-                # Wrap the title (h4) + its flow in a per-book <div class="book">.
-                # This bounds the sticky h4's range to its OWN book: when the next
-                # book scrolls up, its top edge pushes the previous (possibly
-                # taller, multi-line) title out cleanly, instead of leaving a ghost
-                # sliver behind. The h4 stays the FIRST child of .book so sticky
-                # still resolves correctly.
-                # $trailing (a section h2/h3 + anything after it) is emitted OUTSIDE
-                # the .book wrapper so it's a direct child of .booklist-page — needed
-                # for position:sticky on those headings to work.
+                # v30: RESTORED the <div class="book"> wrapper (v29 had removed it).
+                # The wrapper bounds each sticky h4 to its own book, which is what
+                # makes a finished title ride up and clear instead of overlapping
+                # the next one. Without it, every h4 shares the same sticky `top`,
+                # so a new (one-line) h4 just paints over a previous (two-line) one
+                # at that slot and the previous title's SECOND line shows below the
+                # new title. v29 was removed on the theory the wrapper stopped short
+                # books pinning, but the real cause then was the old fixed-offset
+                # ladder; with the template's JS slot-tracker (v77) setting the h4
+                # offset from the live section-bar height, short books pin fine AND
+                # tall titles clear. h4 stays the FIRST child of .book so sticky
+                # resolves against the wrapper.
+                # $trailing (a section h2/h3 after a book) stays OUTSIDE the wrapper
+                # as a direct child of .booklist-page, which its own sticky needs.
                 "<div class=`"book`">$title<div class=`"$flowClass`">$headHtml$body</div></div>$trailing"
             }
             $html = $intro + ($books -join "`n")
@@ -817,5 +833,5 @@ setTimeout(()=>{s.innerText='';},2500);}
 
 # =============================================================================
 #  UserDashboard.ps1
-#  Version v28
+#  Version v30
 # =============================================================================

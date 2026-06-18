@@ -1,6 +1,50 @@
 #!/usr/bin/env bash
-FETCH_BOOKS_VERSION="83"   # bump on every change; echoed at startup so you can
-# v83: VERIFY-TIER CANDIDATES ("try up to N, let dc:title decide"). When a
+FETCH_BOOKS_VERSION="86"   # bump on every change; echoed at startup so you can
+# v86: EXPLICIT COLUMN ORDER via "#columns:" header. Lists may now declare their
+#      order: "#columns: Author | Title" or "#columns: Title | Author". Parsed like
+#      #tag:. When a list is Author|Title, the two fields are swapped right after the
+#      read so the script keeps its long-standing invariant ($author var = TITLE),
+#      meaning ALL downstream code is unchanged — only the entry point adapts. No
+#      header => default Title|Author (pre-v86 behaviour), so existing un-annotated
+#      lists are untouched. Also settable per-run via COL_ORDER env. This removes
+#      the guesswork that caused the v85.1 verify bug (and the md5-guard fixes) —
+#      with the order known, no consumer has to infer which field is the title.
+#      The pre-v86 no-swap path is preserved as a commented block beside the swap
+#      for quick revert if the header approach surprises us. NOTE: this only wires
+#      fetch-books; tag-books/link-md still infer order — migrate them next.
+# v85.1: FIX dc:title verify for AUTHOR|TITLE lists. v83's post-download verify
+#        assumed the caller passed the wanted TITLE, but it was handed list field 1
+#        — which is the AUTHOR on Author|Title lists. So "Samantha Harvey|Orbital"
+#        verified the file "Orbital" against "Samantha Harvey", a false mismatch
+#        that discarded the CORRECT book (and burned the VERIFY_MAX_DLS cap chasing
+#        nothing). verify_epub_is_book now takes BOTH fields and accepts if the file
+#        title matches EITHER (one is the title, the other the author and simply
+#        won't match) — column-order agnostic. Same bidirectional containment used
+#        elsewhere; genuine wrong-book files (Head On for Lock In) still reject.
+# v85: FIX md5-guard FALSE POSITIVES (bidirectional title check). The three md5
+#      title-sanity guards (v81-82.2) compared row-title -> found-title ONE WAY
+#      (every row word must be in the found title). But the library often stores a
+#      SHORTER title than the list (no subtitle): row "Trigger Warning: Short
+#      Fictions and Disturbances" vs library "Trigger Warning". The one-way check
+#      failed that and wrongly flagged correct rows as contaminated, blanking them
+#      (Trigger Warning / Loki / The Clockwork Dynasty / In the Country We Love all
+#      got reset on 2026-06-16). Introduced a shared titles_compatible() helper used
+#      by all three guards: a match counts if EITHER title contains the other's
+#      meaningful words (sub/super-title is fine); only a genuine no-overlap pair
+#      (Lock In vs Head On) is treated as contaminated. Also DEDUPED the three
+#      copies of the comparison into the one helper.
+# v84: --tag-after + HOST python3 sanity check (added after a v83 verify-tier
+#      build had already been run on otis, so these get their own number to keep
+#      the startup banner an honest record of what's deployed). --tag-after runs
+#      tag-books.sh ONCE after the first pass (before --wait), off by default, not
+#      on wait-loop retries. python3 check: fatal at startup if host python3 is
+#      missing (without it every search silently returns nothing = false nomatch).
+# v83: VERIFY-TIER CANDIDATES ("try up to N, let dc:title decide") + --tag-after
+#      (runs tag-books.sh ONCE after the first pass, before the --wait loop, so a
+#      one-pass fetch leaves books tagged without a separate manual step; off by
+#      default; not run on wait-loop retry passes since tagging is slow). Also adds
+#      a HOST python3 sanity check at startup (fatal if missing — without it every
+#      search silently returns nothing = endless false nomatch). When a
 #      contaminated listing leaves the WRONG book as the only candidate clearing
 #      CONFIDENCE (Lock In: the imposter "Lock In 2 Head On" scores >0.6, the real
 #      "Lock In: A Novel..." scores below it and was never tried), the loop had
@@ -934,6 +978,10 @@ WAIT=1   # v69: --wait is now the DEFAULT (poll for quota recovery and re-attemp
          # Use --no-wait for a single one-shot pass (the old default). Ctrl-C
          # cleanly stops a waiting run (the EXIT trap tidies .part-* files).
 SKIP_STANDARD=0   # --skipstandard sets this; applied after arg parsing to force SE_FIRST=0
+TAG_AFTER="${TAG_AFTER:-0}"   # v83: --tag-after runs the tagger once after the first
+                              # pass (before --wait). Env-settable so a wrapper/timer
+                              # can opt in without the flag. 0 = off (unchanged default).
+TAGGER="${TAGGER:-$(dirname "$0")/tag-books.sh}"   # the tagger invoked by --tag-after
 # --wait tunables: after a pass, if any books remain quota_blocked, keep the
 # process open and re-attempt them once quota recovers. Poll every WAIT_INTERVAL
 # seconds; only run a retry pass once downloads_left >= QUOTA_FLOOR + WAIT_MARGIN;
@@ -978,6 +1026,14 @@ while [ $# -gt 0 ]; do
             [ "$#" -ge 2 ] || { echo "error: --tag requires a value" >&2; exit 1; }
             TAG="$(printf '%s' "$2" | sed 's/[[:space:]]*,[[:space:]]*/,/g; s/,\{2,\}/,/g; s/^[[:space:]]*//; s/[[:space:]]*$//; s/^,//; s/,$//')"
             shift 2 ;;
+        --tag-after)
+            # v83: after the FIRST pass completes (before any --wait loop), run the
+            # tagger once over the processed list(s), so freshly-downloaded+imported
+            # books get their #tag: tags without a separate manual step. Runs ONCE
+            # per invocation, NOT on every wait-loop retry pass (tagging is slow and
+            # re-tagging each 30-min wait cycle would be wasteful). Off by default so
+            # timer/one-shot runs are unchanged.
+            TAG_AFTER=1; shift ;;
         --help|-h) sed -n '2,48p' "$0"; exit 0 ;;
         -*)        echo "unknown option: $1" >&2; exit 1 ;;
         *)         FILES+=("$1"); shift ;;
@@ -1048,6 +1104,25 @@ log() {
         printf '%s  %s\n' "$ts" "$msg" >&2
     fi
 }
+
+# ---- host python3 sanity check (v83) ---------------------------------------
+# The script leans on host python3 for URL-encoding search queries, parsing
+# Standard Ebooks candidates, and extracting FlareSolverr/Anna's JSON. Those call
+# sites swallow stderr (2>/dev/null) so a MISSING python3 wouldn't error loudly —
+# it would silently make every search return nothing, i.e. an endless stream of
+# false 'nomatch'. A systemd timer with a thin PATH, a removed package, or a
+# broken alias are all realistic ways this happens on otis. Fail LOUD and early
+# instead. (This is the HOST python3; the in-container OPF extractor is a separate,
+# deliberately fail-OPEN path — its absence must not reject books, but the host
+# one is load-bearing for matching, so its absence must abort.)
+if ! command -v python3 >/dev/null 2>&1; then
+    log "FATAL: host python3 not found on PATH ($PATH). It is required for query"
+    log "       encoding and result parsing; without it every search silently"
+    log "       returns nothing (false nomatch). Install python3 on otis or fix"
+    log "       the PATH (systemd timers often have a minimal PATH — set it in the"
+    log "       unit or use an absolute python3)."
+    exit 1
+fi
 
 # ---- interactive mode: nnn TSV picker --------------------------------------
 # When called with no file args, open nnn in $TSV_DIR as a file picker. Select a
@@ -2036,6 +2111,31 @@ print(best)
 # for the full rationale (the GUI lock race that sent owned books back to Anna's).
 . "$(dirname "$0")/calibre-lib.sh"
 
+# titles_compatible ROW_TITLE FOUND_TITLE -> rc 0 if the two titles plausibly name
+# the SAME book, rc 1 if they look like DIFFERENT books. Used by the three md5
+# title-sanity guards (pre-search / backfill / backstop) to decide whether an md5
+# match landing on a library book is real or a contaminated cross-link.
+#
+# It is BIDIRECTIONAL on purpose. title_full_match(A,B) is one-way: it requires
+# every meaningful word of A to be in B. A library record very often stores a
+# SHORTER title than the list row (no subtitle): list "Trigger Warning: Short
+# Fictions and Disturbances" vs library "Trigger Warning". A one-way row->found
+# check FAILS that (the found title lacks "short/fictions/disturbances") and would
+# wrongly flag a correct match as contaminated — which is exactly what blanked
+# Trigger Warning / Loki / Clockwork Dynasty / In the Country We Love. So we accept
+# the match if EITHER title's meaningful words are contained in the other: a true
+# contamination (Lock In vs Head On) shares no words and fails BOTH directions; a
+# subtitle difference passes in one direction. (We still also try the OTHER list
+# field as a fallback, since list column order is ambiguous.)
+titles_compatible() {
+    local rowt="$1" foundt="$2"
+    [ -z "$foundt" ] && return 0   # no found title to compare -> don't flag (fail-open)
+    # match if row⊆found OR found⊆row (either direction = same book + sub/super title)
+    [ "$(title_full_match "$rowt"   "$foundt")" = "1.000" ] && return 0
+    [ "$(title_full_match "$foundt" "$rowt"  )" = "1.000" ] && return 0
+    return 1
+}
+
 # returns 0 and echoes a calibre id if the book is already present; 1 if not.
 # returns 2 if the library check could not run (calibredb error) — caller should
 # treat 2 as "unknown", and (to avoid wasting quota on a possible duplicate)
@@ -2101,11 +2201,9 @@ except Exception: pass' 2>/dev/null)"
             fi
             log "    [md5-guard] found_title='${found_title}'  f1='$f1' f2='$f2'"
             if [ -n "$found_title" ]; then
-                tg1="$(title_full_match "$f1" "$found_title")"
-                tg2="$(title_full_match "$f2" "$found_title")"
-                log "    [md5-guard] tg1($f1)=$tg1 tg2($f2)=$tg2"
-                if [ "$tg1" != "1.000" ] && [ "$tg2" != "1.000" ]; then
-                    log "    md5 ${md5} is on calibre id $idn ('$found_title') but neither '$f1' nor '$f2' matches that title — treating md5 as contaminated, not trusting it"
+                if ! titles_compatible "$f1" "$found_title" \
+                   && ! titles_compatible "$f2" "$found_title"; then
+                    log "    md5 ${md5} is on calibre id $idn ('$found_title') but neither '$f1' nor '$f2' is compatible with that title — treating md5 as contaminated, not trusting it"
                     idn=""   # fall through to the title/author check below
                 fi
             fi
@@ -2387,31 +2485,44 @@ except Exception:
 
 # v81: verify a downloaded epub really IS the wanted book, using its honest
 # internal title (not Anna's listing). Returns 0 = ok/accept (match, or title
-# unreadable -> fail open), 1 = mismatch (reject: a different book). $want_title
-# is the LIST title (note the fetch-books field inversion: caller passes the
-# actual wanted TITLE here regardless of column order). Only meaningful for epub;
-# callers skip it for other formats.
+# unreadable -> fail open), 1 = mismatch (reject: a different book).
+# v85.1: takes BOTH list fields ($f1 $f2) instead of assuming which is the title.
+# The TSV column order is NOT fixed (the schema allows Title|Author OR Author|
+# Title), so a caller passing "the title" can't know which field that is. The
+# file's dc:title is accepted if it's compatible with EITHER field — so an
+# Author|Title list ("Samantha Harvey|Orbital") verifies the file "Orbital"
+# against field 2, and a Title|Author list verifies against field 1, with no
+# column-order assumption. Only meaningful for epub; callers skip other formats.
 verify_epub_is_book() {
-    local container="$1" path="$2" want_title="$3"
-    [ -z "$want_title" ] && return 0          # nothing to check against -> accept
+    local container="$1" path="$2" f1="$3" f2="${4:-}"
+    [ -z "$f1" ] && [ -z "$f2" ] && return 0   # nothing to check against -> accept
     local ftitle; ftitle="$(epub_internal_title "$container" "$path")"
     [ -z "$ftitle" ] && return 0              # unreadable -> FAIL OPEN (accept)
-    # necessary condition: every meaningful wanted word present in the file title
-    local g; g="$(title_full_match "$want_title" "$ftitle")"
-    if [ "$g" != "1.000" ]; then
-        log "    TITLE MISMATCH: wanted '$want_title' but file is '$ftitle' — discarding (Anna's metadata was wrong)"
-        return 1
+    # Accept if the file's title is compatible with EITHER list field (bidirectional
+    # word-containment, so subtitles on either side are fine). One of the two fields
+    # is the real title; the other is the author and simply won't match — that's
+    # expected and not a rejection on its own.
+    if _verify_title_field "$f1" "$ftitle" || _verify_title_field "$f2" "$ftitle"; then
+        return 0
     fi
-    # weak/short wanted title: also require the file title to START with it, so a
-    # one-word wanted title isn't satisfied by a different book that merely
-    # contains the word (e.g. wanted "Eragon" vs file "Murtagh: The World of
-    # Eragon"). Same rule as the upstream short_title_ok gate.
-    local mw; mw="$(meaningful_words "$want_title")"
+    log "    TITLE MISMATCH: file is '$ftitle' but matches neither '$f1' nor '$f2' — discarding (Anna's metadata was wrong)"
+    return 1
+}
+
+# helper: is the file title a valid match for this single list field?
+# bidirectional containment, plus the weak-title start-anchor for 1-word fields.
+_verify_title_field() {
+    local want="$1" ftitle="$2"
+    [ -z "$want" ] && return 1
+    # bidirectional: want⊆file OR file⊆want (handles subtitle on either side)
+    local fwd rev; fwd="$(title_full_match "$want" "$ftitle")"; rev="$(title_full_match "$ftitle" "$want")"
+    [ "$fwd" != "1.000" ] && [ "$rev" != "1.000" ] && return 1
+    # weak/short wanted field: require the file title to START with it, so a
+    # one-word field isn't satisfied by a different book that merely contains the
+    # word (wanted "Eragon" vs file "Murtagh: The World of Eragon").
+    local mw; mw="$(meaningful_words "$want")"
     if [ "$mw" -lt 2 ]; then
-        if ! short_title_ok "$want_title" "$ftitle"; then
-            log "    TITLE MISMATCH (weak title): wanted '$want_title' but file is '$ftitle' — discarding"
-            return 1
-        fi
+        short_title_ok "$want" "$ftitle" || return 1
     fi
     return 0
 }
@@ -2621,7 +2732,7 @@ print(stem + ext)
     # reject. $tmp is still the pre-move temp path inside DL_CONTAINER.
     case "${fname##*.}" in
         epub|EPUB)
-            if ! verify_epub_is_book "$DL_CONTAINER" "$tmp" "$want_title"; then
+            if ! verify_epub_is_book "$DL_CONTAINER" "$tmp" "$want_title" "$want_author"; then
                 docker exec "$DL_CONTAINER" rm -f "$tmp" 2>/dev/null
                 return 5
             fi ;;
@@ -2732,6 +2843,11 @@ _process_file_body() {
     local tmp; tmp="$(mktemp)"; CLEANUP_FILES+=("$tmp")
     local n_done=0 n_skip=0 n_nomatch=0 n_fail=0 n_bad=0 n_qblock=0 n_pdfonly=0
     local file_tag="$TAG"   # --tag wins; else picked up from a #tag: header below
+    # v86: per-file column order. Default 'title-author' = pre-v86 behaviour
+    # (field 1 is the title). A "#columns: Author | Title" header flips it. Can also
+    # be forced globally via the COL_ORDER env for a one-off run on an unannotated
+    # list (e.g. COL_ORDER=author-title ./fetch-books.sh authorfirst.tsv).
+    local COL_ORDER="${COL_ORDER:-title-author}"
     # Per-file Standard Ebooks toggle. Starts from the global SE_FIRST (which the
     # --skipstandard flag / SE_FIRST env may already have forced to 0), and a
     # "#skipstandard" directive line in THIS list forces it to 0 for this file
@@ -2772,6 +2888,24 @@ _process_file_body() {
                     log "  list tag from header: '$file_tag'"
                 fi
                 printf '%s\n' "$raw" >> "$tmp"; continue ;;
+            \#columns:*|\#column:*|\#cols:*)
+                # v86: explicit column-order directive, e.g. "#columns: Author | Title"
+                # or "#columns: Title | Author". Removes the guesswork that made an
+                # Author|Title list (e.g. "Samantha Harvey|Orbital") verify the file
+                # title against the author field. We only care which of the first two
+                # columns is the TITLE; the rest (status|md5|date|id) are fixed. If
+                # the directive names AUTHOR first, we swap the two fields after the
+                # read so the rest of the script keeps its existing invariant
+                # ($author var holds the TITLE). Absent header => default order
+                # (field 1 = title), i.e. unchanged behaviour for old lists.
+                local _ordspec; _ordspec="$(printf '%s' "$raw" | sed 's/^#[a-z]*:[[:space:]]*//I' | tr 'A-Z' 'a-z')"
+                case "$_ordspec" in
+                    author*'|'*title*|author*title*) COL_ORDER="author-title" ;;
+                    title*'|'*author*|title*author*) COL_ORDER="title-author" ;;
+                    *) log "  WARN: unrecognised #columns directive '$raw' — keeping default (title first)";;
+                esac
+                [ -n "${COL_ORDER:-}" ] && log "  column order from header: $COL_ORDER"
+                printf '%s\n' "$raw" >> "$tmp"; continue ;;
             \#skipstandard|\#skip-standard|\#skipstandard\ *|\#skip-standard\ *)
                 # in-file directive: skip Standard Ebooks for this whole list,
                 # going straight to Anna's. Equivalent to the --skipstandard flag
@@ -2800,6 +2934,19 @@ _process_file_body() {
         #     quota frees up.
         local raw_nocr; raw_nocr="${raw%$'\r'}"
         IFS='|' read -r author title status md5 date bookid rest <<< "$raw_nocr"
+        # v86: honour an explicit "#columns:" header. The whole script assumes the
+        # invariant "$author var holds the TITLE, $title var holds the AUTHOR"
+        # (historical; field 1 is the title). If the list declared Author|Title,
+        # field 1 is really the AUTHOR, so swap the two vars to restore the
+        # invariant — then ALL downstream code works unchanged. Default (no header,
+        # or Title|Author) leaves them as-is.
+        if [ "${COL_ORDER:-title-author}" = "author-title" ]; then
+            local _swap="$author"; author="$title"; title="$_swap"
+        fi
+        # --- OLD BEHAVIOUR (pre-v86), kept for reference / quick revert if the
+        # --- header approach causes trouble: no swap, field 1 always treated as
+        # --- title. To revert: delete the if-swap above and rely on this.
+        #   : # (fields used exactly as read: author=field1=title, title=field2=author)
         # field count for the malformed guard: count '|' separators + 1
         local seps="${raw_nocr//[!|]/}"; local nfields=$(( ${#seps} + 1 ))
         # trim surrounding whitespace on the two fields we match on
@@ -2921,8 +3068,8 @@ try:
     print(b.get("title","") or "")
 except Exception: pass' 2>/dev/null)"
                             if [ -n "$_bf_title" ] \
-                               && [ "$(title_full_match "$author" "$_bf_title")" != "1.000" ] \
-                               && [ "$(title_full_match "$title" "$_bf_title")" != "1.000" ]; then
+                               && ! titles_compatible "$author" "$_bf_title" \
+                               && ! titles_compatible "$title"  "$_bf_title"; then
                                 _bf_ok=0
                             fi
                             log "    [backfill-guard] found_title='${_bf_title}' row-title='$author' row-author='$title' -> $([ "$_bf_ok" -eq 0 ] && echo CONTAMINATED || echo ok)"
@@ -3133,8 +3280,8 @@ try:
     print(b.get("title","") or "")
 except Exception: pass' 2>/dev/null)"
                     if [ -n "$_bs_title" ] \
-                       && [ "$(title_full_match "$author" "$_bs_title")" != "1.000" ] \
-                       && [ "$(title_full_match "$title" "$_bs_title")" != "1.000" ]; then
+                       && ! titles_compatible "$author" "$_bs_title" \
+                       && ! titles_compatible "$title"  "$_bs_title"; then
                         _bs_contam=1
                     fi
                 fi
@@ -3386,6 +3533,25 @@ for f in "${FILES[@]}"; do
     process_file "$f"
 done
 
+# ---- --tag-after: tag the first wave once, before any --wait loop -----------
+# v83: run the tagger ONCE here, after the initial pass and before the wait loop,
+# so freshly downloaded+imported books pick up their #tag: tags without a separate
+# manual run. Deliberately NOT inside the wait loop — tagging is slow and the
+# 30-min wait cycle would re-run it pointlessly. A no-op under --dry-run or if the
+# tagger isn't found (logged, not fatal). Books imported by a LATER wait pass are
+# still covered by the normal tag-queue/sweep path; this just handles the common
+# case (one pass, no quota wait) without the extra manual step.
+if [ "$TAG_AFTER" -eq 1 ] && [ "$DRY_RUN" -eq 0 ]; then
+    if [ -x "$TAGGER" ]; then
+        log "=== --tag-after: running tagger over $((${#FILES[@]})) list(s) ==="
+        for f in "${FILES[@]}"; do
+            "$TAGGER" "$f" || log "  --tag-after: tagger returned non-zero for $(basename "$f") (continuing)"
+        done
+    else
+        log "  --tag-after: tagger not found/executable at $TAGGER — skipping (run tag-books.sh manually)"
+    fi
+fi
+
 # ---- --wait: keep trying quota_blocked books as quota recovers --------------
 # After the initial pass, if any books are quota_blocked (Anna's quota was spent)
 # and --wait is set, hold the process open: poll quota every WAIT_INTERVAL, and
@@ -3448,5 +3614,5 @@ if [ "$WAIT" -eq 1 ] && [ "$DRY_RUN" -eq 0 ] && [ "${ANNAS_AVAILABLE:-1}" -eq 1 
 fi
 log "=== fetch-books done ==="
 # =============================================================================
-# version: FETCH_BOOKS_VERSION 83
+# version: FETCH_BOOKS_VERSION 86
 # =============================================================================

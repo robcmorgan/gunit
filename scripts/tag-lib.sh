@@ -1,5 +1,29 @@
 #!/usr/bin/env bash
-TAG_LIB_VERSION="4"   # bump on every change
+TAG_LIB_VERSION="5"   # bump on every change
+# v5: FIX find_book_id FALSE-POSITIVE on same-author books (blob -> fields).
+#     find_book_id scored each candidate with book_match_score, which flattens the
+#     candidate's title+authors into ONE blob and runs the title gate against it.
+#     For a SHORT wanted title whose meaningful word happens to appear anywhere in
+#     a same-author candidate's blob, the gate passes the WRONG book. Live failure:
+#     list row "The Poet X / Elizabeth Acevedo" (correct id 1944) was matched to id
+#     1936 "With the Fire on High" — a DIFFERENT Acevedo book — because the blob
+#     scorer's title gate isn't anchored to the candidate's TITLE field. This is the
+#     same contamination class fetch-books fixed (v81/v85) with a title-aware,
+#     field-separated check; the tag path had drifted and never received it.
+#     Fix: find_book_id now extracts the candidate's title and author SEPARATELY
+#     (it already lists `-f title,authors`) and scores with book_match_fields (the
+#     structured matcher: wanted-title vs candidate-TITLE, wanted-author vs
+#     candidate-AUTHOR, with the short_title_ok start-anchor gate). A word that
+#     appears only in the candidate's author or in a sibling title can no longer
+#     satisfy a title gate. tag-books and tag-queue both inherit this via the shared
+#     lib, so they can't drift from fetch-books again.
+#     ALSO: the per-call `2>/dev/null` suppressions inside find_book_id are removed.
+#     They hid real lock/traceback errors as "no match" (a book that exists reads as
+#     absent and is silently skipped). cdb already strips plugin noise and detects
+#     locks via retry; its stderr now propagates so a genuine failure is visible in
+#     the log instead of masquerading as a clean miss. A legitimate zero-result
+#     (calibredb prints "No books matching..." to stderr, non-zero exit) is NOT an
+#     error and is handled by the empty-stdout path exactly as before.
 # v4: cdb() now RETRIES with backoff to survive transient library-lock contention
 #     with the always-on GUI container. Symptom it fixes: the SAME query returns
 #     ids one moment and nothing the next, because the GUI holds metadata.db and a
@@ -25,7 +49,7 @@ TAG_LIB_VERSION="4"   # bump on every change
 # =============================================================================
 #  tag-lib.sh — shared calibre tagging logic for tag-books.sh and tag-queue.sh.
 #
-#  Source AFTER match-lib.sh (needs book_match_score, ge) and after the caller
+#  Source AFTER match-lib.sh (needs book_match_fields, ge) and after the caller
 #  has set the calibre config vars (CALIBRE_CONTAINER, CALIBRE_LIBRARY,
 #  CONFIDENCE, ID_SCHEME, MAX_TAG_LEN, TAG_STOPLIST). Provides:
 #     cdb ...                 — run calibredb against the configured library
@@ -109,37 +133,67 @@ cdb() {
     done
 }
 
+# _cand_fields ID -> echoes "TITLE<TAB>AUTHOR" for a calibre id, or nothing.
+# Structured extraction (NOT a flattened blob) so the caller can score the wanted
+# title against the candidate's TITLE and the wanted author against the candidate's
+# AUTHOR — see v5 notes. stderr propagates through cdb (no local suppression) so a
+# real read failure is visible rather than silently read as "no fields".
+_cand_fields() {
+    local id="$1"
+    cdb list -f title,authors -s "id:$id" --for-machine \
+        | python3 -c '
+import sys, json
+try:
+    d = json.load(sys.stdin); b = d[0] if d else {}
+    a = b.get("authors", ""); a = " ".join(a) if isinstance(a, list) else a
+    t = b.get("title", "") or ""
+    # TAB-separated so title and author stay distinct fields for book_match_fields
+    sys.stdout.write(t + "\t" + (a or ""))
+except Exception:
+    pass'
+}
+
 # find a calibre book id. Args: f1 f2 md5. Echoes "<id>\t<via>" (via=id|fuzzy)
-# or nothing. md5-identifier exact first, then strict-scored fuzzy fallback.
+# or nothing.
+#   1) exact by md5 identifier (annas:<md5>) when md5 is given;
+#   2) else fuzzy: title-search each field, then score each candidate with the
+#      STRUCTURED matcher book_match_fields (wanted-title vs candidate TITLE,
+#      wanted-author vs candidate AUTHOR). v5: was book_match_score (blob), which
+#      false-matched same-author books (Poet X -> With the Fire on High).
+# NOTE on field inversion: callers pass f1=list-title, f2=list-author (the
+# fetch-books convention). book_match_fields scores BOTH interpretations, so the
+# argument order f1,f2 is correct regardless.
 find_book_id() {
     local f1="$1" f2="$2" md5="$3"
     if [ -n "$md5" ]; then
         local exact
-        exact="$(cdb search "identifiers:${ID_SCHEME}:${md5}" 2>/dev/null | tr ',' ' ')"
+        # stderr propagates (no 2>/dev/null): a lock/traceback must not look like
+        # a clean "no identifier match". cdb already strips plugin noise + retries.
+        exact="$(cdb search "identifiers:${ID_SCHEME}:${md5}" | tr ',' ' ')"
         set -- $exact
         if [ "$#" -ge 1 ]; then printf '%s\tid\n' "$1"; return 0; fi
     fi
     local ids="" field
     for field in "$f1" "$f2"; do
         local hit
-        hit="$(cdb search "title:\"$field\"" 2>/dev/null | tr ',' ' ')"
-        [ -z "$hit" ] && hit="$(cdb search "$field" 2>/dev/null | tr ',' ' ')"
+        hit="$(cdb search "title:\"$field\"" | tr ',' ' ')"
+        [ -z "$hit" ] && hit="$(cdb search "$field" | tr ',' ' ')"
         ids="$ids $hit"
     done
     ids="$(printf '%s\n' $ids | awk 'NF && !seen[$0]++' | tr '\n' ' ')"
     [ -z "$ids" ] && return 1
-    local id best_id="" best_score="0.000" cand
+    local id best_id="" best_score="0.000" fields ctitle cauthor s
     for id in $ids; do
-        cand="$(cdb list -f title,authors -s "id:$id" --for-machine 2>/dev/null \
-            | python3 -c '
-import sys, json
-try:
-    d = json.load(sys.stdin); b = d[0] if d else {}
-    a = b.get("authors", ""); a = " ".join(a) if isinstance(a, list) else a
-    print((b.get("title","") + " " + a).strip())
-except Exception: pass' 2>/dev/null)"
-        [ -z "$cand" ] && continue
-        local s; s="$(book_match_score "$f1" "$f2" "$cand")"
+        # only consider plausible numeric ids (search noise guard)
+        case "$id" in ''|*[!0-9]*) continue;; esac
+        fields="$(_cand_fields "$id")"
+        [ -z "$fields" ] && continue
+        ctitle="${fields%%$'\t'*}"
+        cauthor="${fields#*$'\t'}"
+        [ "$cauthor" = "$fields" ] && cauthor=""   # no TAB -> author empty
+        # STRUCTURED score: wanted title vs candidate TITLE, wanted author vs
+        # candidate AUTHOR. This is the contamination-safe matcher (v5).
+        s="$(book_match_fields "$f1" "$f2" "$ctitle" "$cauthor")"
         if ge "$s" "$best_score"; then best_score="$s"; best_id="$id"; fi
     done
     if [ -n "$best_id" ] && ge "$best_score" "$CONFIDENCE"; then
@@ -230,3 +284,5 @@ apply_tags() {
     fi
     return 1
 }
+
+# version: TAG_LIB_VERSION 5
