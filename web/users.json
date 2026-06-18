@@ -1,0 +1,33 @@
+{
+  "_comment": "Per-user data keyed by exact Cloudflare email (== Shelfmark folder == Calibre-Web username == userprefs filename basis). GREETING: a user may have 'greetings' (a list — one is picked at RANDOM each page load), OR a single 'greeting' string, OR neither (falls back to defaultGreeting with {name}). {name} is substituted in any of them. 'shelf'/'tag' drive Kindle sync.",
+  "defaultGreeting": "Welcome to the library, {name}.",
+  "users": [
+    {
+      "email": "shops@rob.me.uk",
+      "name": "Rob",
+      "greetings": [
+        "Welcome back, boss.",
+        "The library awaits, {name}.",
+        "What are we reading today, {name}?",
+        "Good to see you again.",
+        "Back for more, are we?"
+      ],
+      "shelf": "forKindle",
+      "tag": "robm"
+    },
+        {
+      "email": "robert.whiteing@gmail.com",
+      "name": "Rob W",
+      "greetings": [
+        "Wise guys realise....",
+        "Get stewed",
+        "My life is a delicate balance",
+        "Still buyable",
+        "There's more to life than books, I'm told",
+        "In my view she hadn't even read the thing."
+      ],
+      "shelf": "forKindle",
+      "tag": "robw"
+    }
+  ]
+}

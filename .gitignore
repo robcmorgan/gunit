@@ -1,6 +1,9 @@
 # Secrets and credentials
 config/calibre-server.env
 stacks_config/config.yaml
+*.env
+stack.env
+*.key
 
 # Runtime state and databases
 config/tag-queue.json
@@ -8,6 +11,7 @@ config/tag-queue.json.bak
 config/tag-queue.json.lock
 state/
 stacks_config/
+stacks_data/
 stacks_logs/
 
 # Personal data
@@ -21,3 +25,12 @@ web/lists/covers/
 web/lists/*.bak
 tsv-lists/*.bak
 scripts/*.bak*
+
+# Scratch / throwaway
+temp.sh
+tmp/
+
+# Editor and OS noise
+*.swp
+*.lock
+.DS_Store
