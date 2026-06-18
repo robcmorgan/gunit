@@ -1,0 +1,111 @@
+#schema: gunit book list v1 — columns are PIPE-separated (|)
+#  1 title    2 author    3 status    4 md5/source    5 date    6 calibre_id|se-empty
+#  status: (blank)=pending  downloaded  nomatch  failed  pdf-only  quota_blocked  tagged  queued/downloading/completed (legacy)
+#  col4: Anna's md5, or se:<author>/<title> for Standard Ebooks rows
+#  col6: calibre book id on DONE rows; the literal "se-empty" on quota_blocked/nomatch/pdf-only rows means SE was already searched and had nothing (skip re-search)
+#  lines beginning with # are comments; "#tag: NAME[, NAME...]" sets the calibre tags for this whole list
+#columns: Title | Author
+#tag: BookTok
+
+
+
+A Court of Mist and Fury (A Court of Thorns and Roses, #2)|Sarah J. Maas|downloaded|0302c28ddbaf2610ebe7ffa9c74a62d8|2026-06-18T21:16
+The Cruel Prince (The Folk of the Air, #1)|Holly Black|downloaded|027cc61e4c0b9d1f7e4506f811a07858|2026-06-18T21:17
+Six of Crows (Six of Crows, #1)|Leigh Bardugo|downloaded|1a6797bb476f4abc127b32f3ca83fd4e|2026-06-18T21:18
+A Court of Thorns and Roses (A Court of Thorns and Roses, #1) | Sarah J. Maas
+Bright Burns the Flame (Bright Burns the Flame, #1) | Angelina J. Steffort
+Fourth Wing (The Empyrean, #1) | Rebecca Yarros
+Shatter Me (Shatter Me, #1) | Tahereh Mafi
+The Lightning Thief (Percy Jackson and the Olympians, #1) | Rick Riordan
+A Court of Wings and Ruin (A Court of Thorns and Roses, #3) | Sarah J. Maas
+The Song of Achilles | Madeline Miller
+The Inheritance Games (The Inheritance Games, #1) | Jennifer Lynn Barnes
+A Good Girl's Guide to Murder (A Good Girl's Guide to Murder, #1) | Holly Jackson
+The Seven Husbands of Evelyn Hugo | Taylor Jenkins Reid
+Caraval (Caraval, #1) | Stephanie Garber
+From Blood and Ash (Blood and Ash, #1)|Jennifer L. Armentrout|downloaded|10f511508890ba2c9e50de5827865369|2026-06-18T21:20
+The Wicked King (The Folk of the Air, #2) | Holly Black
+House of Earth and Blood (Crescent City, #1) | Sarah J. Maas
+The Queen of Nothing (The Folk of the Air, #3) | Holly Black
+Powerless (The Powerless Trilogy, #1) | Lauren Roberts
+Shadow and Bone (Shadow and Bone, #1)|Leigh Bardugo|downloaded|04bdacf1a9c8bffb84e4173d3b59b59c|2026-06-18T21:22
+It Ends with Us (It Ends with Us, #1)|Colleen Hoover|downloaded|2cd908079c6a8805457a4f367b1dc159|2026-06-18T21:27
+The Selection (The Selection, #1)|Kiera Cass|downloaded|05b530d831170ee6c6e20be389a7ad1d|2026-06-18T21:29
+Throne of Glass (Throne of Glass, #1)|Sarah J. Maas|downloaded|1ebb1b0d4501c7ea05404ecab3b56d12|2026-06-18T21:30
+Divergent (Divergent, #1)|Veronica Roth|downloaded||2026-06-18T21:30|1716
+A Court of Silver Flames (A Court of Thorns and Roses, #5)|Sarah J. Maas|downloaded|657c39f34fc3730cb1b6dc51b0e10d15|2026-06-18T21:31
+A Court of Frost and Starlight (A Court of Thorns and Roses, #4)|Sarah J. Maas|downloaded|0ec91949f0486783a8e1ab3ee664763c|2026-06-18T21:32
+Red Queen (Red Queen, #1)|Victoria Aveyard|downloaded|05718e9771f6c84aa35eea2bcf749987|2026-06-18T21:33
+Better Than the Movies (Better Than the Movies, #1) | Lynn Painter
+Circe | Madeline Miller
+Terms and Conditions Apply: Social Media Apps: Promises Vs Reality | R. Suleman
+Once Upon a Broken Heart (Once Upon a Broken Heart, #1) | Stephanie Garber
+Kingdom of Ash (Throne of Glass, #7) | Sarah J. Maas
+The Book Thief | Markus Zusak
+The Invisible Life of Addie LaRue | V.E. Schwab
+Punk 57|Penelope Douglas|downloaded||2026-06-18T21:36|2053
+The Wrath and the Dawn (The Wrath and the Dawn, #1) | Renée Ahdieh
+City of Bones (The Mortal Instruments, #1)|Cassandra Clare|downloaded|25b89d7e4b4868c7016ab9e54cc854ac|2026-06-18T21:37
+Heartless | Marissa Meyer
+Crown of Midnight (Throne of Glass, #2) | Sarah J. Maas
+A Kingdom of Flesh and Fire (Blood and Ash, #2)|Jennifer L. Armentrout|downloaded|06a332c2ce8511c4d05f9b7534350f5b|2026-06-18T21:38
+Verity | Colleen Hoover
+Divine Rivals (Letters of Enchantment, #1)|Rebecca Ross|downloaded|0f4d572fc47738bd17d512d45ac96b6f|2026-06-18T21:39
+The Prison Healer (The Prison Healer, #1) | Lynette Noni
+A Touch of Darkness (Hades x Persephone, #1) | Scarlett St. Clair
+Legendborn (Legendborn #1)|Tracy Deonn|downloaded|1b204f9f436dc35db0b7b5f3312eda24|2026-06-18T21:41
+The City of Brass (The Daevabad Trilogy, #1) | S.A. Chakraborty
+The Poppy War (The Poppy War, #1) | R.F. Kuang
+Assistant to the Villain (Assistant to the Villain, #1) | Hannah Nicole Maehrer
+To Kill a Kingdom (Hundred Kingdoms, #1) | Alexandra Christo
+Serpent & Dove (Serpent & Dove, #1) | Shelby Mahurin
+The Night Circus|Erin Morgenstern|downloaded|24c8934269c3fb430d26907459b17ee3|2026-06-18T21:42
+Crooked Kingdom (Six of Crows, #2) | Leigh Bardugo
+Legend (Legend, #1)|Marie Lu|downloaded|0a921dc5a96891ff8fd8c2d7fce59c55|2026-06-18T21:45
+Empire of Storms (Throne of Glass, #5)|Sarah J. Maas|downloaded|0cc9f7fd9ef94902bccc51c7dd77b7c4|2026-06-18T21:46
+We Were Liars|E. Lockhart|downloaded|13ba9c24ad82bec35a908ba21614765c|2026-06-18T21:47
+Good Girl, Bad Blood (A Good Girl's Guide to Murder, #2) | Holly Jackson
+As Good As Dead (A Good Girl's Guide to Murder, #3) | Holly Jackson
+Heir of Fire (Throne of Glass, #3) | Sarah J. Maas
+We Hunt the Flame (Sands of Arawiya, #1) | Hafsah Faizal
+Queen of Shadows (Throne of Glass, #4) | Sarah J. Maas
+Tower of Dawn (Throne of Glass, #6)|Sarah J. Maas|downloaded|022e89108d7f1e2e5293ad608edebde3|2026-06-18T21:49
+Babel: An Arcane History | R.F. Kuang
+Binding 13 (Boys of Tommen, #1) | Chloe Walsh
+The Silent Patient | Alex Michaelides
+Belladonna (Belladonna, #1) | Adalyn Grace
+The Reappearance of Rachel Price|Holly Jackson|downloaded||2026-06-18T21:50|2067
+The Priory of the Orange Tree (The Roots of Chaos, #1) | Samantha Shannon
+The Stolen Heir (The Stolen Heir Duology, #1) | Holly Black
+Emily Wilde’s Encyclopaedia of Faeries (Emily Wilde #1) | Heather Fawcett
+Cinder (The Lunar Chronicles, #1) | Marissa Meyer
+Behind Closed Doors | B.A. Paris
+Five Survive | Holly Jackson
+The Bridge Kingdom (The Bridge Kingdom, #1) | Danielle L. Jensen
+Crier's War (Crier's War, #1) | Nina Varela
+Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch | Terry Pratchett
+The Starless Sea | Erin Morgenstern
+King of Scars (King of Scars, #1) | Leigh Bardugo
+The Iron King (The Iron Fey, #1) | Julie Kagawa
+House of Salt and Sorrows (Sisters of the Salt, #1)|Erin A. Craig|downloaded|00147a714d6d57d4dadcaaec3164fdb6|2026-06-18T21:53
+Furyborn (Empirium, #1) | Claire Legrand
+You've Reached Sam (You've Reached Sam, #1)|Dustin Thao|quota_blocked|3232ab8dfd3591d4d155359b4fa1da62|2026-06-18T21:53|se-empty
+Twisted Lies (Twisted, #4) | Ana Huang
+I'm Glad My Mom Died | Jennette McCurdy
+Twisted Love (Twisted, #1) | Ana Huang
+The Shadows Between Us (The Stathos Sisters, #1) | Tricia Levenseller
+Cinderella Is Dead | Kalynn Bayron
+Red Rising (Red Rising Saga, #1) | Pierce Brown
+Bone Crier's Moon (Bone Grace, #1) | Kathryn Purdie
+Six Crimson Cranes (Six Crimson Cranes, #1)|Elizabeth Lim|quota_blocked||2026-06-18T21:54|se-empty
+Dance of Thieves (Dance of Thieves, #1) | Mary E. Pearson
+The Reckoning (The Unadjusteds #3)|Marisa Noelle|quota_blocked||2026-06-18T21:54|se-empty
+악역의 엔딩은 죽음뿐 1 (Villains are Destined to Die, Vol. 1) | Suol
+Smile (Smile, #1)|Raina Telgemeier|quota_blocked||2026-06-18T21:55|se-empty
+Sisters (Smile, #2)|Raina Telgemeier|quota_blocked||2026-06-18T21:55|se-empty
+Today Tonight Tomorrow (Rowan & Neil, #1) | Rachel Lynn Solomon
+Who Was William Shakespeare? | Celeste Davidson Mannis
+The Silent Sister | Diane Chamberlain
+Check & Mate|Ali Hazelwood|quota_blocked||2026-06-18T21:56|se-empty
+The Ballad of Never After (Once Upon a Broken Heart, #2) | Stephanie Garber
+The Crown of Gilded Bones (Blood and Ash, #3) | Jennifer L. Armentrout

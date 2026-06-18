@@ -1,0 +1,34 @@
+# =============================================================================
+#  sync-shelf-tags.service  (oneshot — runs once, triggered by the .timer)
+#
+#  Install alongside the timer:
+#    sudo cp sync-shelf-tags.sh /home/robmorgan/gunit/sync-shelf-tags.sh
+#    sudo chmod +x /home/robmorgan/gunit/sync-shelf-tags.sh
+#    sudo cp sync-shelf-tags.service sync-shelf-tags.timer /etc/systemd/system/
+#    sudo systemctl daemon-reload
+#    sudo systemctl enable --now sync-shelf-tags.timer
+#
+#  Run once manually (great for the first dry-run test):
+#    sudo systemctl start sync-shelf-tags.service
+#    journalctl -u sync-shelf-tags -f
+# =============================================================================
+
+[Unit]
+Description=Sync Calibre-Web shelves -> Calibre tags (shelf is boss)
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/home/robmorgan/gunit/sync-shelf-tags.sh
+
+Environment=MAPPING=/home/robmorgan/gunit/config/users.json
+Environment=CW_APP_DB=/data/compose/1/calibre_web_config/app.db
+Environment=CALIBRE_CONTAINER=calibre
+Environment=CALIBRE_LIB=/books/Calibre
+Environment=REQUIRE_NONEMPTY=true
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=sync-shelf-tags
+NoNewPrivileges=true

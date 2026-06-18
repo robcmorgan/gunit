@@ -1,0 +1,1470 @@
+## Alex Award winners
+
+*The Alex Awards are a list of 10 books each year, given to adult books which they think teens and young adults will particularly enjoy.*
+
+### 2026 Alex prize
+
+#### [The Girls Who Grew Big](https://books.rob.me.uk/book/1883)
+[![](covers/1883.jpg)](https://books.rob.me.uk/book/1883)
+##### gritty · sisterhood · survival
+##### Leila Mottley 
+##### Fiction, 2026, 320 pages
+
+> Alex prize says: "In Oakland, a resilient circle of young Black women refuses to be erased by systemic injustice and neighborhood gentrification. From the author of *Nightcrawling*, this raw, rhythmic novel pulses with the urgency of modern girlhood, capturing the fierce communal bonds and defiant grit required to survive an unyielding urban landscape."
+
+A powerful, contemporary novel exploring complex themes of girlhood, race, and survival in Oakland from the author of *Nightcrawling*.
+
+Perfect for readers who crave vivid, setting-as-character narratives that pulse with undeniable authenticity and momentum.
+
+#### [What Kind of Paradise](https://books.rob.me.uk/book/1884)
+[![](covers/1884.jpg)](https://books.rob.me.uk/book/1884)
+##### suspenseful · disappearance · dark secrets
+##### Janelle Brown
+##### Fiction, 2026, 360 pages
+
+> Alex prize says: "When a young woman vanishes from a high-society beachside party, the polished veneer of a glamorous California enclave begins to crack. Through alternating viewpoints, this sleek, addictive psychological puzzle exposes the dark family secrets, generational wealth anxieties, and toxic class friction hidden beneath a perfect landscape."
+
+A tense, sleekly written psychological thriller focused on a disappearance in a wealthy California enclave.
+
+Trades traditional thriller tropes for a scorching, *White Lotus*-style critique of privilege that will make you second-guess everyone's motives.
+
+#### [The Favorites](https://books.rob.me.uk/book/1871)
+[![](covers/1871.jpg)](https://books.rob.me.uk/book/1871)
+##### dark academia · revenge · ambition
+##### Layne Fargo
+##### Fiction, 2026, 336 pages
+
+> Alex prize says: "Inside an elite college campus, an exclusive underground society of women decides to take justice into their own hands. This sharp, transgressive thriller charts a dangerous path of female rage, institutional complicity, and the shifting lines of ambition, delivering a provocative reclamation of power from deep-seated systems."
+
+A sharp, dark, and addictive campus thriller exploring power dynamics and revenge at a prestigious university.
+
+Grab your favorite oversized sweater and dive into a narrative that bleeds autumn aesthetics and unapologetic cat-and-mouse tension.
+
+#### [Hole in the Sky](https://books.rob.me.uk/book/1885)
+[![](covers/1885.jpg)](https://books.rob.me.uk/book/1885)
+##### sci-fi · rogue AI · survival
+##### Daniel H. Wilson
+##### Fiction, 2026, 380 pages
+
+> Alex prize says: "In the silent wake of an algorithmic apocalypse, a fractured band of teenage survivors must navigate a dangerous wilderness ruled by an enigmatic rogue artificial intelligence. From the author of *Robopocalypse*, this high-concept, fast-moving adventure balances hard science with an urgent inquiry into technological dependency and the future of human consciousness."
+
+A high-concept, gripping sci-fi novel about AI and human survival from the author of *Robopocalypse*.
+
+A must-read for fans of dystopian survival series seeking their next massive, cinematic adrenaline fix.
+
+#### [These Heathens](https://books.rob.me.uk/book/1886)
+[![](covers/1886.jpg)](https://books.rob.me.uk/book/1886)
+##### witty · outcasts · chosen family
+##### Mia McKenzie
+##### Fiction, 2026, 312 pages
+
+> Alex prize says: "This brilliant, vibrant historical novel breathes contemporary life into a lesser-known pocket of the past, tracking a tight-knit circle of unconventional outcasts bucking against social rigidity. With sharp wit and deep empathy, it explores the enduring dynamics of race, class, and the saving grace of chosen families."
+
+A brilliant, sharp, and witty historical fiction novel exploring identity, community, and social friction.
+
+An absolute masterclass in voice that throws out the stuffy period-piece rulebook for something undeniably cool.
+
+#### [The Whyte Python World Tour](https://books.rob.me.uk/book/1893)
+[![](covers/1893.jpg)](https://books.rob.me.uk/book/1893)
+##### chaotic · music · indie rock
+##### Travis Kennedy
+##### Fiction, 2026, 288 pages
+
+> Alex prize says: "Hop into the back of a cramped, volatile tour van with a chaotic indie rock band chasing their musical obsession across a shifting underground scene. Bursting with dark humor and frenetic energy, this propulsive coming-of-age journey serves as a poignant tribute to DIY subcultures and the messy search for identity through noise."
+
+A fast-paced, high-energy novel that blends music culture, coming-of-age themes, and dark humor.
+
+Perfectly captures the smell of stale beer, long highway drives, and the unmatched thrill of a live underground set.
+
+#### [Plum](https://books.rob.me.uk/book/1872)
+[![](covers/1872.jpg)](https://books.rob.me.uk/book/1872)
+##### lyrical · nostalgia · rural life
+##### Andy Anderegg
+##### Fiction, 2026, 256 pages
+
+> Alex prize says: "Set against a quiet, rustic backdrop in rural America, this luminous debut gently uncovers the intricate, shifting dynamics of a family undergoing a structural transformation. Anderegg's exceptionally observant prose captures the tender pangs of adolescent longing, memory, and the physical landscapes that shape our youth."
+
+A lyrical, beautifully paced debut novel tracking youth, family, and memory in rural America.
+
+A slow-burn masterpiece designed to be savored, leaving an emotional resonance that lingers long after the final chapter.
+
+#### [Harriet Tubman: Live in Concert](https://books.rob.me.uk/book/1873)
+[![](covers/1873.jpg)](https://books.rob.me.uk/book/1873)
+##### satire · high camp · liberation
+##### Bob the Drag Queen
+##### Fiction, 2026, 272 pages
+
+> Alex prize says: "A wildly inventive, anachronistic tour de force that reframes historic liberation struggles through a modern, high-camp theatrical lens. Weaponizing brilliant satire and sharp political commentary, this electric narrative breaks down rigid historical reverence into an immediate, completely unpredictable, and empowering ride."
+
+A wildly inventive, genre-bending, and fiercely witty satirical novel.
+
+Essential reading for anyone who loves pop-culture mashups that completely shatter the boundaries of what fiction can do.
+
+#### [Sonita: My Fight Against Tyranny and My Escape to Freedom](https://books.rob.me.uk/book/1874)
+[![](covers/1874.jpg)](https://books.rob.me.uk/book/1874)
+##### inspiring · memoir · activism
+##### Sonita Alizada
+##### Memoir, 2026, 304 pages
+
+> Alex prize says: "In this urgent, vital autobiography, a young Afghan refugee documents her harrowing escape from a forced child marriage to become a pioneering international rapper. Her raw story charts the electrifying intersection of political protest and creative awakening, demonstrating how artistic expression can become a literal weapon for survival."
+
+An incredibly moving, vital memoir about a young Afghan rapper escaping a forced marriage to find her voice.
+
+Prepare to have your worldview completely rearranged by an autobiography that reads like a breathless battle cry.
+
+#### Insectopolis: A Natural History
+##### graphic · surveillance · philosophical
+##### Peter Kuper
+##### Graphic Novel, 2026, 160 pages
+
+> Alex prize says: "Through visually arresting, intricate illustrations, this stunning graphic narrative draws fascinating parallels between the structured complexities of insect hives and human urban societies. Kuper holds up a philosophical mirror to modern anxieties regarding surveillance, labor exploitation, and climate decay, demanding that we look closer at our environment."
+
+A stunning, visually rich graphic narrative that weaves natural history with sharp social commentary.
+
+Forget standard nature documentaries; this is sequential art at its absolute finest, demanding you look closer at the world beneath your feet.
+
+---
+
+### 2025 Alex prize
+
+#### [I Was a Teenage Slasher](https://books.rob.me.uk/book/1895)
+[![](covers/1895.jpg)](https://books.rob.me.uk/book/1895)
+##### horror · slasher · 1980s retro
+##### Stephen Graham Jones
+##### Fiction, 2024, 384 pages
+
+> Alex prize says: "A brilliant, blood-drenched deconstruction of retro horror cinema told entirely from the perspective of an accidental 1980s slasher villain. Cursed by a strange, karmic force in a small Texas town, this teenage narrator balances relentless genre thrills with a deeply empathetic look at isolation, grief, and adolescent heartbreak."
+
+A brilliant, genre-deconstructing horror novel told from the perspective of an accidental 1980s slasher-movie villain. Equal parts bloody and surprisingly poignant.
+
+Turn on the synth-wave soundtrack and lock the doors for a gory, nostalgic love letter that perfectly flips the script on 80s cinema.
+
+#### [How to Solve Your Own Murder](https://books.rob.me.uk/book/1896)
+[![](covers/1896.jpg)](https://books.rob.me.uk/book/1896)
+##### cozy mystery · diaries · village
+##### Kristen Perrin
+##### Fiction, 2024, 368 pages
+
+> Alex prize says: "Frances spent her entire life trying to thwart a fortune-teller's prediction of her murder, leaving behind a treasure trove of diaries when the crime finally occurs. Decades later, her grand-niece must navigate a quirky English village full of eccentric suspects and classic red herrings to unravel a smart, comforting whodunit puzzle."
+
+A fast-paced, clever British cozy mystery about a woman who spends her life trying to prevent her predicted murder, leaving her grand-niece to solve it when it finally happens.
+
+If you love the eccentric charm of *Knives Out*, this delightfully intricate puzzle will have you playing armchair detective all night.
+
+#### [The Dead Cat Tail Assassins](https://books.rob.me.uk/book/1897)
+[![](covers/1897.jpg)](https://books.rob.me.uk/book/1897)
+##### fantasy · assassins · stylized
+##### P. Djèlí Clark
+##### Fiction, 2024, 224 pages
+
+> Alex prize says: "A resurrected assassin bound to the strict bureaucracy of the goddess of the dead finds her undead existence upended when a new target forces her to question her forgotten past. This high-energy, fast-moving fantasy novella boasts an exceptionally vivid urban fantasy world, snappy dialogue, and non-stop action."
+
+A brilliant, fast-moving fantasy novella set in a world of gods and undead assassins. High energy, highly stylized, and very readable.
+
+Packed with more attitude and explosive set-pieces than a summer blockbuster, ideal for readers seeking massive stakes without the slow-burn commitment.
+
+#### [Daughters of Shandong](https://books.rob.me.uk/book/1875)
+[![](covers/1875.jpg)](https://books.rob.me.uk/book/1875)
+##### historical · civil war · resilience
+##### Eve J. Chung
+##### Fiction, 2024, 368 pages
+
+> Alex prize says: "Fleeing the terrifying violence of the Chinese Civil War after being abandoned by their patriarchal clan, a mother and her daughters embark on a treacherous journey to forge a new life. This sweeping, deeply emotional historical novel offers a powerful testament to familial resilience and the reclamation of female agency."
+
+A gripping, sweeping historical novel about a mother and her daughters fleeing the violence of the Chinese Civil War to forge a new life.
+
+An emotionally colossal journey that will leave you in absolute awe of the grit required to weather the darkest corners of history.
+
+#### [The Witchstone](https://books.rob.me.uk/book/1876)
+[![](covers/1876.jpg)](https://books.rob.me.uk/book/1876)
+##### stakes · demons · snappy banter
+##### Henry H. Neff
+##### Fiction, 2024, 400 pages
+
+> Alex prize says: "An unlikely alliance forms between a sarcastic, low-ranking demon and a cursed human teenager rushing to intercept an ancient, catastrophic magical artifact. Neff infuses a high-stakes fantasy race with breakneck pacing, complex political factions, and an incredibly entertaining stream of snappy banter."
+
+A witty, high-stakes fantasy adventure following a low-ranking demon and a young curse-bearer trying to avert a crisis.
+
+If you like your apocalyptic scenarios served with a side of razor-sharp sarcasm, the chemistry between these leads is pure gold.
+
+#### [The Witch of Colchis](https://books.rob.me.uk/book/1877)
+[![](covers/1877.jpg)](https://books.rob.me.uk/book/1877)
+##### feminist retelling · tragedy · agency
+##### Rosie Hewlett
+##### Fiction, 2024, 384 pages
+
+> Alex prize says: "Stripping away traditional classical biases, this sharp, atmospheric mythological retelling places the notorious sorceress Medea squarely in the center of her own tragic narrative. Hewlett tracks her complex journey from a gifted princess to a desperate exile, delivering a gripping, contemporary-feeling psychological character study."
+
+A sharp, modern mythological feminist retelling focusing on the dark power and complex psychology of Medea.
+
+Handing the microphone directly to the antagonist transforms this classic myth into an addictive, dangerous thriller.
+
+#### [Beautiful People: My Thirteen Truths About Disability](https://books.rob.me.uk/book/1878)
+[![](covers/1878.jpg)](https://books.rob.me.uk/book/1878)
+##### essays · candid · internet culture
+##### Melissa Blake
+##### Memoir, 2024, 272 pages
+
+> Alex prize says: "With incredible wit and fierce honesty, journalist Melissa Blake uses her distinct voice to dismantle harmful cultural stereotypes about living with a genetic syndrome. This candid collection of essays tackles internet trolling, media representation, and relationships, celebrating individual identity with defiant joy."
+
+An incredibly engaging, witty, and fiercely honest memoir/essay collection about navigating the modern world with a disability.
+
+The author serves as the uncompromising best friend you didn't know you needed in this laugh-out-loud, empowering manifesto.
+
+#### Woman, Life, Freedom
+##### graphic · activism · solidarity
+##### Marjane Satrapi (Editor)
+##### Graphic Novel, 2024, 272 pages
+
+> Alex prize says: "Curated by the acclaimed author of *Persepolis*, this powerful graphic anthology compiles the visually striking work of over twenty international artists documenting the historic youth uprisings in Iran. The graphic medium provides an immediate, accessible window into a vital fight for basic human rights and global solidarity."
+
+A powerful graphic novel collaboration compiling art and stories from over 20 activists documenting the historic recent uprisings in Iran.
+
+History happening right before your eyes, proving that visual art remains one of the most powerful weapons against oppression.
+
+#### Big Jim and the White Boy
+##### graphic · epic · reclamation
+##### David F. Walker
+##### Graphic Novel, 2024, 256 pages
+
+> Alex prize says: "A radical, brilliant graphic reimagining of *Huckleberry Finn* that elevates the enslaved character Jim into the center of a multigenerational epic. Tracking his life before, during, and long after the river trip, Walker unpacks the brutal realities of American history while granting an iconic figure profound depth and voice."
+
+A radical, brilliant graphic novel reimagining of *Huckleberry Finn* told from Jim's perspective as a multigenerational family epic.
+
+An absolute masterstroke of literary reclamation that completely reshapes how we understand the American canon.
+
+#### I Feel Awful, Thanks
+##### graphic · magic · burnout
+##### Lara Pickle
+##### Graphic Novel, 2024, 176 pages
+
+> Alex prize says: "Moving to London to start a fresh chapter, a young witch quickly discovers that navigating city loneliness, career building, and modern adult burnout is far more difficult than casting spells. This charming, beautifully illustrated graphic novel offers a deeply empathetic comfort blanket for anyone navigating early independence."
+
+A charming, deeply relatable graphic novel following a young witch moving to London who realizes city life and burnout are harder than magic.
+
+A warm, validating hug for anyone overwhelmed by "adulting," offering a deeply soothing reminder that it’s okay to not have everything figured out.
+
+---
+
+### 2024 Alex prize
+
+#### [Chain-Gang All-Stars](https://books.rob.me.uk/book/1913)
+[![](covers/1913.jpg)](https://books.rob.me.uk/book/1913)
+##### visceral · thriller · satirical
+##### Nana Kwame Adjei-Brenyah
+##### Fiction, 2023, 384 pages
+
+> Alex prize says: "In a terrifyingly near-future privatized American prison system, incarcerated gladiators duel to the death on live, pay-per-view television. Centered on two fierce female champions fighting for their freedom, this visceral, cinematic blockbuster delivers an unblinking, high-stakes critique of systemic racism and commercial bloodlust."
+
+A searing, high-concept, and adrenaline-fueled satirical thriller about a privatized American prison system where inmates duel to the death on live TV.
+
+Prepare to have your mind entirely blown by a ferocious, unputdownable book that dares you to examine your own entertainment consumption.
+
+#### [Starter Villain](https://books.rob.me.uk/book/1898)
+[![](covers/1898.jpg)](https://books.rob.me.uk/book/1898)
+##### comedy · sci-fi · talking cats
+##### John Scalzi
+##### Fiction, 2023, 272 pages
+
+> Alex prize says: "A regular substitute teacher unexpectedly inherits his late uncle's massive, high-stakes supervillain syndicate, complete with volcanic island lairs and laser-guided, unionized talking cats. Scalzi's signature light-speed pacing and hilarious dialogue offer a wonderfully fun, lighthearted subversion of classic espionage tropes."
+
+A hilarious, fast-moving sci-fi comedy about a regular substitute teacher who inherits his uncle's supervillain business (complete with laser-guided talking cats).
+
+Ever wanted to run a secret volcanic lair? This is pure, unadulterated fun designed to blast you straight out of any reading slump.
+
+#### [Whalefall](https://books.rob.me.uk/book/1899)
+[![](covers/1899.jpg)](https://books.rob.me.uk/book/1899)
+##### thriller · claustrophobic · survival
+##### Daniel Kraus
+##### Fiction, 2023, 336 pages
+
+> Alex prize says: "Accidentally swallowed alive by a massive sperm whale, a young scuba diver finds himself trapped in a pitch-black stomach with exactly one hour of oxygen remaining. This hyper-focused, real-time scientific survival thriller masterfully balances claustrophobic physical dread against an emotionally shattering exploration of family grief."
+
+A hyper-focused, claustrophobic scientific thriller about a young scuba diver who is accidentally swallowed alive by a sperm whale and has one hour of oxygen to escape.
+
+Take a deep breath before you open this book, because you likely won't exhale again until the final page of this scientifically fascinating nightmare.
+
+#### [Maame](https://books.rob.me.uk/book/1900)
+[![](covers/1900.jpg)](https://books.rob.me.uk/book/1900)
+##### london · adulting · caregiver
+##### Jessica George
+##### Fiction, 2023, 320 pages
+
+> Alex prize says: "Navigating the chaotic world of London flat shares, corporate microaggressions, and dating apps, a twenty-five-year-old late-bloomer struggles to balance her own independence with her heavy duties as her father's primary caregiver. George writes with crystalline clarity and warm humor about the profound journey of defining oneself."
+
+A sharp, funny, and deeply empathetic contemporary London novel about a 25-year-old late-bloomer navigating flat shares, dating apps, and family duty.
+
+For anyone who has ever felt like they are starring in a coming-of-age movie way behind schedule, this brilliant debut feels like catching up with a best friend.
+
+#### [Bad Cree](https://books.rob.me.uk/book/1887)
+[![](covers/1887.jpg)](https://books.rob.me.uk/book/1887)
+##### horror · folklore · kinship
+##### Jessica Johns
+##### Fiction, 2023, 272 pages
+
+> Alex prize says: "When a young Cree woman wakes up clutching a literal crow's feather from a terrifying nightmare, she realizes a hostile supernatural force is bleeding into her waking life. Returning to her rural hometown, she must harness the healing power of cultural community and ancestral kinship to confront a creeping atmospheric dread."
+
+An eerie, atmospheric thriller blending horror and indigenous folklore about a young Cree woman whose vivid nightmares start bleeding into reality.
+
+A masterclass in creeping dread that will grip you tightly from the very first nightmare and have you double-checking the locks on your doors.
+
+#### [Chlorine](https://books.rob.me.uk/book/1888)
+[![](covers/1888.jpg)](https://books.rob.me.uk/book/1888)
+##### body horror · obsession · swimmer
+##### Jade Song
+##### Fiction, 2023, 256 pages
+
+> Alex prize says: "In the high-pressure, grueling world of competitive high school sports, a teenage swimmer becomes so completely obsessed with perfection that she begins to force a dark, physical metamorphosis into a mythological mermaid. Song's fiercely hypnotic prose captures the absolute, unsettling boundary of adolescent alienation and body horror."
+
+A dark, surreal, and intense coming-of-age body horror novel about a high school swimmer whose obsession with perfection leads her to believe she is a mermaid.
+
+Dive headfirst into a hypnotic, chemical-soaked fever dream that boldly examines how far one girl will push her physical boundaries.
+
+#### [Fourth Wing](https://books.rob.me.uk/book/1889)
+[![](covers/1889.jpg)](https://books.rob.me.uk/book/1889)
+##### dragons · brutal college · escapism
+##### Rebecca Yarros
+##### Fiction, 2023, 528 pages
+
+> Alex prize says: "Enter a brutal military academy for dragon riders where graduation means surviving your cutthroat peers, high-stakes magical trials, and the erratic whims of fire-breathing mounts. Yarros coordinates highly addictive fantasy tropes and relentless pacing to construct a masterclass in escapist storytelling."
+
+The massive fantasy blockbuster about a brutal military college for dragon riders. High stakes, fast pacing, and total escapism.
+
+Believe the massive hype; this hits every single sweet spot with precision, moving so fast you'll find yourself frantically reading until the sun comes up.
+
+#### [I Will Greet the Sun Again](https://books.rob.me.uk/book/1890)
+[![](covers/1890.jpg)](https://books.rob.me.uk/book/1890)
+##### brothers · displacement · tender
+##### Khashaya J. Khabushani
+##### Fiction, 2023, 224 pages
+
+> Alex prize says: "Growing up Iranian-American in a turbulent Los Angeles household, three brothers rely on one another to navigate cultural displacement and domestic fractures. Told through the sparse, incredibly evocative eyes of the youngest sibling, this tender coming-of-age debut offers a profoundly honest portrait of home and belonging."
+
+A beautiful, quiet, and deeply moving literary novel about three brothers growing up Iranian-American in Los Angeles.
+
+A novel that will completely shatter your heart and then gently piece it back together, leaving a profound, lingering impact on the soul.
+
+#### [The Talk](https://books.rob.me.uk/book/1891)
+[![](covers/1891.jpg)](https://books.rob.me.uk/book/1891)
+##### graphic · memoir · racism
+##### Darrin Bell
+##### Graphic Novel, 2023, 352 pages
+
+> Alex prize says: "Pulled from his own formative childhood experiences with prejudice, a Pulitzer Prize-winning political cartoonist illustrates a deeply poignant graphic memoir. Bell maps his personal journey to capture the intense modern anxieties of a Black father preparing to have 'the talk' about safety and racism with his own young son."
+
+A poignant, visually striking graphic memoir charting a Black father's reflections on growing up and having "the talk" with his own son about racism and safety.
+
+The stunning visual medium allows the narrative to jump off the page with raw, emotional force, making it an essential, highly accessible read.
+
+#### [The Hard Parts](https://books.rob.me.uk/book/1892)
+[![](covers/1892.jpg)](https://books.rob.me.uk/book/1892)
+##### memoir · endurance · grit
+##### Oksana Masters
+##### Memoir, 2023, 320 pages
+
+> Alex prize says: "Surviving severe radiation neglect in a post-Chernobyl orphanage and undergoing multiple childhood amputations, Oksana Masters forged a legendary path to become a multi-sport Paralympic champion. Written with raw, gritty honesty, this unforgettable autobiography serves as an ultimate testament to human adaptability."
+
+An incredible, gritty memoir by a Paralympic champion who survived the aftermath of Chernobyl, severe childhood neglect, and multiple amputations to become an elite athlete.
+
+If you ever need a reminder of what the human spirit is truly capable of enduring, this brutal and awe-inspiring account redefines the very concept of resilience.
+
+---
+
+### 2023 Alex prize
+
+#### [A Lady's Guide to Fortune-Hunting](https://books.rob.me.uk/book/1901)
+[![](covers/1901.jpg)](https://books.rob.me.uk/book/1901)
+##### romance · wit · regency
+##### Sophie Irwin
+##### Fiction, 2022, 304 pages
+
+> Alex prize says: "Bypassing traditional romantic submissiveness, a sharp-tongued, financially desperate heroine enters the cutthroat London marriage market like a calculated military commander. Irwin infuses a delightfully witty Regency romance with crisp banter and a fast-moving energy that prioritizes female intelligence."
+
+A delightfully witty, fast-paced Regency romance featuring a sharp-tongued heroine determined to save her family from ruin.
+
+If *Bridgerton* had a protagonist who operated like a ruthless CEO, this would be her story—proving calculating ambition is an intoxicating combination.
+
+#### [Babel, or the Necessity of Violence](https://books.rob.me.uk/book/2097)
+[![](covers/2097.jpg)](https://books.rob.me.uk/book/2097)
+##### dark academia · fantasy · empire
+##### R. F. Kuang
+##### Fiction, 2022, 544 pages
+
+> Alex prize says: "In a sweeping, brilliant dark academia setting, student revolutionaries in 1830s Oxford discover a unique magic system powered by the silver bars of translation. Kuang matches a dense, fascinating critique of British imperialism with a propulsive, high-stakes adventure about language and the necessity of resistance."
+
+A sweeping, brilliant dark academia fantasy exploring the power of language, the violence of colonialism, and student rebellion in 1830s Oxford.
+
+An absolute masterpiece that is as intellectually rigorous as it is fiercely entertaining; it will entirely consume you and rewrite how you look at the world.
+
+#### Chef's Kiss
+##### graphic · queer · culinary
+##### Jarrett Melendez
+##### Graphic Novel, 2022, 160 pages
+
+> Alex prize says: "Struggling to find a job after college, a young graduate stumbles into a position at a chaotic restaurant kitchen, falling for a handsome line cook along the way. This vibrant, charmingly illustrated queer graphic novel serves up a sweet, comforting look at post-grad directionlessness and culinary passion."
+
+A vibrant and charming queer graphic novel about a recent college graduate navigating the pressures of the culinary world and new romance.
+
+The literary equivalent of a perfectly baked, warm pastry on a tough day that will leave you smiling from ear to ear.
+
+#### [Daughter of the Moon Goddess](https://books.rob.me.uk/book/1903)
+[![](covers/1903.jpg)](https://books.rob.me.uk/book/1903)
+##### fantasy · mythology · adventure
+##### Sue Lynn Tan
+##### Fiction, 2022, 512 pages
+
+> Alex prize says: "To rescue her exiled mother, a brave young woman must disguise her identity and train within the elite military ranks of the Celestial Kingdom. Tan’s exceptionally lush, cinematic fantasy weaves classical Chinese mythology into a thrilling, beautifully paced coming-of-age adventure full of mythical beasts."
+
+A captivating, richly detailed romantic fantasy inspired by Chinese mythology, following a young woman's quest to free her mother.
+
+Step into a world so vibrantly rendered you can practically feel the magic humming off the pages as it immerses you completely in its breathtaking universe.
+
+#### [I'm Glad My Mom Died](https://books.rob.me.uk/book/1904)
+[![](covers/1904.jpg)](https://books.rob.me.uk/book/1904)
+##### memoir · dark · recovery
+##### Jennette McCurdy
+##### Memoir, 2022, 320 pages
+
+> Alex prize says: "Written with sharp, uncompromising comedic timing, this fiercely honest memoir chronicles a former child star's traumatic upbringing under an overbearing mother. McCurdy details her complex recovery from eating disorders and parental control, delivering a powerful exploration of boundary-setting and reclaiming one's life."
+
+A fiercely honest, dark, and darkly funny memoir detailing the struggles of a former child star recovering from eating disorders and parental control.
+
+The title alone tells you exactly what kind of fearless ride you are in for, turning profound trauma into an empowering masterclass on reclaiming your autonomy.
+
+#### [Lesser Known Monsters of the 21st Century](https://books.rob.me.uk/book/1905)
+[![](covers/1905.jpg)](https://books.rob.me.uk/book/1905)
+##### surreal · speculative · anthology
+##### Kim Fu
+##### Fiction, 2022, 224 pages
+
+> Alex prize says: "From digital simulators that allow users to visit the deceased to a young girl unexpectedly growing wings, this striking anthology treats bizarre speculative premises with a grounded emotional realism. Fu's incredibly precise writing styles unpack universal truths about isolation, modern technology, and human connection."
+
+A striking, surreal short story collection exploring technology, grief, and the strange corners of modern human relationships.
+
+Prepare to have your perception of reality delightfully warped as the author packs an enormous emotional punch into bite-sized, brilliantly strange narratives.
+
+#### [True Biz](https://books.rob.me.uk/book/1906)
+[![](covers/1906.jpg)](https://books.rob.me.uk/book/1906)
+##### deaf culture · drama · school
+##### Sara Nović
+##### Fiction, 2022, 384 pages
+
+> Alex prize says: "Set within a residential academy for the Deaf, this deeply immersive campus drama tracks the volatile, intersecting lives of students and faculty navigating identity. Nović brilliantly integrates ASL educational diagrams and cultural history directly into a powerful narrative about language and community belonging."
+
+A deeply immersive, empathetic novel set at a residential school for the Deaf, tracking the intersecting lives of students and faculty navigating identity and systemic friction.
+
+An electrifying drama that doubles as a profound educational experience, completely captivating you while expanding how you think about communication.
+
+#### [The Kaiju Preservation Society](https://books.rob.me.uk/book/1907)
+[![](covers/1907.jpg)](https://books.rob.me.uk/book/1907)
+##### sci-fi · giant monsters · escapism
+##### John Scalzi
+##### Fiction, 2022, 272 pages
+
+> Alex prize says: "A pandemic-era delivery driver lands an unconventional job with a secret NGO tasked with taking care of massive, biologically volatile nuclear monsters in an alternate dimension. Scalzi delivers light-speed pacing and witty banter in a high-energy sci-fi adventure that prioritizes pure reading enjoyment."
+
+A fast, punchy, and wildly entertaining sci-fi adventure about a pandemic-era delivery driver who gets a job taking care of massive nuclear animals in an alternate dimension.
+
+If you are looking for pure, unadulterated escapism, this golden ticket reads like the best popcorn action movie you’ve ever seen.
+
+#### [Wash Day Diaries](https://books.rob.me.uk/book/1908)
+[![](covers/1908.jpg)](https://books.rob.me.uk/book/1908)
+##### graphic · slice of life · friendship
+##### Jamila Rowser
+##### Graphic Novel, 2022, 192 pages
+
+> Alex prize says: "This gorgeous, intimate graphic novel celebrates the deep bonds, daily lives, and mental health struggles of four Black women in the Bronx. Centered around the communal care of hair care rituals, the warm, expressive artwork highlights the profound strength found in quiet, everyday moments of self-love."
+
+A gorgeous, intimate graphic novel following the daily lives, hair care rituals, and deep bonds of friendship among four Black women in the Bronx.
+
+A stunning, beautifully illustrated love letter to the quiet strength of sisterhood that radiates warmth off of every single page.
+
+#### [The Maid](https://books.rob.me.uk/book/1909)
+[![](covers/1909.jpg)](https://books.rob.me.uk/book/1909)
+##### mystery · cozy · neurodivergent
+##### Nita Prose
+##### Fiction, 2022, 304 pages
+
+> Alex prize says: "Molly the maid views the world with an unyielding dedication to cleanliness and rigid protocol, making her an eccentric but excellent detective when a wealthy guest is found dead in his bed. Prose crafts a charming, tightly wound locked-room cozy mystery centered on neurodivergence and loneliness."
+
+A clever, heartwarming locked-room cozy mystery starring an eccentric, endearing hotel maid with unique social skills who gets caught up in a murder investigation.
+
+Featuring one of the most uniquely endearing protagonists to hit the genre in years, proving the people we overlook often see the most.
+
+---
+
+### 2022 Alex prize
+
+#### [Light from Uncommon Stars](https://books.rob.me.uk/book/1910)
+[![](covers/1910.jpg)](https://books.rob.me.uk/book/1910)
+##### fantasy · music · identity
+##### Ryka Aoki
+##### Fiction, 2021, 320 pages
+
+> Alex prize says: "An incredibly original, heartwarming blend of science fiction and fantasy that weaves together a transgender violin prodigy, a Faustian teacher, and an alien refugee family running a California donut shop. Aoki's sensory prose celebrates the literal healing grace found in music, food, and identity."
+
+An incredibly original, heartwarming blend of sci-fi and fantasy featuring a transgender violin prodigy, a Faustian teacher, and an alien family running a donut shop.
+
+The genre-defying, life-affirming mashup you never knew you needed, singing with absolute magic to remind us of the healing power of art.
+
+#### [The One Hundred Years of Lenni and Margot](https://books.rob.me.uk/book/1911)
+[![](covers/1911.jpg)](https://books.rob.me.uk/book/1911)
+##### friendship · terminal · hospital
+##### Marianne Cronin
+##### Fiction, 2021, 336 pages
+
+> Alex prize says: "Realizing their combined ages total exactly a century, a seventeen-year-old patient and an eighty-three-year-old companion forge an unlikely bond in a terminal hospital ward. Together, they create one hundred paintings to archive their lives, delivering a life-affirming, witty, and beautiful tearjerker."
+
+A poignant, beautifully life-affirming story of an unlikely friendship between a 17-year-old and an 83-year-old in a terminal hospital ward.
+
+Keep the tissues handy, but prepare to laugh just as much as you cry during this uplifting exploration of the legacies we leave behind.
+
+#### [The Witch's Heart](https://books.rob.me.uk/book/1912)
+[![](covers/1912.jpg)](https://books.rob.me.uk/book/1912)
+##### Greek myth · norse · motherhood
+##### Genevieve Gornichec
+##### Fiction, 2021, 368 pages
+
+> Alex prize says: "Exiled to a remote forest by Odin, the Norse giantess Angrboda raises three unique, dangerous children while struggling to avert the catastrophic dawn of Ragnarok. Gornichec crafts a deeply domestic, emotionally rich historical perspective on Norse lore, focusing on the unseen women of ancient myth."
+
+A compelling, atmospheric mythological retelling centered on the banished Norse giantess Angrboda and her complex role in the fate of the gods.
+
+A magnificent spotlight on the marginalized women of mythology, offering a slow-burning epic perfect for fans of *The Song of Achilles*.
+
+#### [The Beautiful Ones](https://books.rob.me.uk/book/1870)
+[![](covers/1870.jpg)](https://books.rob.me.uk/book/1870)
+##### biography · music · pop icon
+##### Prince
+##### Biography, 2019, 288 pages
+
+> Alex prize says: "Told through his own unfinished, handwritten journals and raw archival photos, this deeply personal biography offers an arresting window into the early life and creative formation of a musical genius. An inspiring artifact charting the relentless mechanics of self-actualization."
+
+A deeply personal, visually arresting look into the early life and creative formation of a musical icon, told through his own unfinished writings and personal photos.
+
+There is nothing quite like peering directly into the mind of a generational genius via an artifact that serves as the ultimate creative blueprint.
+
+#### Lore Olympus, Vol. 1
+##### graphic · Greek myth · romance
+##### Rachel Smythe
+##### Graphic Novel, 2021, 384 pages
+
+> Alex prize says: "Rachel Smythe updates classical deities with incredibly relatable modern anxieties, making the ancient myth feel immediate and personal. It is a visually arresting, fast-moving entry point into graphic fiction that balances high soap-opera drama with genuine emotional depth."
+
+The narrative utilizes a brilliant, neon-soaked color palette to explore themes of gossip, agency, trauma, and romance within the corporate bureaucracy of the underworld.
+
+Dive headfirst into a neon-drenched, wildly addictive phenomenon that took the internet by storm, making the pantheon feel intensely personal.
+
+#### Ballad for Sophie
+##### graphic · piano · intense rivalry
+##### Filipe Melo
+##### Graphic Novel, 2021, 320 pages
+
+> Alex prize says: "An aging musical maestro uses an interview with a young journalist to unpack a lifetime of intense artistic rivalry, wartime compromise, and deep personal regret. The stunning graphic illustration style shifts dynamically to capture the literal rhythm and heavy emotional weight of the music."
+
+A sweeping, beautifully illustrated graphic novel about an aging pianist recounting a lifetime of intense artistic rivalry, regret, and hidden truth.
+
+A visual and emotional symphony that serves as a breathtakingly drawn masterpiece about the crushing weight of ambition.
+
+#### [Crossing the Line](https://books.rob.me.uk/book/1914)
+[![](covers/1914.jpg)](https://books.rob.me.uk/book/1914)
+##### memoir · polo · philadelphia
+##### Kareem Rosser
+##### Memoir, 2021, 304 pages
+
+> Alex prize says: "In this gritty, fast-paced sports memoir, a young man and his brothers utilize a public urban riding program to escape systemic poverty and violence in Philadelphia. Rosser documents their high-stakes battles breaking down racial and financial barriers to compete against elite, wealthy Ivy League polo teams."
+
+An inspiring, gritty memoir detailing how a young man and his brothers used polo to escape poverty and violence in Philadelphia.
+
+If you love the adrenaline of an underdog sports story, this unvarnished, immensely inspiring testament to the bonds of brotherhood will completely floor you.
+
+#### [The Rose Code](https://books.rob.me.uk/book/1915)
+[![](covers/1915.jpg)](https://books.rob.me.uk/book/1915)
+##### historical · codebreakers · WWII
+##### Kate Quinn
+##### Fiction, 2021, 656 pages
+
+> Alex prize says: "Three very different women arrive at Bletchley Park to fight institutional sexism and crack vital Nazi military codes, reunited years later to track down an internal traitor. Quinn delivers a massive, incredibly satisfying historical puzzle that moves with the speed of a modern political thriller."
+
+A thrilling, meticulously researched historical novel following three very different women breaking Nazi codes at Bletchley Park and tracking a post-war traitor.
+
+A massive novel that practically demands to be binge-read, honoring the unsung heroines of WWII while delivering pure, adrenaline-pumping entertainment.
+
+#### Seek You: A Journey Through American Loneliness
+##### graphic · essay · isolation
+##### Kristen Radtke
+##### Graphic Novel, 2021, 352 pages
+
+> Alex prize says: "Blending personal memoir with deep sociological research, this haunting graphic essay explores the cultural history and silent modern epidemic of loneliness. The muted, cinematic illustrations enhance a deeply validating study of how modern architecture, technology, and expectations isolate us."
+
+A hauntingly beautiful graphic essay exploring the anatomy, cultural history, and silent epidemic of loneliness in modern society.
+
+A stunning, cinematic meditation on a pervasive epidemic that encourages us all to look up and reconnect with the world around us.
+
+#### [True Story: What Reality TV Says About Us](https://books.rob.me.uk/book/1917)
+[![](covers/1917.jpg)](https://books.rob.me.uk/book/1917)
+##### non-fiction · sociology · pop culture
+##### Danielle J. Lindemann
+##### Non-fiction, 2022, 352 pages
+
+> Alex prize says: "Treating popular, trashy media with serious academic rigor, this engaging sociological analysis maps how reality television serves as an illuminating mirror for our cultural biases. Lindemann uses popular shows to explain complex social theories regarding race, class, and gender in an accessible way."
+
+A fascinating, sharp sociological deep dive into how reality television serves as an illuminating mirror for our cultural anxieties and biases.
+
+Ever felt guilty about binge-watching trashy TV? This brilliant, highly accessible read will completely change how you justify and watch television.
+
+---
+
+### 2021 Alex prize
+
+#### [Black Sun](https://books.rob.me.uk/book/1918)
+[![](covers/1918.jpg)](https://books.rob.me.uk/book/1918)
+##### fantasy · epic · intrigue
+##### Rebecca Roanhorse
+##### Fiction, 2020, 464 pages
+
+> Alex prize says: "Woven with celestial magic and brutal clan politics, this sweeping epic fantasy takes inspiration from pre-Columbian American landscapes. Centered on a blind avatar of a crow god and a high priestess navigating a looming civil war, Roanhorse delivers a brilliantly structured, morally complex landscape."
+
+A sweeping, epic fantasy inspired by pre-Columbian Americas, woven with celestial magic, political intrigue, and unforgettable characters.
+
+Leaving medieval Europe behind, this book kicks open the doors to a breathtaking world where a high-stakes collision of destiny and power will hook you immediately.
+
+#### [The House in the Cerulean Sea](https://books.rob.me.uk/book/1879)
+[![](covers/1879.jpg)](https://books.rob.me.uk/book/1879)
+##### fantasy · cozy · orphanage
+##### TJ Klune
+##### Fiction, 2020, 400 pages
+
+> Alex prize says: "A buttoned-up corporate caseworker is dispatched to investigate a highly classified, isolated island facility populated by unique, magical children. Klune's exceptionally warm, humorous prose handles themes of institutional prejudice and acceptance with a gentle, life-affirming touch that celebrates chosen families."
+
+A cozy, whimsical, and profoundly moving fantasy about a buttoned-up caseworker who falls in love with an unconventional orphanage full of magical children.
+
+The literary equivalent of a warm hug on a very bad day, guaranteed to heal your heart and leave you beaming.
+
+#### The Impossible First
+##### memoir · antarctica · extreme survival
+##### Colin O'Brady
+##### Memoir, 2019, 304 pages
+
+> Alex prize says: "This gripping, raw autobiography chronicles a grueling, historic solo trek across the frozen interior of Antarctica without any external support drops. O'Brady documents the physical reality of hauling a 375-pound sled, focusing heavily on the internal psychological battle required to overcome extreme isolation."
+
+A gripping, raw memoir chronicling a grueling, historic solo trek across the frozen continent and the mental strength required to survive.
+
+Strap in for one of the most intense tests of human endurance ever documented, offering a deeply motivating testament to the sheer power of the mind.
+
+#### Kent State: Four Dead in Ohio
+##### graphic · tragedy · youth activism
+##### Derf Backderf
+##### Graphic Novel, 2020, 288 pages
+
+> Alex prize says: "Through a meticulously researched timeline, this visually striking graphic novel tracks the four days leading up to the tragic 1970 National Guard shooting. Focusing with deep empathy on the daily lives of the student victims, Backderf delivers a devastating history lesson about social polarization."
+
+A meticulously researched, visually striking graphic novel tracking the tragic events of May 1970 with profound empathy and historical weight.
+
+Transforming abstract history into a deeply human tragedy, this is a towering achievement in graphic non-fiction that provides a vital warning for the future.
+
+#### [The Kids Are Gonna Ask](https://books.rob.me.uk/book/1919)
+[![](covers/1919.jpg)](https://books.rob.me.uk/book/1919)
+##### podcast · viral media · twins
+##### Gretchen Anthony
+##### Fiction, 2020, 384 pages
+
+> Alex prize says: "Determined to find their long-lost biological father, charismatic teenage twins launch a low-budget podcast that unexpectedly sweeps across the nation as a viral public sensation. Anthony balances the energetic pacing of modern internet culture with a deep exploration of grief and media literacy."
+
+A witty, fast-paced contemporary novel following teen twins who launch a hit podcast to find their biological father, sweeping up the nation in the process.
+
+A sparkling modern-day treasure hunt fueled by the chaotic energy of internet virality, proving finding out where you come from is only half the adventure.
+
+#### [The Only Good Indians](https://books.rob.me.uk/book/1920)
+[![](covers/1920.jpg)](https://books.rob.me.uk/book/1920)
+##### horror · vengeance · cultural trauma
+##### Stephen Graham Jones
+##### Fiction, 2020, 320 pages
+
+> Alex prize says: "Years after violating a sacred tribal tradition, four Indigenous men find themselves relentlessly hunted by a malevolent, vengeful entity. Jones uses a unique, rhythmic prose style to craft a visceral modern horror masterpiece that functions as a profound study of generational trauma and guilt."
+
+A visceral, psychological horror novel dealing with cultural trauma, guilt, and a vengeful entity tracking four Indigenous men after a childhood hunting mistake.
+
+Not for the faint of heart, this bloody masterpiece is driven by some of the most creative, unsettling scares of the decade and will stick with you forever.
+
+#### [Plain Bad Heroines](https://books.rob.me.uk/book/1927)
+[![](covers/1927.jpg)](https://books.rob.me.uk/book/1927)
+##### gothic · queer · ancient curse
+##### Emily M. Danforth
+##### Fiction, 2020, 640 pages
+
+> Alex prize says: "Shifting between a tragic turn-of-the-century boarding school incident and a modern-day Hollywood crew filming a horror movie on the same cursed grounds, this sprawling gothic thriller is heavily queer and fiercely smart. Danforth employs a sarcastic, meta-narrator to deliver a decadent, suspenseful ride."
+
+A sprawling, delightfully gothic, and heavily queer modern-day thriller layered with a centuries-old curse at a haunted girls' school.
+
+Get ready to lose yourself in a delightfully spooky, meta-fictional maze that serves as an absolute feast of a novel offering a decadent, suspenseful ride.
+
+#### [Riot Baby](https://books.rob.me.uk/book/1928)
+[![](covers/1928.jpg)](https://books.rob.me.uk/book/1928)
+##### sci-fi · psychic · racism
+##### Tochi Onyebuchi
+##### Fiction, 2020, 176 pages
+
+> Alex prize says: "A young Black woman gifted with world-shattering psychic powers navigates a futuristic surveillance state while her brother faces the realities of Rikers Island. Onyebuchi's compressed, poetic sci-fi masterpiece packs a furious emotional punch, delivering an essential, visionary critique of systemic racism."
+
+A sharp, explosive sci-fi novella tracking a young woman with world-shattering psychic gifts and her brother as they navigate systemic racism and institutional corruption.
+
+Packing more fury and visionary brilliance into a short novella than most authors manage in their entire careers, this demands to be read in a single sitting.
+
+#### [Solutions and Other Problems](https://books.rob.me.uk/book/1929)
+[![](covers/1929.jpg)](https://books.rob.me.uk/book/1929)
+##### graphic · memoir · absurdist humor
+##### Allie Brosh
+##### Graphic Novel, 2020, 528 pages
+
+> Alex prize says: "Blending her iconic, crude digital illustration style with laugh-out-loud absurdist humor, Allie Brosh maps an incredibly poignant graphic autobiography. This unique compilation tackles permanent personal grief, isolated childhood memories, and mental health struggles with unblinking, comforting honesty."
+
+A brilliant, deeply poignant graphic memoir blending hilarious, absurdist comic art with heavy reflections on grief, mental health, and moving forward.
+
+From an author who is a genius at making you laugh until you cry, and then just making you cry, proving you can find humor even in the absolute darkest of places.
+
+#### [We Ride Upon Sticks](https://books.rob.me.uk/book/1930)
+[![](covers/1930.jpg)](https://books.rob.me.uk/book/1930)
+##### 1980s · witchcraft · field hockey
+##### Quan Barry
+##### Fiction, 2020, 368 pages
+
+> Alex prize says: "Set in Salem, Massachusetts, an underperforming 1980s high school girls' field hockey team turns to dark magic and a notebook featuring Emilio Estevez to secure a winning streak. Barry delivers a celebratory, fiercely feminist coming-of-age story exploding with pop culture energy."
+
+A wildly fun, high-energy 1980s-set novel about a high school girls' field hockey team who turn to dark magic and a notebook featuring Emilio Estevez to win.
+
+Grab your Aqua Net hairspray and get ready for a witchy nostalgia trip that uses dark magic as the perfect metaphor for realizing your own untamed potential.
+
+---
+
+### 2020 Alex prize
+
+#### [The Nickel Boys](https://books.rob.me.uk/book/1931)
+[![](covers/1931.jpg)](https://books.rob.me.uk/book/1931)
+##### historical · reform school · Jim Crow
+##### Colson Whitehead
+##### Fiction, 2019, 224 pages
+
+> Alex prize says: "Idealistic Elwood and cynical Turner form an unlikely bond at Nickel Academy, a corrupt 1960s reform school, as they endure the abuse meted out by the sadistic warden. Their heart-wrenching story of physical and mental survival is based on the real-life experiences of children at the former Arthur G. Dozier School for Boys."
+
+A devastating, brilliantly crafted historical novel based on the real-world horrors of a Jim Crow-era reform school in Florida.
+
+An essential, devastating cornerstone of modern American literature that paints an unforgettable portrait of friendship and the long shadow of historical injustice.
+
+#### [Middlegame](https://books.rob.me.uk/book/1880)
+[![](covers/1880.jpg)](https://books.rob.me.uk/book/1880)
+##### fantasy · alchemy · puzzle box
+##### Seanan McGuire
+##### Fiction, 2019, 496 pages
+
+> Alex prize says: "Separated at birth by a calculating alchemist who engineered them to control the fundamental fabric of reality, a pair of telepathic twins must reunite to survive their creators. McGuire weaves a dense, dark contemporary fantasy packed with secret children's books and timeline puzzles."
+
+A complex, dark contemporary fantasy tracking a pair of twins created by an alchemist, who share a telepathic bond and control the fundamental fabric of reality.
+
+Prepare to have your brain twisted into a glorious, magical knot that rewards readers with a brilliantly executed thriller about unbreakable sibling bonds.
+
+#### [A Boy and His Dog at the End of the World](https://books.rob.me.uk/book/1932)
+[![](covers/1932.jpg)](https://books.rob.me.uk/book/1932)
+##### dystopian · journey · loyal dog
+##### C.A. Fletcher
+##### Fiction, 2019, 384 pages
+
+> Alex prize says: "In a quiet, depopulated future world where humanity has slowly faded away, a brave young boy embarks on a treacherous trek across abandoned ruins to rescue his stolen dog. Fletcher's camp-fire storytelling style prioritizes unyielding loyalty, hope, and survival without traditional dystopian violence."
+
+A poignant, atmospheric post-apocalyptic journey following a boy traveling across a depopulated future Scotland to rescue his stolen dog.
+
+Not your typical blood-and-gore apocalypse; if you prioritize hope over despair, this quiet, hauntingly beautiful sweeping adventure is an absolute triumph.
+
+#### Do You Dream of Terra-Delta?
+##### sci-fi · space · deep isolation
+##### Temi Oh
+##### Fiction, 2019, 528 pages
+
+> Alex prize says: "Selected as teenagers to leave an environmentally dying planet, a young crew of astronauts embarks on a grueling twenty-three-year voyage to colonize a new world. Oh excels at mapping the intense psychological toll and shifting interpersonal friction that comes with spending your youth in deep space."
+
+A thought-provoking, character-driven sci-fi epic tracking a crew of young astronauts embarking on a 23-year voyage to colonize a new planet.
+
+Stripping away flashy laser battles to deliver a profound look at the extreme psychological reality of space travel, forming a slow-burning epic about finding your purpose among the stars.
+
+#### [The Gilded Wolves](https://books.rob.me.uk/book/1933)
+[![](covers/1933.jpg)](https://books.rob.me.uk/book/1933)
+##### fantasy · magical heist · Paris
+##### Roshani Chokshi
+##### Fiction, 2019, 400 pages
+
+> Alex prize says: "Set in a glittering, alternative 1889 Paris, a diverse team of clever outcasts coordinates an elaborate, high-stakes magical heist during the Exposition Universelle. Chokshi blends historical engineering with ancient riddles and sharp banter, delivering a highly cinematic adventure."
+
+A glittering, high-stakes historical fantasy set in 1889 Paris, following a team of clever outcasts pulling off an elaborate magical heist.
+
+Think *Ocean's Eleven* crossed with late-nineteenth-century Parisian magic, seamlessly balancing glittering escapism with sharp critiques of empire.
+
+#### [The Library of the Unwritten](https://books.rob.me.uk/book/1934)
+[![](covers/1934.jpg)](https://books.rob.me.uk/book/1934)
+##### fantasy · library · afterlife
+##### AJ Hackwith
+##### Fiction, 2019, 384 pages
+
+> Alex prize says: "In the neutral territories of Hell, a head librarian is tasked with managing a repository of books that authors died before finishing. When an unwritten story manifests a body and escapes to Earth, this high-energy fantasy adventure unfolds as a witty, original love letter to the creative process."
+
+A clever, fast-moving fantasy about a librarian in Hell responsible for managing the books that authors never managed to finish writing.
+
+The ultimate playground for anyone who has ever loved a book, functioning as a hilarious, action-packed road trip that celebrates the messy process of storytelling.
+
+#### [Loki: Where Mischief Lies](https://books.rob.me.uk/book/1978)
+[![](covers/1978.jpg)](https://books.rob.me.uk/book/1978)
+##### fantasy · loki · identity
+##### Mackenzi Lee
+##### Fiction, 2019, 416 pages
+
+> Alex prize says: "Sent to Earth to investigate a series of magical murders in Victorian London, a young Norse god struggles to balance his fluid identity with his brother's shadow. Lee leans heavily into character psychology and sharp banter to deliver an incredibly fun historical fantasy about modern insecurities."
+
+A sharp, witty, and nuanced fantasy tracking the infamous Norse god during a historical investigation in Victorian London.
+
+Peeling back the mythological arrogance to reveal a deeply insecure, fiercely relatable teenager, making ancient gods feel wonderfully, messily human.
+
+#### [The Ten Thousand Doors of January](https://books.rob.me.uk/book/1935)
+[![](covers/1935.jpg)](https://books.rob.me.uk/book/1935)
+##### fantasy · hidden portals · lyrical
+##### Alix E. Harrow
+##### Fiction, 2019, 416 pages
+
+> Alex prize says: "Raised as a reclusive curiosity by a wealthy collector, a young woman uncovers a magical leather-bound book that unlocks secret portals across the globe. Harrow's exceptionally beautiful, lyrical historical fantasy functions as a satisfying coming-of-age ode to independent thinkers and outcasts."
+
+A lush, lyrical historical fantasy centered on a young woman who discovers a magical book that unlocks hidden portals across the world.
+
+A soaring ode to the power of words and the defiance of outcasts that will make you look twice at every closed door you pass.
+
+#### That's Not English
+##### contemporary · isolation · expats
+##### Sarah Bernstein
+##### Fiction, 2019, 192 pages
+
+> Alex prize says: "Utilizing a highly unique, fragmented prose style, this sharp contemporary debut charts the quiet alienation and language barriers of young expatriates. Bernstein avoids traditional plot structures to focus heavily on psychological depth and the complex machinery of modern intimacy."
+
+A sharp, stylized contemporary debut focusing on the complex inner lives, language barriers, and interactions of young expatriates.
+
+For readers who crave intellectual prose, capturing the exact, uncomfortable reality of trying to connect when you don't fully speak the language.
+
+#### [With the Fire on High](https://books.rob.me.uk/book/1936)
+[![](covers/1936.jpg)](https://books.rob.me.uk/book/1936)
+##### contemporary · cooking · teen motherhood
+##### Elizabeth Acevedo
+##### Fiction, 2019, 400 pages
+
+> Alex prize says: "A talented high school senior and teen mother refuses to let her difficult circumstances derail her fierce passion for culinary creation. Acevedo writes with a rhythmic, empowering energy, incorporating recipes into a life-affirming novel about resilience and defining your own future."
+
+A vibrant, moving contemporary story about a talented high school senior navigating teen motherhood, family, and her dream of working in a professional kitchen.
+
+A story so vibrant you can practically smell the spices through the pages, proving that resilience is the greatest recipe for success.
+
+---
+
+### 2019 Alex prize
+
+#### [The Cruel Prince](https://books.rob.me.uk/book/1937)
+[![](covers/1937.jpg)](https://books.rob.me.uk/book/1937)
+##### fantasy · fae · court politics
+##### Holly Black
+##### Fiction, 2018, 384 pages
+
+> Alex prize says: "Stolen from the mortal world as a child, a human girl must rely on manipulation, physical training, and pure spite to survive the deadly political machinations of the Faerie court. Black discards traditional folklore to deliver an intoxicating, fast-paced thriller about ambition and survival."
+
+A dark, intoxicating contemporary fantasy following a human girl fighting for her place amidst the deadly, deceptive political machinations of the Faerie court.
+
+Leave your cozy fairy tales at the door for an intoxicating, edge-of-your-seat ride where betrayal is a given and power is the only currency that matters.
+
+#### [The Poet X](https://books.rob.me.uk/book/1944)
+[![](covers/1944.jpg)](https://books.rob.me.uk/book/1944)
+##### verse · slam poetry · harlem
+##### Elizabeth Acevedo
+##### Fiction, 2018, 368 pages
+
+> Alex prize says: "In Harlem, a fierce teenager uses slam poetry to navigate her mother's strict religious expectations and discover her own voice. This stunning novel in verse crackles with kinetic energy and profound empathy, capturing the raw, musical urgency of finding one's place in the world."
+
+A stunning, award-winning novel in verse about a fierce Afro-Latina teenager discovering slam poetry as a way to understand her relationship with religion, family, and herself.
+
+This book literally pulses with the rhythm of a heartbeat, building a towering coming-of-age masterpiece that will leave you absolutely breathless.
+
+#### [The Hazel Wood](https://books.rob.me.uk/book/1945)
+[![](covers/1945.jpg)](https://books.rob.me.uk/book/1945)
+##### thriller · dark fairytales · curse
+##### Melissa Albert
+##### Fiction, 2018, 368 pages
+
+> Alex prize says: "When her mother is kidnapped by figures who seem to step directly out of her grandmother's cult book of dark fables, a teenage girl must enter a dangerous supernatural estate. Albert crafts beautifully brutal fairy tales that anchor an atmospheric, suspenseful modern mystery."
+
+An eerie, gripping contemporary fairy-tale thriller following a girl whose grandmother wrote a cult book of dark fables that are suddenly bleeding into the real world.
+
+Taking the concept of the fairy tale and sharpening it into a modern blade, this will appeal to anyone who knows that the best stories always have a little bit of blood in them.
+
+#### [Children of Blood and Bone](https://books.rob.me.uk/book/1946)
+[![](covers/1946.jpg)](https://books.rob.me.uk/book/1946)
+##### West African · ritual · rebellion
+##### Tomi Adeyemi
+##### Fiction, 2018, 544 pages
+
+> Alex prize says: "A high-stakes, West African-inspired epic fantasy tracks a young magic-user and a rogue princess racing across a vast kingdom to complete an ancient ritual. Adeyemi builds an adrenaline-fueled, cinematic blockbuster that tackles real-world themes of state violence through a brilliant fantasy lens."
+
+A massive, high-stakes West African-inspired epic fantasy tracking a young rogue trying to restore magic to her oppressed kingdom.
+
+Completely redefining epic fantasy for a new generation, the jaw-dropping action masks a fiercely intelligent critique that elevates it to an absolute must-read.
+
+#### [Skyward](https://books.rob.me.uk/book/1947)
+[![](covers/1947.jpg)](https://books.rob.me.uk/book/1947)
+##### sci-fi · pilots · flight academy
+##### Brandon Sanderson
+##### Fiction, 2018, 528 pages
+
+> Alex prize says: "Determined to overcome the shadow of her late father's alleged cowardice, a defiant young girl enters an elite flight academy during humanity's desperate subterranean war against aliens. Sanderson delivers trademark tight pacing and starship tactics in a high-energy space opera."
+
+A thrilling, fast-paced sci-fi adventure tracking a defiant young girl who dreams of being a fighter pilot in humanity's desperate subterranean war against aliens.
+
+The ultimate, high-G space opera designed for pure, unadulterated enjoyment, serving as the perfect entry point for readers looking for heroic flight tactics.
+
+#### [Circe](https://books.rob.me.uk/book/1948)
+[![](covers/1948.jpg)](https://books.rob.me.uk/book/1948)
+##### mythological · witchcraft · independence
+##### Madeline Miller
+##### Fiction, 2018, 400 pages
+
+> Alex prize says: "Madeline Miller brings extraordinary modern psychological depth to ancient Greek myths, tracing the banishment, motherhood, and independent sorcery of the goddess Circe. Written in elegant, literary prose, it chronicles a profound search for meaning among classical deities."
+
+A sweeping, lyrical feminist reimagining of the classic Greek sorceress, mapping her isolation, power, and encounters with legendary heroes.
+
+Achieving the impossible by making an ancient myth feel intensely intimate, completely reshaping how we view the monsters and gods of antiquity.
+
+#### [Educated](https://books.rob.me.uk/book/1949)
+[![](covers/1949.jpg)](https://books.rob.me.uk/book/1949)
+##### memoir · isolation · self-taught
+##### Tara Westover
+##### Memoir, 2018, 352 pages
+
+> Alex prize says: "Raised by radical, anti-government survivalists in rural Idaho who forbade public schooling, Tara Westover taught herself advanced mathematics to escape a volatile home life. This moving memoir tracks the literal transformative power of literacy and intellectual independence."
+
+An unforgettable, gripping memoir tracking a young woman's journey from an isolated, survivalist childhood in rural Idaho to earning a PhD from Cambridge.
+
+This book will grip you by the throat and refuse to let go, offering an unflinching, emotionally shattering look at the painful, necessary cost of saving yourself.
+
+#### [The Prince and the Dressmaker](https://books.rob.me.uk/book/1950)
+[![](covers/1950.jpg)](https://books.rob.me.uk/book/1950)
+##### graphic · fashion · identity
+##### Jen Wang
+##### Graphic Novel, 2018, 224 pages
+
+> Alex prize says: "A young prince secretly wearing avant-garde gowns forms a close, confidential partnership with a talented dressmaker to conquer the Parisian fashion scene. Wang's highly expressive, fluid artwork structures a sweet, validating graphic novel about artistic collaboration and acceptance."
+
+A gorgeous, heartwarming graphic novel about identity, family, and fashion, tracking a young prince who secretly wears dresses and his talented dressmaker.
+
+If joy could be bound into a book, it would look exactly like this profoundly sweet story about the beautiful magic of creative collaboration.
+
+#### [Green](https://books.rob.me.uk/book/1951)
+[![](covers/1951.jpg)](https://books.rob.me.uk/book/1951)
+##### contemporary · Boston · 1990s culture
+##### Sam Graham-Felsen
+##### Fiction, 2018, 320 pages
+
+> Alex prize says: "Set in 1992 Boston, a white middle schooler in a predominantly Black neighborhood forms a complex, nuanced friendship with a classmate based on a shared desire to escape their environments. Utilizing an authentic neighborhood slang, this coming-of-age story handles privilege with raw honesty."
+
+A sharp, insightful coming-of-age story set in 1992 Boston exploring race, friendship, and belonging from the perspective of a white middle schooler in a predominantly Black neighborhood.
+
+Capturing the exact, awkward friction of early adolescence with staggeringly authentic dialogue, it refuses to take the easy way out.
+
+#### Running Silver
+##### fantasy · folklore · financial cleverness
+##### Naomi Novik
+##### Fiction, 2018, 480 pages
+
+> Alex prize says: "When a moneylender's daughter boasts she can spin silver into gold, she draws the dangerous attention of a cruel winter king. Novik builds a dense, atmospheric fantasy landscape rooted in Jewish folklore, prioritizing financial cleverness and domestic resourcefulness over traditional combat."
+
+A brilliant, richly detailed fairy-tale reimagining of Rumpelstiltskin focusing on three young women outwitting cold winters, greedy kings, and icy winter monsters.
+
+An intricate, winter-chilled fairy tale where wit replaces swords, rewarding readers looking for deep intellect and profound world-building.
+
+---
+
+### 2018 Alex prize
+
+#### [All Systems Red](https://books.rob.me.uk/book/1953)
+[![](covers/1953.jpg)](https://books.rob.me.uk/book/1953)
+##### sci-fi · Murderbot · social anxiety
+##### Martha Wells
+##### Fiction, 2017, 144 pages
+
+> Alex prize says: "A lethal security android hacks its own governor module, gaining absolute independence, but really just wants to watch soap operas. Wells packs immense character depth, humor, and social anxiety into an addictive sci-fi novella that subverts artificial intelligence tropes with profound heart."
+
+The snappy, fast-moving sci-fi novella introducing Murderbot, a lethal security android that has hacked its own governor module but really just wants to watch soap operas.
+
+Meet the most relatable, heavily-armed android in the history of science fiction, packing massive action and profound heart into a perfectly concise package.
+
+#### [The Clockwork Dynasty](https://books.rob.me.uk/book/1956)
+[![](covers/1956.jpg)](https://books.rob.me.uk/book/1956)
+##### sci-fi · automatons · secret history
+##### Daniel H. Wilson
+##### Fiction, 2017, 320 pages
+
+> Alex prize says: "A modern anthropologist specializing in historical clockwork mechanisms accidentally gets caught in a centuries-old underground war between hidden automatons. This high-octane sci-fi thriller shifts smoothly between royal historical courts and high-tech modern labs."
+
+An adrenaline-pumping sci-fi thriller that weaves historical flashbacks with a modern chase, exposing an ancient race of mechanical humanoids living secretly among us.
+
+Merging the elegance of historical fiction with the high-octane pulse of a modern techno-thriller, it is a cinematic read perfect for anyone fascinated by ancient engineering.
+
+#### [Down Among the Sticks and Bones](https://books.rob.me.uk/book/1959)
+[![](covers/1959.jpg)](https://books.rob.me.uk/book/1959)
+##### fantasy · gothic science · autonomy
+##### Seanan McGuire
+##### Fiction, 2017, 192 pages
+
+> Alex prize says: "Escaping the rigid gender expectations of their overbearing parents, twin sisters step into a portal world ruled by gothic vampires and mad scientists. McGuire writes with a sharp, fairy-tale cadence to deliver an atmospheric look at autonomy and self-creation."
+
+A dark, beautifully tragic dark fantasy novella tracing the origins of two twin sisters who stepped into a portal world ruled by vampires and mad scientists.
+
+Wielding prose like a surgical scalpel, it’s a biting masterpiece that delivers an unforgettable punch in a remarkably short page count.
+
+#### [Electric Arches](https://books.rob.me.uk/book/1960)
+[![](covers/1960.jpg)](https://books.rob.me.uk/book/1960)
+##### poetry · afrofuturism · Chicago
+##### Eve L. Ewing
+##### Poetry, 2017, 112 pages
+
+> Alex prize says: "Blending childhood memories with Afrofuturist visual art and prose, this striking collection maps Black girlhood in Chicago. Ewing utilizes a dynamic, creative layout that encourages young adults to view their own neighborhoods through a lens of magical realism."
+
+A striking, imaginative collection of poetry, prose, and visual art exploring Black girlhood, memory, and Afrofuturism in Chicago.
+
+Bursting off the page with a dynamic, accessible collection, it teaches young adults to look at their own histories through a lens of magical realism.
+
+#### [A Hope More Powerful Than the Sea](https://books.rob.me.uk/book/1961)
+[![](covers/1961.jpg)](https://books.rob.me.uk/book/1961)
+##### biography · refugee · open water
+##### Melissa Fleming
+##### Biography, 2017, 288 pages
+
+> Alex prize says: "Fleeing civil war, a young Syrian woman is left stranded in the Mediterranean Sea holding two infants after her migrant vessel is rammed by traffickers. This deeply moving biography provides an unvarnished window into the global refugee crisis and baseline human resilience."
+
+The deeply moving, true story of Doaa Al Zamel, a young Syrian refugee who survived a harrowing multi-day shipwreck in the Mediterranean.
+
+Stripping away abstract statistics to reveal the staggering human reality underneath, it highlights the absolute, unyielding limits of human resilience.
+
+#### [Malagash](https://books.rob.me.uk/book/1972)
+[![](covers/1972.jpg)](https://books.rob.me.uk/book/1972)
+##### contemporary · grief · computer virus
+##### Joey Comeau
+##### Fiction, 2017, 176 pages
+
+> Alex prize says: "Determined to make her dying father immortal, a young girl attempts to record his voice directly into a computer virus. Comeau's lean prose is laced with a pitch-black comedic edge, delivering a highly original, brief look at digital memory and teenage grief."
+
+A quiet, uniquely formatted, and deeply poignant short novel about a young girl who attempts to record her dying father's voice inside a computer virus to make him immortal.
+
+Flipping the traditional hospice narrative completely upside down with pitch-black humor, it offers a highly original, unsentimental read for anyone facing the unimaginable.
+
+#### Roughneck
+##### graphic · redemption · family violence
+##### Jeff Lemire
+##### Graphic Novel, 2017, 272 pages
+
+> Alex prize says: "Living in an isolated, snowy northern community, a washed-up ex-hockey player must confront a legacy of violence to protect his estranged sister. Lemire's stark, expressive ink-wash artwork perfectly captures an emotionally heavy graphic novel about redemption."
+
+A gritty, raw, and visually powerful graphic novel tracking a washed-up ex-hockey enforcer who must protect his estranged sister from her abusive partner.
+
+A brutal story that doesn't shy away from the horrific cycles of generational trauma, serving as a moving tale of the fierce lengths we go to protect our family.
+
+#### [She Rides Shotgun](https://books.rob.me.uk/book/1973)
+[![](covers/1973.jpg)](https://books.rob.me.uk/book/1973)
+##### hard-boiled noir · criminal · escape
+##### Jordan Harper
+##### Fiction, 2017, 272 pages
+
+> Alex prize says: "Fleeing a white supremacist prison gang, an ex-con father teaches his sharp eleven-year-old daughter criminal survival tactics in the California desert. Harper writes with a propulsive, hard-boiled economy of language to deliver an addictive coming-of-age crime thriller."
+
+A lean, mean, and cinematic neo-noir thriller following an ex-con father and his sharp eleven-year-old daughter fleeing a white supremacist gang.
+
+Moving like a muscle car with cut brake lines, it’s an incredibly addictive action story that unexpectedly morphs into an unforgettable coming-of-age journey.
+
+#### [Things We Have in Common](https://books.rob.me.uk/book/1974)
+[![](covers/1974.jpg)](https://books.rob.me.uk/book/1974)
+##### thriller · obsession · alienation
+##### Tasha Kavanagh
+##### Fiction, 2015, 304 pages
+
+> Alex prize says: "Struggling with extreme bullying, an isolated, obsessive teenage outsider begins to follow a suspicious local man she believes kidnapped her classmate. Kavanagh creates an incredibly claustrophobic, unreliable first-person voice that digs deep into teenage alienation."
+
+A deeply unsettling, dark psychological thriller told from the perspective of an isolated, obsessive teenage outsider who becomes entangled in a local girl's disappearance.
+
+Locking you inside the mind of one of the most uniquely uncomfortable narrators in modern fiction, it boldly explores the dangerous extremes of teenage isolation.
+
+#### [An Unkindness of Ghosts](https://books.rob.me.uk/book/1976)
+[![](covers/1976.jpg)](https://books.rob.me.uk/book/1976)
+##### sci-fi · lower decks · social hierarchy
+##### Rivers Solomon
+##### Fiction, 2017, 352 pages
+
+> Alex prize says: "An eccentric non-binary medic navigates the brutal, racial caste system of a generation ship arranged strictly like an antebellum plantation. Solomon's brilliant, heavy science fiction world functions as a powerful critique of white supremacy and institutional trauma."
+
+A phenomenal, fiercely structural sci-fi novel tracking an eccentric non-binary medic on a generation ship arranged strictly like an antebellum plantation.
+
+Using the vastness of space to examine the deeply entrenched roots of American slavery, it proves science fiction is one of our greatest tools for tearing apart systemic injustice.
+
+---
+
+### 2017 Alex prize
+
+#### [The Invisible Life of Ivan Isaenko](https://books.rob.me.uk/book/1975)
+[![](covers/1975.jpg)](https://books.rob.me.uk/book/1975)
+##### contemporary · sarcasm · institutional wit
+##### Scott Stambach
+##### Fiction, 2016, 304 pages
+
+> Alex prize says: "Born with severe deformities in a bleak Soviet orphanage, a highly intelligent boy uses biting sarcasm to manipulate staff until a new leukemia patient challenges his worldview. Stambach balances pitch-black institutional humor with a tender character study."
+
+A profoundly witty, darkly humorous, and touching story of a physically disabled boy living out his days in a bleak Soviet-era orphanage who encounters a transformative connection.
+
+Come for the razor-sharp humor and stay for the absolute emotional gut-punch; it subverts tired disability tropes with raw intellect.
+
+#### [The Queen of the Night](https://books.rob.me.uk/book/1962)
+[![](covers/1962.jpg)](https://books.rob.me.uk/book/1962)
+##### historical · grand opera · identity
+##### Alexander Chee
+##### Fiction, 2016, 576 pages
+
+> Alex prize says: "An American orphan rises to become an elite opera star in Paris, only to find her secret, dangerous past dramatized in a new libretto. Chee's prose is extraordinarily opulent and meticulously researched, delivering a massive, immersive historical mystery."
+
+A sweeping, lavish historical epic following an American orphan who becomes an elite opera star in Paris, only to find her dangerous past dramatized in a new libretto.
+
+Operating with the high melodrama and soaring tension of a classic grand opera, it is a deeply rewarding mystery for anyone who loves sprawling literature about secrets and art.
+
+#### [The Regional Office Is Under Attack!](https://books.rob.me.uk/book/1963)
+[![](covers/1963.jpg)](https://books.rob.me.uk/book/1963)
+##### workplace satire · assassins · mashup
+##### Manuel Gonzales
+##### Fiction, 2016, 400 pages
+
+> Alex prize says: "A shadowy organization of super-powered assassin schoolgirls faces a massive, coordinated assault. Gonzales coordinates corporate workplace satire and high-octane comic action sequences in an unpredictable, highly stylized picaresque."
+
+A wildly original, fast-paced genre mashup detailing an assault on a shadowy organization of super-powered assassin schoolgirls.
+
+Mixing *The Office* with *Kill Bill*, it is a wildly original thrill ride designed for readers who want their action sequences served with a side of sharp absurdity.
+
+#### [In the Country We Love: My Family Divided](https://books.rob.me.uk/book/1964)
+[![](covers/1964.jpg)](https://books.rob.me.uk/book/1964)
+##### memoir · deportation · resilience
+##### Diane Guerrero
+##### Memoir, 2016, 272 pages
+
+> Alex prize says: "Left completely on her own at age fourteen when her undocumented parents were arrested and deported, an actress details her journey of survival in Boston. Guerrero writes with raw candor about depression, financial instability, and the human cost of immigration policy."
+
+A vital, clear-eyed memoir detailing the actress's harrowing experience as a 14-year-old when her undocumented parents were suddenly arrested and deported.
+
+Stripping away political talking points to reveal the devastating human cost of border policy, it inspires immense empathy and demands to be read.
+
+#### [The Gilded Razor: A Memoir](https://books.rob.me.uk/book/1881)
+[![](covers/1881.jpg)](https://books.rob.me.uk/book/1881)
+##### memoir · addiction · recovery
+##### Sam Lansky
+##### Memoir, 2016, 336 pages
+
+> Alex prize says: "This raw, unflinching memoir tracks a brilliant young writer's rapid descent into prescription drug addiction amidst his elite New York teenage years. Lansky's sharp, cinematic prose maps the harsh realities of dependency and the long path to reclaiming boundaries."
+
+A raw, unflinching, and ultimately redemptive memoir tracking a brilliant young writer's descent into severe prescription drug addiction during his elite New York teenage years.
+
+Capturing the chaotic, terrifying velocity of teenage self-destruction among the New York elite, it proves reclaiming your life is the ultimate act of defiance.
+
+#### [The Whale: A Love Story](https://books.rob.me.uk/book/1965)
+[![](covers/1965.jpg)](https://books.rob.me.uk/book/1965)
+##### historical · writers · obsession
+##### Mark Beauregard
+##### Fiction, 2016, 272 pages
+
+> Alex prize says: "During a hot Massachusetts summer, author Herman Melville frantically drafts *Moby-Dick* while caught in a complicated emotional obsession with Nathaniel Hawthorne. Drawing on real historical letters, this atmospheric novel explores the hidden histories of classic literature."
+
+An elegant, deeply romantic historical novel exploring the intense, complicated emotional relationship between authors Herman Melville and Nathaniel Hawthorne.
+
+Pulling back the dusty curtain of the American literary canon, it perfectly captures the manic energy required to write a masterpiece while drowning in hidden desire.
+
+#### [Arena](https://books.rob.me.uk/book/1979)
+[![](covers/1979.jpg)](https://books.rob.me.uk/book/1979)
+##### sci-fi · esports · gaming addiction
+##### Holly Jennings
+##### Fiction, 2016, 336 pages
+
+> Alex prize says: "Competing inside an ultra-violent virtual reality esports league, a teenage gamer must navigate corporate exploitation, substance abuse, and a teammate's sudden death. Jennings matches the fast mechanics of gaming culture with a serious look at mental health."
+
+A fast, high-stakes near-future sci-fi novel exploring the dark underside of fame, corporate control, and gaming addiction within a lethal virtual reality esports league.
+
+An adrenaline rush that perfectly understands the mechanics of modern competitive gaming, functioning as a smart, cautionary tale about technology and sports culture.
+
+#### [Every Heart a Doorway](https://books.rob.me.uk/book/1882)
+[![](covers/1882.jpg)](https://books.rob.me.uk/book/1882)
+##### fantasy · portal · boarding school
+##### Seanan McGuire
+##### Fiction, 2016, 176 pages
+
+> Alex prize says: "At a specialized boarding school for children who have returned from magical portal worlds, a group of outcasts must catch a gruesome campus killer. McGuire constructs a perfectly paced, gorgeous allegory for teenage displacement and identity exploration."
+
+A brilliant, sharp fantasy novella set at a boarding school for children who have returned from magical portal worlds and are desperately trying to go back.
+
+Turning the portal-fantasy genre inside out, it offers incredible representation and profound allegories for outgrowing your own reality.
+
+#### Romeo and/or Juliet: A Choosable-Path Adventure
+##### interactive · comedy · Shakespeare
+##### Ryan North
+##### Fiction, 2016, 448 pages
+
+> Alex prize says: "This hilarious, choose-your-own-path adaptation turns a mandatory Shakespeare tragedy into a comedic playground packed with ridiculous branches and robotic suits. North uses sharp footnotes and interactive puzzles to deconstruct classic literary tropes."
+
+A hilarious, deeply clever pick-your-own-path adaptation of the classic Shakespeare tragedy packed with brilliant art, ridiculous branches, and hidden stats.
+
+Transforming a mandatory literary tragedy into a wildly interactive playground, it proves classic stories can still be ridiculously entertaining.
+
+#### [The Fireman](https://books.rob.me.uk/book/1921)
+[![](covers/1921.jpg)](https://books.rob.me.uk/book/1921)
+##### thriller · apocalyptic · viral epidemic
+##### Joe Hill
+##### Fiction, 2016, 768 pages
+
+> Alex prize says: "A worldwide viral plague causes its victims to spontaneously combust, forcing a resilient pregnant nurse to seek a hidden underground sanctuary. Hill delivers a massive, propulsive survival narrative that explores the thin line between community and mob violence."
+
+A massive, terrifying apocalyptic thriller about a worldwide plague that causes victims to spontaneously combust, and a resilient pregnant nurse fighting to find a safe sanctuary.
+
+Crackling with unrelenting suspense from the very first page, it forces you to question how quickly civil society burns away under pressure.
+
+---
+
+### 2016 Alex prize
+
+#### [All the Single Ladies](https://books.rob.me.uk/book/1922)
+[![](covers/1922.jpg)](https://books.rob.me.uk/book/1922)
+##### non-fiction · history · independence
+##### Rebecca Traister
+##### Non-fiction, 2016, 352 pages
+
+> Alex prize says: "Weaving extensive sociological statistics with historical case studies, Traister maps how unmarried women have consistently driven major progressive movements. This energetic, clear-eyed work of non-fiction reshapes how young adults view career and autonomy."
+
+A phenomenal, sharp journalistic and historical deep dive into the cultural and political power of unmarried women throughout history.
+
+Transforming dense sociological history into an electrifying manifesto, it will radically reshape how you view independence, career, and freedom.
+
+#### [The Book of Speculation](https://books.rob.me.uk/book/1923)
+[![](covers/1923.jpg)](https://books.rob.me.uk/book/1923)
+##### mystery · curse · circus life
+##### Erika Swyler
+##### Fiction, 2015, 352 pages
+
+> Alex prize says: "A young librarian receives an ancient, water-damaged journal that tracks a generational curse haunting his family's circus ancestry. Swyler writes with rich sensory detail, balancing a slow-burning historical mystery against a high-stakes modern family crisis."
+
+A lush, atmospheric mystery centering on a young librarian who receives an ancient journal tracking a generational curse that haunts his family's circus past.
+
+A sensory richness that makes you taste the salt air and smell the old paper bindings, serving as an absolute feast for readers who love atmospheric mysteries.
+
+#### [The Grace of Kings](https://books.rob.me.uk/book/1924)
+[![](covers/1924.jpg)](https://books.rob.me.uk/book/1924)
+##### fantasy · epic rebellion · silkpunk
+##### Ken Liu
+##### Fiction, 2015, 640 pages
+
+> Alex prize says: "Two charismatic friends forge an unlikely alliance to overthrow an oppressive empire, only to find their bond shattered by competing philosophies of governance. Liu's monumental 'silkpunk' epic fantasy incorporates East Asian philosophy and brilliant bamboo engineering."
+
+A monumental, meticulously constructed "silkpunk" epic fantasy tracking two charismatic friends who lead a massive rebellion against an oppressive empire.
+
+Replacing standard European tropes with breathtaking East Asian engineering and battle kites, it is a vast, brilliant adventure designed for readers hungry for massive scope.
+
+#### [Our Souls at Night](https://books.rob.me.uk/book/1925)
+[![](covers/1925.jpg)](https://books.rob.me.uk/book/1925)
+##### contemporary · connection · small town
+##### Kent Haruf
+##### Fiction, 2015, 192 pages
+
+> Alex prize says: "To combat late-life isolation, an elderly neighbor approaches her companion with a simple proposal: to share a bed together at night just to talk. Haruf's sparse, powerful prose delivers a moving, mature look at domestic intimacy and small-town gossip."
+
+A beautiful, sparse, and deeply affecting quiet novel about elderly man and woman in Colorado who form an unconventional connection to combat loneliness.
+
+A masterclass in the profound power of quiet companionship, it proves the desire for connection never fades, no matter how old we get.
+
+#### [The Sacred Lies of Minnow Bly](https://books.rob.me.uk/book/1926)
+[![](covers/1926.jpg)](https://books.rob.me.uk/book/1926)
+##### mystery · cult · raw survival
+##### Stephanie Oakes
+##### Fiction, 2015, 400 pages
+
+> Alex prize says: "Found handless in the woods after her extremist cult's violent collapse, a seventeen-year-old must navigate juvenile detention while revealing a prophet's secrets. Oakes crafts a hard-hitting psychological whodunit centered on survival and intellectual reclamation."
+
+A hard-hitting, dark contemporary mystery tracking a handless young girl escaping an extremist cult, frameworked around a classic Grimm fairy tale.
+
+Refusing to look away from the horrors of religious indoctrination, it celebrates the sheer, undeniable power of intellectual reclamation.
+
+#### [The Scorpion Rules](https://books.rob.me.uk/book/1966)
+[![](covers/1966.jpg)](https://books.rob.me.uk/book/1966)
+##### sci-fi · AI · absolute peace
+##### Erin Bow
+##### Fiction, 2015, 384 pages
+
+> Alex prize says: "In a world governed by an omnipotent artificial intelligence that holds the children of global leaders hostage to enforce world peace, a captive princess faces execution. Bow delivers a masterfully paced psychological thriller packed with brilliant philosophical logic."
+
+A clever, sharp post-apocalyptic sci-fi novel about a world governed by an AI that holds the children of world leaders hostage to enforce absolute peace.
+
+The kind of brilliant, high-concept science fiction that stays locked in your brain for years, perfectly balancing explosive action with profound philosophical debates.
+
+#### [A Spool of Blue Thread](https://books.rob.me.uk/book/1980)
+[![](covers/1980.jpg)](https://books.rob.me.uk/book/1980)
+##### contemporary · family · drama
+##### Anne Tyler
+##### Fiction, 2015, 368 pages
+
+> Alex prize says: "This masterfully observant multigenerational family drama tracks the domestic friction and long-buried rivalries of a Baltimore clan across decades. Tyler captures the exact rhythm of everyday heartbreaks, finding extraordinary weight hidden within regular interactions."
+
+A masterfully observant, multigenerational family drama tracking the quiet quirks, hidden secrets, and domestic frictions of a Baltimore family across decades.
+
+Revealing the profound, complex universe hidden underneath seemingly mundane details, it will make you look entirely differently at your own dinner table dynamics.
+
+#### [The Thing About Jellyfish](https://books.rob.me.uk/book/1938)
+[![](covers/1938.jpg)](https://books.rob.me.uk/book/1938)
+##### contemporary · grief · marine science
+##### Ali Benjamin
+##### Fiction, 2015, 352 pages
+
+> Alex prize says: "Convinced her classmate's sudden drowning must have been caused by a rare, overlooked jellyfish sting, a grieving girl retreats into silence and plans a scientific quest. Benjamin seamlessly blends marine biology into a tender study of middle school dynamics."
+
+A poignant, scientifically rich story about a grieving young girl who retreats into silence after her friend drowns, trying to find a logical explanation via marine biology.
+
+Distilling the staggering nature of sudden grief into a story that is both intellectually fascinating and deeply tender, it treats middle school heartache with absolute dignity.
+
+#### [Trigger Warning: Short Fictions and Disturbances](https://books.rob.me.uk/book/500)
+[![](covers/500.jpg)](https://books.rob.me.uk/book/500)
+##### fantasy · anthology · dark samplers
+##### Neil Gaiman
+##### Fiction, 2015, 312 pages
+
+> Alex prize says: "A wide-ranging collection of eerie, unsettling short stories and poems that subvert classic fairy-tale and mythological archetypes. Gaiman writes with a deceptive simplicity that can evoke extreme comfort or absolute dread within a single paragraph."
+
+A fantastic, wide-ranging collection of eerie, imaginative, and unsettling short stories and poems exploring the dark corners of myth and memory.
+
+An ultimate literary illusionist effortlessly weaving between comforting nostalgia and absolute dread, perfect for readers who like their stories with a bit of a bite.
+
+#### [The Unnoticeables](https://books.rob.me.uk/book/1940)
+[![](covers/1940.jpg)](https://books.rob.me.uk/book/1940)
+##### fantasy · punk rock · horror
+##### Robert Brockway
+##### Fiction, 2015, 352 pages
+
+> Alex prize says: "A 1970s New York punk rocker and a modern-day Los Angeles stuntwoman fight an ancient, mathematical cult that turns vulnerable people into empty shells. Brockway infuses a high-octane horror comedy with a hilarious, foul-mouthed cynical energy."
+
+A gritty, fast-moving punk-rock urban fantasy tracking a 1970s NYC punk and a modern-day LA stuntwoman fighting cosmic horrors that turn people into empty shells.
+
+Injecting the urban fantasy genre with a dose of pure, chaotic punk-rock energy, it champions the outcasts fighting back against a society trying to erase them.
+
+---
+
+### 2015 Alex prize
+
+#### [All the Light We Cannot See](https://books.rob.me.uk/book/1736)
+[![](covers/1736.jpg)](https://books.rob.me.uk/book/1736)
+##### historical · war · parallel lines
+##### Anthony Doerr
+##### Fiction, 2014, 544 pages
+
+> Alex prize says: "The parallel paths of a blind French girl hiding in a walled coastal city and an orphaned German radio technician collide during the closing days of World War II. Doerr's short chapters and extraordinarily descriptive, poetic prose create a monumental epic."
+
+A stunningly beautiful, intricately structured historical epic about a blind French girl and a young German soldier whose paths collide during WWII.
+
+An immersive sensory experience tracking the beauty of technology and human nature amidst warfare that functions as an absolute masterclass in narrative structure.
+
+#### Mystery · music · historic hotel
+##### Kate Racculia
+##### Fiction, 2014, 432 pages
+
+> Alex prize says: "When a high-strung music prodigy vanishes from her room during a historic hotel's blizzard-bound festival, a chaotic group of students and conductors must solve the puzzle. Racculia delivers a theatrical whodunit that captures teenage performance anxiety."
+
+A dark, clever, and high-energy ensemble mystery set at a statewide high school music festival inside a grand, historic hotel where an old murder took place.
+
+A wonderfully fun, fast-paced tribute to classic locked-room mysteries and the intense culture of youth music.
+
+#### [Bingo's Run](https://books.rob.me.uk/book/1942)
+[![](covers/1942.jpg)](https://books.rob.me.uk/book/1942)
+##### contemporary · street kid · Nairobi
+##### James Levine
+##### Fiction, 2014, 288 pages
+
+> Alex prize says: "A sharp-witted fifteen-year-old drug runner maps the slums of Nairobi, navigating corrupt orphanages and shifting gang allegiances with raw intelligence. Levine writes with a propulsive, unvarnished economy that highlights international social issues through an unforgettable voice."
+
+A fast-paced, unsentimental, yet deeply moving novel starring an incredibly sharp-witted fifteen-year-old street kid working as a drug runner in the slums of Nairobi.
+
+Highlighting the brutal realities of extreme poverty without stripping away dark humor, it introduces international social issues through an unforgettable coming-of-age voice.
+
+#### [Confessions](https://books.rob.me.uk/book/1943)
+[![](covers/1943.jpg)](https://books.rob.me.uk/book/1943)
+##### thriller · revenge plot · school
+##### Kanae Minato
+##### Fiction, 2014, 240 pages
+
+> Alex prize says: "On her final day of class, a grieving Japanese teacher announces to her pupils that she has introduced a lethal substance into the milk of the students responsible for her daughter's death. Minato structures a sleek, terrifying psychological thriller through intersecting first-person confessions."
+
+A chilling, pitch-black Japanese psychological thriller told in intersecting perspectives, tracking a middle school teacher executing a calculated revenge plot against the students who killed her daughter.
+
+A sleek, completely unpredictable narrative that dives deep into institutional failure, exploring the dark limits of justice and teenage sociopathy.
+
+#### [Everything I Never Told You](https://books.rob.me.uk/book/1967)
+[![](covers/1967.jpg)](https://books.rob.me.uk/book/1967)
+##### mystery · family · generational secrets
+##### Celeste Ng
+##### Fiction, 2014, 304 pages
+
+> Alex prize says: "Following the sudden drowning of their favorite daughter, a mixed-race midwestern family in the 1970s must untangle a legacy of hidden secrets and overwhelming expectations. Ng writes with quiet, flawless precision to deliver a profound look at intersectional identity."
+
+A deeply moving, flawlessly paced literary mystery tracing the cracks within a mixed-race midwestern family following the sudden drowning of their favorite daughter.
+
+Showing how easily miscommunications can build structural walls, it provides a profound look at intersectional identity, grief, and family boundaries.
+
+#### Lock In
+##### sci-fi · police procedural · paralysis
+##### John Scalzi
+##### Fiction, 2014, 336 pages
+
+> Alex prize says: "A rookie FBI agent investigates a high-profile homicide inside a near-future society transformed by a virus that leaves victims navigating the world via robotic bodies. Scalzi maintains a light-speed momentum packed with corporate corruption and virtual reality hacking."
+
+A sharp, near-future sci-fi police procedural where a rookie FBI agent investigates a murder within a society transformed by a virus that leaves victims paralyzed but able to navigate the world via robotic bodies.
+
+Handling themes of physical accessibility, virtual spaces, and civil rights with a sharp, entertaining edge, it is an exceptionally fun, thought-provoking entry point.
+
+#### [The Martian](https://books.rob.me.uk/book/1969)
+[![](covers/1969.jpg)](https://books.rob.me.uk/book/1969)
+##### sci-fi · extreme survival · Mars
+##### Andy Weir
+##### Fiction, 2014, 384 pages
+
+> Alex prize says: "Stranded alone on Mars with a ruined habitat, an engineer relies on chemistry, botany, and heavy gallows humor to calculate his survival. Weir utilizes highly entertaining log entries to transform real science and mathematics into a propulsive, high-stakes thriller."
+
+A witty, fast-paced, and scientifically detailed survival thriller about an astronaut stranded alone on Mars using his engineering skills to stay alive.
+
+A brilliant, propulsive celebration of human ingenuity that turns real-world science and mathematics into high-stakes dramatic obstacles.
+
+#### The Miniaturist
+##### thriller · gothic · underground vampires
+##### Lauren Owen
+##### Fiction, 2014, 544 pages
+
+> Alex prize says: "Beginning as a Victorian London literary drama, this atmospheric thriller quickly descends into a dark, secret underground network of aristocratic vampires. When a young poet vanishes, his courageous sister sets out to cross foggy streets and hidden gentleman's clubs to rescue him."
+
+A grand, atmospheric, and unpredictable historical thriller that begins as a Victorian London literary drama before descending into a dark, secret underground vampire society.
+
+A beautifully immersive, gothic setting filled with secret gentlemen's clubs and complex supernatural lore, perfect for readers who love classic Victorian literature.
+
+#### [Those Who Leave and Those Who Stay](https://books.rob.me.uk/book/1797)
+[![](covers/1797.jpg)](https://books.rob.me.uk/book/1797)
+##### historical · sisterhood · class mobility
+##### Elena Ferrante
+##### Fiction, 2014, 418 pages
+
+> Alex prize says: "Tracking the competitive lifelong bond of two women navigating 1970s Italy, Ferrante writes with an extraordinary emotional honesty about female jealousy and class mobility. This sprawling historical masterpiece treats the internal life of women with absolute seriousness."
+
+The brilliant, intensely psychological third installment of the Neapolitan Novels tracking the fierce, competitive lifelong bond of two women navigating 1970s Italy.
+
+An extraordinary, uncompromising emotional honesty about female jealousy and ambition that treats the internal life of women with absolute literary seriousness.
+
+#### [Wolf in White Van](https://books.rob.me.uk/book/1971)
+[![](covers/1971.jpg)](https://books.rob.me.uk/book/1971)
+##### contemporary · imagination · pocket isolation
+##### John Darnielle
+##### Fiction, 2014, 224 pages
+
+> Alex prize says: "A disfigured man running a complex, text-based play-by-mail roleplaying game uses fantasy escapism to process a tragic teenage accident. Darnielle writes with a deeply poetic clarity that maps the deep pockets of modern isolation, offering intense psychological depth."
+
+A fragmented, profoundly resonant novel tracking a disfigured man who runs a complex play-by-mail roleplaying game, exploring isolation, imagination, and a tragic childhood accident.
+
+Capturing the exact allure of fantasy escapism and modern loneliness, it offers intense validation for anyone fascinated by the power and danger of imagination.

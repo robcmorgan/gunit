@@ -1,0 +1,128 @@
+#schema: gunit book list v1 — columns are PIPE-separated (|)
+#  1 title    2 author    3 status    4 md5/source    5 date    6 calibre_id|se-empty
+#  status: (blank)=pending  downloaded  nomatch  failed  quota_blocked  tagged  queued/downloading/completed (legacy)
+#  col4: Anna's md5, or se:<author>/<title> for Standard Ebooks rows
+#  col6: calibre book id on DONE rows; the literal "se-empty" on quota_blocked/nomatch rows means SE was already searched and had nothing (skip re-search)
+#  lines beginning with # are comments; "#tag: NAME[, NAME...]" sets the calibre tags for this whole list
+#tag: Alex prize, Adult, Young Adult
+
+The Girls Who Grew Big|Leila Mottley|tagged|463e696020861197a9028f6a19783bcf|2026-06-16T15:10|1883
+What Kind of Paradise|Janelle Brown|tagged||2026-06-16T15:10
+The Favorites|Layne Fargo|tagged||2026-06-16T15:10
+Hole in the Sky|Daniel H. Wilson|tagged||2026-06-16T15:11
+These Heathens|Mia McKenzie|tagged||2026-06-16T15:11
+The Whyte Python World Tour|Travis Kennedy|tagged|d11d1efb9cd6eabb1db7ecedf43aae65|2026-06-16T15:11|1893
+Plum|Andy Anderegg|tagged||2026-06-16T15:11
+Harriet Tubman: Live in Concert|Bob the Drag Queen|downloaded||2026-06-16T17:15|1894
+Sonita: My Fight Against Tyranny and My Escape to Freedom|Sonita Alizada|tagged|3a6715038a49e306279811d3a9ba714f|2026-06-16T15:12|1874
+Insectopolis: A Natural History|Peter Kuper|nomatch||2026-06-16T17:28|se-empty
+I Was a Teenage Slasher|Stephen Graham Jones|tagged|eeaa4303827e738fb5e132500edb61c4|2026-06-16T15:12|1895
+How to Solve Your Own Murder|Kristen Perrin|tagged|fc634c0f55cf3b8453be3c598af73198|2026-06-16T15:12|1896
+The Dead Cat Tail Assassins|P. Djèlí Clark|tagged|f25aba531f87f8428237a6094cabb7c4|2026-06-16T15:12|1897
+Daughters of Shandong|Eve J. Chung|tagged||2026-06-16T15:12
+The Witchstone|Henry H. Neff|tagged||2026-06-16T15:13
+The Witch of Colchis|Rosie Hewlett|tagged||2026-06-16T15:13
+Beautiful People: My Thirteen Truths About Disability|Melissa Blake|tagged|fa80118252460764913b3339dd844204|2026-06-16T15:13|1878
+Woman, Life, Freedom|Marjane Satrapi|nomatch||2026-06-16T17:29|se-empty
+Big Jim and the White Boy|David F. Walker|nomatch||2026-06-16T17:31|se-empty
+I Feel Awful, Thanks|Lara Pickle|nomatch||2026-06-16T17:32|se-empty
+Chain-Gang All-Stars|Nana Kwame Adjei-Brenyah|tagged|f605da01edb3049d194370d22cbf2e64|2026-06-16T15:13|1913
+Starter Villain|John Scalzi|tagged|e4c889ee1c072e87ccf78ede5e9a9b07|2026-06-16T15:13|1898
+Whalefall|Daniel Kraus|tagged|f2f02b2bef1b00b248c06f8036079c4c|2026-06-16T15:13|1899
+Maame|Jessica George|tagged|e14a57f7630ace9d51b83ac440e123a1|2026-06-16T15:14|1900
+Bad Cree|Jessica Johns|tagged||2026-06-16T15:14
+Chlorine|Jade Song|tagged||2026-06-16T15:15
+Fourth Wing|Rebecca Yarros|tagged||2026-06-16T15:15
+I Will Greet the Sun Again|Khashaya J. Khabushani|tagged||2026-06-16T15:15
+The Talk|Darrin Bell|tagged||2026-06-16T15:16
+The Hard Parts|Oksana Masters|tagged||2026-06-16T15:16
+A Lady's Guide to Fortune-Hunting|Sophie Irwin|tagged|f29fea1bc7134d5d15998d3240141db9|2026-06-16T15:16|1901
+Babel, or the Necessity of Violence: An Arcane History of the Oxford Translators' Revolution|R. F. Kuang|tagged|21a491f20922da822e19e27d2dfebc73|2026-06-16T15:17|2097
+Chef's Kiss|Jarrett Melendez|pdf-only|191f4a4d16bdc53c9d825a69c8eedf36|2026-06-16T13:34|se-empty
+Daughter of the Moon Goddess|Sue Lynn Tan|tagged|eaa4597243231a9a2e87b27135c51000|2026-06-16T15:17|1903
+I'm Glad My Mom Died|Jennette McCurdy|tagged|f325d825066ceaa0ded0531ae691c2e0|2026-06-16T15:17|1904
+Lesser Known Monsters of the 21st Century|Kim Fu|tagged|f97839978d312fb329813bb903b73e9a|2026-06-16T15:17|1905
+True Biz|Sara Nović|tagged|ec03b861534df06007dd31019d56b149|2026-06-16T15:18|1906
+The Kaiju Preservation Society|John Scalzi|tagged|fb69750ab707b8bddd043ba4c6b17149|2026-06-16T15:18|1907
+Wash Day Diaries|Jamila Rowser|tagged|84c5afcc92fce2aefca0e79b7ac6a0c9|2026-06-16T15:18|1908
+The Maid|Nita Prose|tagged|f603ae8909669dc66d40a1f61c2542fb|2026-06-16T15:18|1909
+Light from Uncommon Stars|Ryka Aoki|tagged|c17b508f7275beec932fad8006d29680|2026-06-16T15:18|1910
+The One Hundred Years of Lenni and Margot|Marianne Cronin|tagged|eecb9ce56db3cc8b49a53bbcb8c91743|2026-06-16T15:19|1911
+The Witch's Heart|Genevieve Gornichec|tagged|e447c3ef65fb277bc7ab328afc4663b8|2026-06-16T15:19|1912
+The Beautiful Ones|Prince|tagged||2026-06-16T15:19
+Lore Olympus, Vol. 1|Rachel Smythe|nomatch||2026-06-16T13:35|se-empty
+Ballad for Sophie|Filipe Melo|pdf-only|3c88f4915d03764df3cc53a7b90ab89e|2026-06-16T13:36|se-empty
+Crossing the Line: A Fearless Team of Brothers and the Sport That Changed Their Lives|Kareem Rosser|tagged|e58bf84fc1c3da894f2b20baa7c5c0ab|2026-06-16T15:19|1914
+The Rose Code|Kate Quinn|tagged|ff1f0f236fb3ffd3dae479417678c06a|2026-06-16T15:19|1915
+Seek You: A Journey Through American Loneliness|Kristen Radtke|downloaded|02ebc8a497cdabb736af895a84fb63b3|2026-06-16T11:24
+True Story: What Reality TV Says About Us|Danielle J. Lindemann|tagged|ea9e99c811bdef4d1b819a1aeb5d0883|2026-06-16T15:20|1917
+Black Sun|Rebecca Roanhorse|tagged|efd64866b8a60e248842d72f450ba5cc|2026-06-16T15:20|1918
+The House in the Cerulean Sea|TJ Klune|tagged||2026-06-16T15:21
+The Impossible First: From Inner Demons to an Epic Crossing of Antarctica|Colin O'Brady|nomatch||2026-06-16T13:37|se-empty
+Kent State: Four Dead in Ohio|Derf Backderf|nomatch||2026-06-16T13:39|se-empty
+The Kids Are Gonna Ask|Gretchen Anthony|tagged|ee974dbf1e338f25ec66a6e3154ac350|2026-06-16T15:21|1919
+The Only Good Indians|Stephen Graham Jones|tagged|f2c5baebc4915554c43a6ff5ddbba729|2026-06-16T15:22|1920
+Plain Bad Heroines|Emily M. Danforth|tagged|f515dc6cc7294dca2e4454a1d8636c90|2026-06-16T15:22|1927
+Riot Baby|Tochi Onyebuchi|tagged|ee900f53f0fe31c9a6c98098e5e38d26|2026-06-16T15:23|1928
+Solutions and Other Problems|Allie Brosh|tagged|d913c1fab6e0002d90dde8bf7b503650|2026-06-16T15:23|1929
+We Ride Upon Sticks|Quan Barry|tagged|e2489baf19ab0920d81791840e831a81|2026-06-16T15:23|1930
+The Nickel Boys|Colson Whitehead|tagged|fe26cb27a9f3e55b877ec1a97b8ba98f|2026-06-16T15:23|1931
+Middlegame|Seanan McGuire|tagged||2026-06-16T15:24
+A Boy and His Dog at the End of the World|C.A. Fletcher|tagged|e81be9c2a3e87aa8e6bed8bb45be2c08|2026-06-16T15:24|1932
+Do You Dream of Terra-Delta?|Temi Oh|nomatch||2026-06-16T13:40|se-empty
+The Gilded Wolves|Roshani Chokshi|tagged|d6dd604ecde0041e1615168ae5358f80|2026-06-16T15:24|1933
+The Library of the Unwritten|AJ Hackwith|tagged|f30c46b59117b47ad94be8be24d30933|2026-06-16T15:24|1934
+Loki: Where Mischief Lies|Mackenzi Lee|downloaded||2026-06-16T17:15|1978
+The Ten Thousand Doors of January|Alix E. Harrow|downloaded|3f618608c937219fe1dd7272487e5ed8|2026-06-16T17:17
+That's Not English|Sarah Bernstein|nomatch||2026-06-16T13:42|se-empty
+With the Fire on High|Elizabeth Acevedo|tagged|d33c08cd291bc3d427c8d7437109b119|2026-06-16T15:25
+The Cruel Prince|Holly Black|tagged|ea1e9070aa1aac09c3591d040bc363e7|2026-06-16T15:26|1937
+The Poet X|Elizabeth Acevedo|downloaded||2026-06-16T17:18|1944
+The Hazel Wood|Melissa Albert|tagged|e59861134c61caf54ac0e6715f267658|2026-06-16T15:26|1945
+Children of Blood and Bone|Tomi Adeyemi|tagged|fbcb7501c21d760b4062ebf8e51837af|2026-06-16T15:26|1946
+Skyward|Brandon Sanderson|tagged|ff1dd2fce4af32e5663ff8c38a8eaf7d|2026-06-16T15:26|1947
+Circe|Madeline Miller|tagged|fe9270f55e7d9e3ae6291b2144375639|2026-06-16T15:27|1948
+Educated|Tara Westover|tagged|ed1c2cac7947db8c431816287203e4b7|2026-06-16T15:27|1949
+The Prince and the Dressmaker|Jen Wang|tagged|a08d321fbb8c494b29489f0e97e26b51|2026-06-16T15:27|1950
+Green|Sam Graham-Felsen|tagged|d1d9a0b6a2f1f822bc32d47d83742394|2026-06-16T15:27|1951
+Spinning Silver|Naomi Novik|tagged|f39d3210b39ea010ac82a4fcecc5eff4|2026-06-16T15:27|1952
+All Systems Red|Martha Wells|tagged|fb1b9b51abea3e37872f1a061ec48c06|2026-06-16T15:27|1953
+The Clockwork Dynasty|Daniel H. Wilson|downloaded||2026-06-16T17:16|1956
+Down Among the Sticks and Bones|Seanan McGuire|tagged|ffd98466b60ca3fca1bf0110b77b9a25|2026-06-16T15:27|1959
+Electric Arches|Eve L. Ewing|tagged|71bcbb47019330b418307eb0bf0d0217|2026-06-16T15:27|1960
+A Hope More Powerful Than the Sea|Melissa Fleming|tagged|da3f111aebca770ca8e70dc2fd1530ab|2026-06-16T15:27|1961
+Malagash|Joey Comeau|tagged|b6bc3dc3358b7d277299c6e1059195e6|2026-06-16T15:28|1972
+Roughneck|Jeff Lemire|pdf-only|0941668fa1b6bd71209b2571fcfe8324|2026-06-16T13:43|se-empty
+She Rides Shotgun|Jordan Harper|tagged|ff5524133a01d2e16b7bcd1c5b66e298|2026-06-16T15:28|1973
+Things We Have in Common|Tasha Kavanagh|tagged|e8c1fba8455d935dc40a497353c56e5e|2026-06-16T15:28|1974
+An Unkindness of Ghosts|Rivers Solomon|tagged|d8f0c1cd53cd8119b261fc0257784e6e|2026-06-16T15:28|1976
+The Invisible Life of Ivan Isaenko|Scott Stambach|tagged|770728b566686f01bc40499c5177c9bf|2026-06-16T15:28|1975
+The Queen of the Night|Alexander Chee|tagged|f7c3d27cbaef9af6bd1915c5bf70fddc|2026-06-16T15:28|1962
+The Regional Office Is Under Attack!|Manuel Gonzales|tagged|f8c6855bb309d99e93419f605af14967|2026-06-16T15:28|1963
+In the Country We Love: My Family Divided|Diane Guerrero|downloaded||2026-06-16T17:16|1964
+The Gilded Razor: A Memoir|Sam Lansky|tagged||2026-06-16T15:29
+The Whale: A Love Story|Mark Beauregard|tagged|ed0a249e1fda53df797f35490304308e|2026-06-16T15:29|1965
+Arena|Holly Jennings|tagged|592e2e4ccaedb70669cec6ae5296ead5|2026-06-16T15:29|1979
+Every Heart a Doorway|Seanan McGuire|tagged||2026-06-16T15:29
+Romeo and/or Juliet: A Choosable-Path Adventure|Ryan North|nomatch||2026-06-16T13:44|se-empty
+The Fireman|Joe Hill|tagged|e183cac10581092791c34311a5cac830|2026-06-16T15:29|1921
+All the Single Ladies: Unmarried Women and the Rise of an Independent Nation|Rebecca Traister|tagged|fc2454a8c3a74631a9a1050c91287612|2026-06-16T15:29|1922
+The Book of Speculation|Erika Swyler|tagged|f781e955d1dad41438d713b705eba667|2026-06-16T15:30|1923
+The Grace of Kings|Ken Liu|tagged|f4eb0b90464e903cab064ebae95ecfc7|2026-06-16T15:30|1924
+Our Souls at Night|Kent Haruf|tagged|f21ece5fd6ed06ca32c1df43f1f1c1a0|2026-06-16T15:30|1925
+The Sacred Lies of Minnow Bly|Stephanie Oakes|tagged|dd4e726622ee126fbe028010bf03e324|2026-06-16T15:30|1926
+The Scorpion Rules|Erin Bow|tagged|fee19448eb8fc6589d7c98af62190a5d|2026-06-16T15:30|1966
+A Spool of Blue Thread|Anne Tyler|tagged|05a0860424e8ddf4149c9da50d1ebfe4|2026-06-16T15:31|1977
+The Thing About Jellyfish|Ali Benjamin|tagged|92ecd77a00a0a3ac0179465a2035b4f8|2026-06-16T15:31|1938
+Trigger Warning: Short Fictions and Disturbances|Neil Gaiman|downloaded||2026-06-16T17:16|1939
+The Unnoticeables|Robert Brockway|tagged|eba0748817cf4560b0c6bd1e608a7fbe|2026-06-16T15:31|1940
+All the Light We Cannot See|Anthony Doerr|tagged||2026-06-16T15:31
+Bellweather Rhapsody|Kate Racculia|tagged|b876196a90c63247952dcd4d6485ab65|2026-06-16T15:31|1941
+Bingo's Run|James Levine|tagged|ff9c8e35935b9da335114461371b97b8|2026-06-16T15:31|1942
+Confessions|Kanae Minato|tagged|f8e7e778e0ebcf1b066bd967ae7bc0c5|2026-06-16T15:32|1943
+Everything I Never Told You|Celeste Ng|tagged|f8455987285b1a65afe665154986f556|2026-06-16T15:32|1967
+Lock In|John Scalzi|nomatch|022a4b657c0447ede35cfedfe1240b0c|2026-06-16T15:40|se-empty
+The Martian|Andy Weir|tagged|f54a090cd8c4bb5a40572bbb12f4516b|2026-06-16T15:32|1969
+The Quick|Lauren Owen|tagged|fccc2f944d10664fab652ce388da8eb0|2026-06-16T15:32|1970
+Those Who Leave and Those Who Stay|Elena Ferrante|tagged||2026-06-16T15:32
+Wolf in White Van|John Darnielle|tagged|ff4c4fe425fc625e19ea294e7fa7cf19|2026-06-16T15:32|1971

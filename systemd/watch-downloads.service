@@ -1,0 +1,50 @@
+# /etc/systemd/system/watch-downloads.service
+# =============================================================================
+#  watch-downloads.service
+#  Supervises watch-downloads.sh as an always-on host service on otis.
+#
+#  Install:
+#    sudo cp watch-downloads.sh /home/robmorgan/gunit/watch-downloads.sh
+#    sudo chmod +x /home/robmorgan/gunit/watch-downloads.sh
+#    sudo cp watch-downloads.service /etc/systemd/system/watch-downloads.service
+#    sudo systemctl daemon-reload
+#    sudo systemctl enable --now watch-downloads.service
+#
+#  Watch it:   journalctl -u watch-downloads -f
+#  Restart:    sudo systemctl restart watch-downloads
+#  Stop:       sudo systemctl stop watch-downloads
+# =============================================================================
+[Unit]
+Description=Shelfmark download watcher (auto-shelf to Calibre-Web per kindleSync toggle)
+# Don't start before Docker is up — the script does `docker exec calibre ...`
+After=docker.service network-online.target
+Wants=network-online.target
+Requires=docker.service
+# rate-limit restarts so a fast-failing script backs off instead of spinning
+StartLimitIntervalSec=60
+StartLimitBurst=5
+[Service]
+Type=simple
+ExecStart=/home/robmorgan/gunit/scripts/watch-downloads.sh
+# --- config: override the script's defaults here, so nothing is hardcoded ---
+Environment=BOOKS_ROOT=/Nutmeg/Media/Books/incoming/gunit_user_folders
+Environment=MAPPING=/home/robmorgan/gunit/web/users.json
+Environment=PREFS_DIR=/home/robmorgan/gunit/userprefs
+Environment=CALIBRE_CONTAINER=calibre
+# Live CWA database. The OLD /data/compose/1/calibre_web_config/app.db was the
+# dead calibre-web container's db — shelving there silently did nothing.
+Environment=CW_APP_DB=/home/robmorgan/cwa_config/app.db
+Environment=CALIBRE_LIB=/books/Calibre
+Environment=SETTLE_SECS=15
+# --- supervision: keep it alive ---
+Restart=always
+RestartSec=5
+# --- logging to journald (journalctl -u watch-downloads) ---
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=watch-downloads
+# --- light hardening (the script needs docker + the paths above, so we can't
+#     lock it down hard, but these cost nothing) ---
+NoNewPrivileges=true
+[Install]
+WantedBy=multi-user.target

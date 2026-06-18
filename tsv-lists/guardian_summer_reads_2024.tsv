@@ -1,0 +1,133 @@
+#schema: gunit book list v1 — columns are PIPE-separated (|)
+#  1 title    2 author    3 status    4 md5/source    5 date    6 calibre_id|se-empty
+#  status: (blank)=pending  downloaded  nomatch  failed  quota_blocked  tagged  queued/downloading/completed (legacy)
+#  col4: Anna's md5, or se:<author>/<title> for Standard Ebooks rows
+#  col6: calibre book id on DONE rows; the literal "se-empty" on quota_blocked/nomatch rows means SE was already searched and had nothing (skip re-search)
+#  lines beginning with # are comments; "#tag: NAME[, NAME...]" sets the calibre tags for this whole list
+#tag: Summer Reads, Guardian, 2024 list
+
+
+
+
+## Fiction
+James|Percival Everett|tagged||2026-06-05T13:59
+
+The Ministry of Time|Kaliane Bradley|tagged||2026-06-05T14:00
+
+Long Island|Colm Tóibín|tagged||2026-06-05T14:00
+
+You Are Here|David Nicholls|tagged||2026-06-05T14:00
+
+Long Island Compromise|Taffy Brodesser-Akner|tagged||2026-06-05T14:00
+
+Enlightenment|Sarah Perry|tagged||2026-06-06T11:29
+
+My Favourite Mistake|Marian Keyes|tagged||2026-06-05T14:00
+
+Wild Houses|Colin Barrett|tagged||2026-06-05T14:00
+
+All Fours|Miranda July|tagged||2026-06-05T14:01
+
+The Lodgers|Holly Pester|tagged||2026-06-05T14:01
+
+Mona of the Manor|Armistead Maupin|tagged||2026-06-05T14:01
+
+Sandwich|Catherine Newman|tagged||2026-06-05T14:01
+
+Headshot|Rita Bullwinkel|tagged||2026-06-05T14:01
+
+The Kellerby Code|Jonny Sweet|tagged|cb1582561bfe7ee49a8587e0eac15565|2026-06-05T14:01
+
+The Safekeep|Yael van der Wouden|tagged||2026-06-05T14:01
+
+The Sleepwalkers|Scarlett Thomas|tagged||2026-06-05T14:02
+
+The Heart in Winter|Kevin Barry|tagged||2026-06-05T14:02
+
+You Like It Darker|Stephen King|tagged|15fe5276a287d893210aae42bd58efb8|2026-06-05T14:02
+
+French Windows|Antoine Laurain|nomatch||2026-06-05T13:37
+
+My Friends|Hisham Matar|tagged||2026-06-05T14:02
+
+Private Rites|Julia Armfield|tagged|0de3138468253848db6199911e73af44|2026-06-05T14:02|1648
+
+Green Dot|Madeleine Gray|tagged|a605147440fab88bb139a0f732fd3e96|2026-06-05T14:02|1649
+
+Only Here, Only Now|Tom Newlands|tagged|08c25446b83b2d804ec746e20735931b|2026-06-05T14:02|1650
+
+The Husbands|Holly Gramazio|tagged|ee3b26a6c47f537cca10ad93ab6e04d7|2026-06-05T14:02
+
+Caledonian Road|Andrew O’Hagan|tagged|56ff0d01b4db808062537030e9ca6172|2026-06-05T14:03
+
+## Nonfiction
+Keir Starmer: The Biography|Tom Baldwin|nomatch||2026-06-05T13:39
+
+Hits, Flops, and Other Illusions: My Fortysomething Years in Hollywood|Ed Zwick|nomatch||2026-06-05T13:40
+
+My Family: The Memoir|David Baddiel|nomatch||2026-06-05T13:40
+
+Maurice and Maralyn: A Whale, a Shipwreck, a Love Story|Sophie Elmhirst|tagged|f9f20bed1de36f621e9298f035c259aa|2026-06-05T14:03|1602
+
+Not the End of the World: How We Can Be the First Generation to Build a Sustainable Planet|Hannah Ritchie|nomatch||2026-06-05T13:41
+
+The Trading Game: A Confession|Gary Stevenson|tagged|1da5c1f0db5e4b0d7c0f0b6a97b5646b|2026-06-05T14:03
+
+Revolutionary Acts: Love & Brotherhood in Black Gay Britain|Jason Okundaye|nomatch||2026-06-05T13:42
+
+A Very Private School|Charles Spencer|tagged|30b5deb1d9bcf5171cd66efb36fd9794|2026-06-06T11:29|1654
+
+Knife: Meditations After an Attempted Murder|Salman Rushdie|tagged|d6b6d0a064211671a5a90ef204fbef29|2026-06-05T14:03|1655
+
+Cloistered: My Years As a Nun|Catherine Coldstream|nomatch||2026-06-05T13:43
+
+No Judgement: On Being Critical|Lauren Oyler|nomatch||2026-06-05T13:43
+
+Crypt: Life, Death and Disease in the Middle Ages and Beyond|Professor Alice Roberts|tagged|bf5287d580232780722c70828cb4dfba|2026-06-06T11:30|1656
+
+The Anxious Generation: How the Great Rewiring of Childhood Is Causing an Epidemic of Mental Illness|Jonathan Haidt|tagged|da6bea45f0f10aa447b9228f8778b42e|2026-06-06T11:30
+
+Bald: How I Slowly Learned to Not Hate Having No Hair (And You Can Too)|Stuart Heritage|tagged||2026-06-06T11:30
+
+The Garden Against Time: In Search of a Common Paradise|Olivia Laing|tagged|e4f09cd7e9b785507bf450e013515171|2026-06-05T14:04
+
+My Family and Other Rock Stars|Tiffany Murray|tagged|01c77314569b58f195998399fb0327bf|2026-06-05T14:04
+
+The Secret Public: How LGBTQ Resistance Shaped Popular Culture (1955–1979)|Jon Savage|nomatch||2026-06-05T13:46
+
+Catland: Feline Enchantment and the Making of the Modern World|Kathryn Hughes|nomatch||2026-06-05T13:46
+
+Under a Rock: A Memoir|Chris Stein|nomatch||2026-06-05T13:46
+
+Naked Portrait: A Memoir of Lucian Freud|Rose Boyt|nomatch||2026-06-05T13:47
+
+Scattered: The Making and Unmaking of a Refugee|Aamna Mohdin|tagged|b3a105fca0dfbd1b6c770b963c007061|2026-06-05T14:04
+
+Empireworld: How British Imperialism Has Shaped the Globe|Sathnam Sanghera|tagged|4133595fa36b36a09757a3039e54ce3a|2026-06-06T11:30|1663
+
+All That Glitters: A Story of Friendship, Fraud and Fine Art|Orlando Whitfield|tagged|7bfacd4cf2f8d2631858ad2269395ecc|2026-06-06T11:30
+
+The Friday Afternoon Club: A Family Memoir|Griffin Dunne|tagged|1a45f30c85c13048fa2878f41536d8ed|2026-06-06T11:30|1667
+
+Broken Threads: My Family from Empire to Independence|Mishal Husain|tagged|3ed74460a44bf86e9b6aa6b989f9fe0b|2026-06-06T11:30
+
+## Paperbacks
+Doppelganger: A Trip Into the Mirror World|Naomi Klein|tagged|f914a57c432475345a0c1936ee4856ca|2026-06-06T11:32
+
+How to Say Babylon: A Jamaican Memoir|Safiya Sinclair|nomatch||2026-06-06T11:31
+
+Getting Better: Life Lessons on Going Under, Getting Over It, and Getting Through It|Michael Rosen|nomatch||2026-06-05T21:01
+
+Politics on the Edge|Rory Stewart|tagged|96bd3be0478016449598c5fed2b218ea|2026-06-06T11:30
+
+All That She Carried: The Journey of Ashley’s Sack, a Black Family Keepsake|Tiya Miles|tagged|7672c0de60705d6e7700817f4b1e3183|2026-06-06T11:30
+
+Kairos|Jenny Erpenbeck|downloaded|1e3b39caa20849ce1e228c224983060d|2026-06-05T21:02
+
+The Bee Sting|Paul Murray|tagged|e03f1c050ca066eb2433642767a4fe83|2026-06-06T11:30
+
+The Fraud|Zadie Smith|tagged|5c4e953df9bb3bbf635d98ce32c0167d|2026-06-06T11:30|1672
+
+The Wren, the Wren|Anne Enright|tagged|e681783d79970fd942367dc4d40750ff|2026-06-06T11:30|1266
+
+Brotherless Night|VV Ganeshananthan|tagged|bd4468fb5540ab5c4a98a886346900b5|2026-06-06T11:30

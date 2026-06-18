@@ -1,0 +1,96 @@
+#schema: gunit book list v1 — columns are PIPE-separated (|)
+#  1 title    2 author    3 status    4 md5/source    5 date    6 calibre_id|se-empty
+#  status: (blank)=pending  downloaded  nomatch  failed  quota_blocked  tagged  queued/downloading/completed (legacy)
+#  col4: Anna's md5, or se:<author>/<title> for Standard Ebooks rows
+#  col6: calibre book id on DONE rows; the literal "se-empty" on quota_blocked/nomatch rows means SE was already searched and had nothing (skip re-search)
+#  lines beginning with # are comments; "#tag: NAME[, NAME...]" sets the calibre tags for this whole list
+#tag: Best for Teens, Goodreads
+
+The Lightning Thief|Rick Riordan|tagged||2026-06-15T12:36
+City of Bones|Cassandra Clare|tagged||2026-06-15T12:37
+Eclipse|Stephenie Meyer|tagged||2026-06-15T12:37
+Eragon|Christopher Paolini|tagged||2026-06-15T12:38
+Catching Fire|Suzanne Collins|tagged||2026-06-15T12:39
+The Elephant Tree|R.D. Ronald|tagged|10edf621f243b806b87a33606f96a068|2026-06-15T12:39|1692
+Uglies|Scott Westerfeld|tagged|bbf438c3d7d9d2550a916c05bafa2fb6|2026-06-16T10:03|1724
+Breaking Dawn|Stephenie Meyer|tagged||2026-06-16T10:03
+New Moon|Stephenie Meyer|tagged||2026-06-16T10:04
+The Chronicles of Narnia|C.S. Lewis|tagged||2026-06-16T10:05
+Being a Witch, and Other Things I Didn't Ask For|Sara Pascoe|tagged|8ec9228d8d06c6ca5d758978cdcd9964|2026-06-16T10:05|2076
+Ender’s Game|Orson Scott Card|tagged||2026-06-15T12:43
+Local Woman Missing|Mary Kubica|tagged|07a58bfb9378700135bb12b641597ccd|2026-06-15T12:43|1694
+Holes|Louis Sachar|tagged|399ee3fa51f790ab5df858119e9f140f|2026-06-15T12:44|1695
+City of Glass|Cassandra Clare|tagged|bcd34e8a75920ae1f68a28caa35f05ca|2026-06-15T12:44|1699
+The Giver|Lois Lowry|tagged|4662ebbbbc1373c9ff04ab47f0694f81|2026-06-15T12:44|1697
+The Sea of Monsters|Rick Riordan|downloaded||2026-06-17T01:37|1698
+The Host|Stephenie Meyer|tagged||2026-06-16T10:06
+City of Ashes|Cassandra Clare|tagged|a844971e6ca0dc7cd3627da12ee2736f|2026-06-15T12:46|1696
+The Girl Who Was Taken|Charlie Donlea|tagged|8362cdc6785a1f65efd36d4ecfb3d338|2026-06-15T12:46|1700
+The Last Olympian|Rick Riordan|tagged|60ca5857e050f8cdfd9fca49649ab354|2026-06-16T10:06|1701
+The Titan’s Curse|Rick Riordan|tagged|f3cc1f9bbb61b7a3bef3b74c227086ca|2026-06-15T12:47|1730
+The Battle of the Labyrinth|Rick Riordan|tagged|0a25f624a757e8c3ed5cba81b35cd937|2026-06-15T12:47|1702
+Those Empty Eyes|Charlie Donlea|tagged|9d0c9ad9413b5758e6b3ba09fdd7b3d5|2026-06-15T12:47|1704
+Ask for Andrea|Noelle W. Ihli|tagged|d3d8c1092a43b716a8552bd6f70c67bd|2026-06-15T12:47|1705
+Graceling|Kristin Cashore|tagged|8fa6ff4636fb0a077e9ba09db1f975b5|2026-06-15T12:48|1706
+Think Twice|Harlan Coben|tagged|1a25638ae9780a2fadda6fb49e00e4ab|2026-06-16T10:07|2094
+What Lies in the Woods|Kate Alice Marshall|downloaded|0347fbfd4566165f1986f1e32c16d0bd|2026-06-16T10:45|2096
+Gray After Dark|Noelle W. Ihli|tagged|9d048b50b1d25881bd1a2cd3067a21b2|2026-06-15T12:49|1709
+No One Can Know|Kate Alice Marshall|tagged|db29aa63b2bbf8db04b289417c4159cf|2026-06-16T10:07|1710
+The Club|Ellery Lloyd|tagged|2440fb2ad70aeb23fe7f62d3efaf0648|2026-06-16T10:08|2090
+Look Closer|David Ellis|tagged|063a2a0275974aca1f20ce15a36fd1b5|2026-06-16T10:08|2088
+The Roommate|Kiersten Modglin|tagged|191c0c87fef20fa0bb044a056abd0aaa|2026-06-16T10:09|2077
+Hidden Pictures|Jason Rekulak|tagged|31186c02f929ca6e95584dc2fbb51e8f|2026-06-15T12:53|1713
+The Shards|Bret Easton Ellis|tagged|7f0528a2300a46a40337c75aacd203e4|2026-06-15T12:53|1714
+Head Like a Hole|Andrew Van Wey|tagged|65e4180f178ee635ab710cd224533cd6|2026-06-15T12:54|2049
+A Wrinkle in Time|Madeleine L'Engle|tagged||2026-06-15T12:54
+Not Forever, But For Now|Chuck Palahniuk|tagged|0ba61436d3437d773d8d9fd106463516|2026-06-16T10:09|2078
+Divergent|Veronica Roth|tagged|f825b9cfda4aa54fc39bfedf115d8953|2026-06-15T12:54|1716
+Marked|P.C. Cast|tagged|f988f4fb63641556941d97a166649b22|2026-06-15T12:54|1717
+Ella Enchanted|Gail Carson Levine|tagged|13d821fe60f588f728d136e2d2b63436|2026-06-16T10:09|2087
+Hush, Hush|Becca Fitzpatrick|tagged|1286aebbc318860f97b2253a941c7580|2026-06-15T12:55|1719
+Shiver|Maggie Stiefvater|tagged|37f9afb1092b4c28a166b7fe04cd3775|2026-06-15T12:56|1720
+The Perks of Being a Wallflower|Stephen Chbosky|tagged|842240f9140697eaf8f68e422e3318a4|2026-06-16T10:09|1721
+Looking for Alaska|John Green|tagged||2026-06-15T12:56
+The Golden Compass|Philip Pullman|tagged||2026-06-15T12:57
+From Manchester to the Arctic|Sheena Billett|tagged|f2876157b928d28897a415d6a0cb275d|2026-06-15T12:57|1722
+The Fault in Our Stars|John Green|tagged||2026-06-15T12:57
+Artemis Fowl|Eoin Colfer|tagged||2026-06-15T12:58
+Eldest|Christopher Paolini|tagged|0935af0c745ba3bc52f7bf16181f7a16|2026-06-16T10:10|2086
+The Goose Girl|Shannon Hale|downloaded||2026-06-17T01:37|2093
+The Outsiders|S.E. Hinton|tagged||2026-06-16T10:10
+Pretties|Scott Westerfeld|tagged|b684c42448bd8c622bd88be6a1ac3d8b|2026-06-15T12:59|1724
+Specials|Scott Westerfeld|tagged|d53fb4c4f2a50ba4207ecd52ab554873|2026-06-15T13:00|1725
+Brisingr|Christopher Paolini|tagged|2521680e724052a8cdc32bd3256db940|2026-06-16T10:10|1691
+One Moment in Time|Shari Low|tagged|2c618dc171941e10e3fcf8fa14ae3de4|2026-06-16T10:10|2079
+The House of the Scorpion|Nancy Farmer|tagged|0445f343dd6d912f59992603b6c786c7|2026-06-16T10:11|2092
+The Book Thief|Markus Zusak|tagged||2026-06-16T10:11
+Demon Copperhead|Barbara Kingsolver|tagged|8b644cea9589289ded2cad6a56c20b5a|2026-06-15T13:01|1727
+The Zombie Room|R.D. Ronald|tagged|01eba69cccff7fe79edec689e1296df8|2026-06-16T10:11|2080
+A Great and Terrible Beauty|Libba Bray|tagged|37cc142d6146cbfee7f3fc65fc252b38|2026-06-15T13:01|1728
+Princess Academy|Shannon Hale|tagged|5d7109fe0916585b6b8c885d4f6c23ba|2026-06-15T13:02|1729
+The Tower of Nero|Rick Riordan|tagged|99847cc321d32d307069d3142a67e13d|2026-06-15T13:02|1703
+Punk 57|Penelope Douglas|tagged|10696eaedd526c4aac620133162cf312|2026-06-15T13:02|2053
+Ghosts|Dolly Alderton|tagged|2494124ecbfba283818787df4d0741f1|2026-06-15T13:02|2046
+Things I Wanted to Say, But Never Did|Monica Murphy|tagged|3974994bb3d7c88c878389aa9a9ba86f|2026-06-15T13:02|2055
+Picking Daisies on Sundays|Liana Cincotti|tagged|14358437c7d3911b904d539dedbe4b55|2026-06-15T13:02|2056
+Woke Up Like This|Amy Lea|tagged|18f5c96c30e418cd19355c03c5bfd192|2026-06-15T13:03|2057
+The Stars Don't Lie|Boo Walker|tagged|49c0050ef7eb47b4011f43a7370eb1eb|2026-06-15T13:03|2058
+Howl's Moving Castle|Diana Wynne Jones|tagged|07d5298829d3bbf4cadffb7044788c5e|2026-06-15T13:03|2059
+West with Giraffes|Lynda Rutledge|tagged|175b892d1063fa8fafc24c575a6e8c3b|2026-06-15T13:03|2060
+Sunday Morning|Jewel E. Ann|tagged|1e754f680d82b1af23d28c41bcbf5d51|2026-06-15T13:03|2061
+Wicked Lovely|Melissa Marr|tagged|318029d5556c2da0962cb5c2a6375c5e|2026-06-15T13:03|2062
+Gallant|V.E. Schwab|tagged|0cd649e703efa7a1323aec3847fa2938|2026-06-15T13:03|2063
+Vow of Thieves|Mary E. Pearson|tagged|95855c1425a1277ae50602d000b9943d|2026-06-16T10:12|2081
+Paper Towns|John Green|tagged|0091145ff278dcc7d439389819ed1549|2026-06-15T13:03|2064
+Fablehaven|Brandon Mull|tagged|0489d6daadbb29e87fc5605f0b110430|2026-06-15T13:03|2065
+Vampire Academy Collection|Richelle Mead|tagged|ef81fa77d81df9fcecc6a736c8060eca|2026-06-15T13:03|2066
+The Reappearance of Rachel Price|Holly Jackson|tagged|279cf4dc87d70b096c3c6fcb90ce418f|2026-06-15T13:04|2067
+The Judgment Of Biestia|Christopher Bernard|quota_blocked||2026-06-17T01:38|se-empty
+The Alchemyst|Michael Scott|tagged|b77c3336a79cc9795a05d1c1325ac473|2026-06-16T10:12|2082
+Nothing Better Than You|Lynn Painter|downloaded|edf6a654c0aea2582ded83a6a2cc4360|2026-06-16T10:50
+Daughter of the Moon Goddess|Sue Lynn Tan|tagged||2026-06-16T10:13
+Catch the Sun|Jennifer Hartmann|tagged|4b9357e6925602674fad1a8640f76a92|2026-06-15T13:05|2069
+The Half King|Melissa Landers|downloaded||2026-06-17T01:38|2091
+Credence|Penelope Douglas|tagged|30a6eb0153f71cb2e49864ba5e5d4f6f|2026-06-15T13:05|2070
+Tom Lake|Ann Patchett|tagged|022f2d9c35b5574303b227f56f7f907d|2026-06-15T13:05|2071
+Lessons In Faking|Selina Mae|tagged|28a51894d66f4c765b9f01457aa4766a|2026-06-15T13:05|2072

@@ -1,0 +1,112 @@
+#schema: gunit book list v1 — columns are PIPE-separated (|)
+#  1 title    2 author    3 status    4 md5/source    5 date    6 calibre_id|se-empty
+#  status: (blank)=pending  downloaded  nomatch  failed  quota_blocked  tagged  queued/downloading/completed (legacy)
+#  col4: Anna's md5, or se:<author>/<title> for Standard Ebooks rows
+#  col6: calibre book id on DONE rows; the literal "se-empty" on quota_blocked/nomatch rows means SE was already searched and had nothing (skip re-search)
+#  lines beginning with # are comments; "#tag: NAME[, NAME...]" sets the calibre tags for this whole list
+# Top 100 Novels Guardian Critics Pick
+
+#tag: Top 100 Novels, Guardian, Critics Picks
+
+
+
+
+The Road|Cormac McCarthy|tagged||2026-06-08T11:41
+Catch-22|Joseph Heller|tagged||2026-06-08T11:41
+Pedro Páramo|Juan Rulfo|tagged|4df55a83046337a2d2689e015bbb4e03|2026-06-08T11:42|1795
+The Return of the Native|Thomas Hardy|tagged||2026-06-08T11:42
+The Known World|Edward P. Jones|tagged||2026-06-08T11:42
+Invisible Cities|Italo Calvino|tagged|0ec440774cb30eee2ffb8e87f0c5cd2a|2026-06-08T11:42|1755
+Sentimental Education|Gustave Flaubert|tagged||2026-06-08T11:42
+Life and Fate|Vasily Grossman|tagged|afdf9f809a97f95144ad147ef790fc84|2026-06-08T11:42
+Jacob's Room|Virginia Woolf|tagged|se:virginia-woolf/jacobs-room|2026-06-08T11:42
+The Left Hand of Darkness|Ursula K. Le Guin|tagged|9893aae5109dd07a1bb75f2de052c9b0|2026-06-08T11:42|1758
+Ragtime|E. L. Doctorow|tagged|10333f09c9c42c3a86bc29cbc61b5659|2026-06-08T11:42
+The Line of Beauty|Alan Hollinghurst|tagged||2026-06-08T11:43
+The Turn of the Screw|Henry James|tagged|se:henry-james/the-turn-of-the-screw|2026-06-08T11:43
+The Vegetarian|Han Kang|tagged|3515b285e8109d41356266eb8f260736|2026-06-08T11:43|1782
+The Talented Mr Ripley|Patricia Highsmith|tagged|c2b57da453d16368135da769476b3a78|2026-06-08T11:43|1783
+A Farewell to Arms|Ernest Hemingway|tagged||2026-06-08T11:43
+The End of the Affair|Graham Greene|tagged||2026-06-08T11:43
+Buddenbrooks|Thomas Mann|tagged|se:thomas-mann/buddenbrooks/h-t-lowe-porter|2026-06-08T11:43
+Rebecca|Daphne du Maurier|tagged||2026-06-08T11:43
+Go Tell It on the Mountain|James Baldwin|tagged||2026-06-08T11:44
+A House for Mr Biswas|V. S. Naipaul|tagged|b0b74502da33114ec48d57806e967cc8|2026-06-08T11:44|1785
+The Rainbow|D. H. Lawrence|tagged|se:d-h-lawrence/the-rainbow|2026-06-08T11:44
+My Ántonia|Willa Cather|tagged|se:willa-cather/my-antonia|2026-06-08T11:44
+Dracula|Bram Stoker|tagged||2026-06-08T11:44
+The Bluest Eye|Toni Morrison|tagged|1fc92cd87591401cbf0180928dd9f714|2026-06-08T11:44|1788
+Nervous Conditions|Tsitsi Dangarembga|tagged|7196dc398d0309821cff9ae9b035b523|2026-06-08T11:44
+Austerlitz|W. G. Sebald|tagged|a8413601658a0a4e48351fee2e92286c|2026-06-08T11:44|1790
+Our Mutual Friend|Charles Dickens|tagged||2026-06-08T11:45
+Kindred|Octavia E. Butler|tagged|7f6f687a8bc42fb409e06ebf6adc7fae|2026-06-08T11:45|1791
+The Outsider|Albert Camus|tagged|cf627448e166f43bb355b4df0dc36baa|2026-06-08T11:45|381
+Jude the Obscure|Thomas Hardy|tagged|se:thomas-hardy/jude-the-obscure|2026-06-08T11:45
+Crime and Punishment|Fyodor Dostoevsky|tagged||2026-06-08T11:45
+Blood Meridian|Cormac McCarthy|tagged||2026-06-08T11:45
+The Man Without Qualities|Robert Musil|tagged|a130cc4cae31c5d959f2c9258720f45d|2026-06-08T11:45|1794
+The Master and Margarita|Mikhail Bulgakov|tagged||2026-06-08T11:45
+The Color Purple|Alice Walker|tagged|97d597def9e23790a014491ff904e3c7|2026-06-08T11:46
+The Good Soldier|Ford Madox Ford|tagged|se:ford-madox-ford/the-good-soldier|2026-06-08T11:46
+White Teeth|Zadie Smith|tagged|3f7ab38547d22b8bf60e57c4110d997a|2026-06-08T11:46
+Half of a Yellow Sun|Chimamanda Ngozi Adichie|tagged|5a5e3c0be79e7a9eac4a2bd93eb6a784|2026-06-08T11:46|1762
+The Rings of Saturn|W. G. Sebald|tagged|a487057a04f8cfad6479c22198573bb0|2026-06-08T11:46|1763
+Howards End|E. M. Forster|tagged||2026-06-08T11:46
+Never Let Me Go|Kazuo Ishiguro|tagged||2026-06-08T11:46
+Disgrace|J. M. Coetzee|tagged||2026-06-08T11:46
+The Sound and the Fury|William Faulkner|tagged|se:william-faulkner/the-sound-and-the-fury|2026-06-08T11:46
+Mansfield Park|Jane Austen|tagged||2026-06-08T11:47
+The Waves|Virginia Woolf|tagged|54fe9f3a4828fe24c821e33a49465503|2026-06-08T11:47|810
+Orlando|Virginia Woolf|tagged|se:virginia-woolf/orlando|2026-06-08T11:47
+The Transit of Venus|Shirley Hazzard|tagged|aa80c0f9303fe0510110f2b50ef43197|2026-06-08T11:47
+The Golden Bowl|Henry James|tagged|se:henry-james/the-golden-bowl|2026-06-08T11:47
+My Brilliant Friend|Elena Ferrante|tagged|6fcd2dd4ca8b83342806345faf9650d3|2026-06-08T11:47|1769
+Wide Sargasso Sea|Jean Rhys|tagged|a45805e84f9986f5beb28fd2be2715b9|2026-06-08T11:47|1770
+A Fine Balance|Rohinton Mistry|tagged|b7f94e392dd1a5dc11ec77182d0ad587|2026-06-08T11:47|1796
+The Metamorphosis|Franz Kafka|tagged||2026-06-08T11:48
+Vanity Fair|William Makepeace Thackeray|tagged||2026-06-08T11:48
+The Leopard|Giuseppe Tomasi di Lampedusa|tagged|2d116158843254996d0a8e28c57e61a2|2026-06-08T11:48
+The Golden Notebook|Doris Lessing|tagged||2026-06-08T11:48
+Giovanni's Room|James Baldwin|tagged|06503f8a308a9e303a05250499e93e0d|2026-06-08T11:48
+Housekeeping|Marilynne Robinson|tagged|e43663df29b725cd520c91e4ead02f89|2026-06-08T11:48
+The Magic Mountain|Thomas Mann|tagged||2026-06-08T11:48
+Heart of Darkness|Joseph Conrad|tagged||2026-06-08T11:49
+Song of Solomon|Toni Morrison|tagged||2026-06-08T11:49
+Their Eyes Were Watching God|Zora Neale Hurston|tagged|033ab7c9ba563e70e70e782ea812fdf2|2026-06-08T11:49
+The Age of Innocence|Edith Wharton|tagged||2026-06-08T11:49
+Invisible Man|Ralph Ellison|tagged|08b339d02030e6e20923695b430d7a79|2026-06-08T11:49|1775
+The Handmaid's Tale|Margaret Atwood|tagged||2026-06-08T11:49
+Great Expectations|Charles Dickens|tagged||2026-06-08T11:50
+Wolf Hall|Hilary Mantel|tagged||2026-06-08T11:50
+David Copperfield|Charles Dickens|tagged||2026-06-08T11:50
+The God of Small Things|Arundhati Roy|tagged||2026-06-08T11:50
+The Prime of Miss Jean Brodie|Muriel Spark|tagged|835d8bdbbcf0f2d815b9ad1d86adf974|2026-06-08T11:51
+Frankenstein|Mary Shelley|tagged||2026-06-08T11:51
+Pale Fire|Vladimir Nabokov|tagged|ca0a04813b6200fd2c493b8a19726f6b|2026-06-08T11:51|153
+The Brothers Karamazov|Fyodor Dostoyevsky|tagged||2026-06-08T11:51
+The Trial|Franz Kafka|tagged||2026-06-08T11:51
+Don Quixote|Miguel de Cervantes|tagged||2026-06-08T11:51
+Lolita|Vladimir Nabokov|tagged||2026-06-08T11:51
+The Remains of the Day|Kazuo Ishiguro|tagged||2026-06-08T11:52
+Midnight's Children|Salman Rushdie|tagged||2026-06-08T11:52
+Things Fall Apart|Chinua Achebe|tagged||2026-06-08T11:52
+The Portrait of a Lady|Henry James|tagged|se:henry-james/the-portrait-of-a-lady|2026-06-08T11:52
+Wuthering Heights|Emily Brontë|tagged||2026-06-08T11:52
+The Life and Opinions of Tristram Shandy, Gentleman|Laurence Sterne|tagged||2026-06-08T11:52
+Persuasion|Jane Austen|tagged||2026-06-08T11:53
+One Hundred Years of Solitude|Gabriel García Márquez|tagged||2026-06-08T11:53
+Nineteen Eighty-Four|George Orwell|tagged|7c53e0083ece94fe523a334e5b1f24fc|2026-06-08T11:53|1779
+Moby-Dick|Herman Melville|tagged||2026-06-08T11:53
+Mrs Dalloway|Virginia Woolf|tagged||2026-06-08T11:53
+Emma|Jane Austen|tagged||2026-06-08T11:54
+Bleak House|Charles Dickens|tagged||2026-06-08T11:54
+The Great Gatsby|F. Scott Fitzgerald|tagged||2026-06-08T11:54
+Madame Bovary|Gustave Flaubert|tagged||2026-06-08T11:54
+Pride and Prejudice|Jane Austen|tagged||2026-06-08T11:55
+Jane Eyre|Charlotte Brontë|tagged||2026-06-08T11:55
+War and Peace|Leo Tolstoy|tagged||2026-06-08T11:55
+Anna Karenina|Leo Tolstoy|tagged||2026-06-08T11:55
+In Search of Lost Time|Marcel Proust|tagged||2026-06-08T11:55
+To the Lighthouse|Virginia Woolf|tagged||2026-06-08T11:55
+Ulysses|James Joyce|tagged||2026-06-08T11:56
+Beloved|Toni Morrison|downloaded|20623ae16c1d275677f3b7441812ec8c|2026-06-18T18:33

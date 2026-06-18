@@ -1,0 +1,23 @@
+# Secrets and credentials
+config/calibre-server.env
+stacks_config/config.yaml
+
+# Runtime state and databases
+config/tag-queue.json
+config/tag-queue.json.bak
+config/tag-queue.json.lock
+state/
+stacks_config/
+stacks_logs/
+
+# Personal data
+web/users.json
+userprefs/
+
+# Book cover images (large, derivable)
+web/lists/covers/
+
+# Backup files
+web/lists/*.bak
+tsv-lists/*.bak
+scripts/*.bak*

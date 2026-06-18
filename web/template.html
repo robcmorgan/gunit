@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<!-- template.html v80 -->
+<!--
+  ===========================================================================
+  Gunit homepage template.  EDIT THIS FILE FREELY — changes show on refresh,
+  no Docker rebuild needed.
+
+  Three placeholder tokens get replaced by the app at request time:
+    {{NAV}}      -> the top navigation bar (Browse / Request / Lists / How To Use)
+    {{HOME}}     -> the home page body: greeting, links, settings toggles.
+                    Empty on the Lists and How To Use pages.
+    {{CONTENT}}  -> the page body for secondary pages (rendered markdown).
+                    Empty on the home page.
+  This one template is shared by every page; the app fills NAV always, then
+  fills HOME (home page) OR CONTENT (Lists / How To Use). Edit the markdown in
+  lists.md / instructions.md to change those pages — no rebuild needed.
+  Leave the tokens where you want that content to appear. Everything else
+  is yours to change — text, CSS, layout, sections.
+  ===========================================================================
+-->
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico">
+<title>...Gunit!</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
+  * { box-sizing: border-box; }
+  body, p, li, .greeting, .whoami, .toggle { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  h1, h2, h3, h4, h5, h6, .brand-title, .topnav, .nav-link, .custom-link,
+  .booklist-page h1, .booklist-page h2, .booklist-page h3, .booklist-page h4, .booklist-page h5,
+  .instructions h1, .instructions h2, .instructions h3, .instructions h4, .instructions h5 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Outfit', sans-serif; }
+  body { background: #1f3a5f; color: #cdd7e0; margin: 0 auto; padding: 40px; max-width: 900px; }
+  .custom-section { margin-bottom: 40px; }
+  .custom-section h1 { font-size: 2.8em; border-bottom: 2px solid rgba(255,255,255,0.05);
+    padding-bottom: 10px; margin-bottom: 15px; color: #f3f4f6; }
+  /* dashboard links as a stacked column of equal-width buttons (was a ragged
+     row of inline pills — looked uneven once one button had a subtitle). Each
+     is full-width up to a readable max, left-aligned, gently rounded. */
+  .custom-link { display: flex; flex-direction: column; justify-content: center;
+    width: 100%; max-width: 420px; min-height: 58px;
+    color: #e8edf2; text-decoration: none; font-size: 1.1em;
+    margin: 0 0 12px 0; font-weight: 500; padding: 12px 18px;
+    border: 1px solid rgba(255,255,255,0.18); border-radius: 10px;
+    background: rgba(255,255,255,0.04); text-align: left;
+    transition: background 0.15s ease, border-color 0.15s ease; }
+  .custom-link:first-of-type { margin-top: 20px; }
+  .custom-link:hover { color: #fff; background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.4); }
+  /* optional lighter second line inside a button (set via the link's Sub field).
+     Stacks under the main label; the button grows taller to fit. */
+  .custom-link .custom-link-sub { display: block; font-size: 0.85em;
+    font-weight: 400; color: #9aa6b2; margin-top: 2px; letter-spacing: 0.01em; }
+  .custom-link:hover .custom-link-sub { color: #c4ced8; }
+  .toggle { display: flex; align-items: center; gap: 12px; font-size: 1.1em; margin-bottom: 14px; color: #9ca3af; }
+  .toggle input { width: 22px; height: 22px; cursor: pointer; }
+  .whoami { font-size: 1em; opacity: 0.6; }
+  .greeting { font-size: 1.6em; color: #e5e7eb; font-weight: 600; margin: 0 0 4px 0; }
+  #status { min-height: 1.4em; color: #60a5fa; font-size: 1.2em; }
+  /* instructions / index pages (Lists index, How To Use): pale card on dark page,
+     matching the list subpage style. */
+  .instructions { background: #e8eef6; color: #1c2733; border-radius: 12px;
+    padding: 22px 22px; line-height: 1.65; }
+  .instructions img { max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0; }
+  .instructions h1 { color: #1b3a5b; border: none; }
+  .instructions h2 { color: #20507e; font-weight: 500; }
+  .instructions h3 { color: #2c5d8a; font-weight: 500; }
+  .instructions a { color: #c8502d; text-decoration: none;
+    border-bottom: 1px solid rgba(200,80,45,0.4); transition: background 0.12s, border-color 0.12s; }
+  .instructions a:hover { background: rgba(200,80,45,0.12); border-bottom-color: #c8502d; }
+  .instructions a:visited { color: #9c6b5a; border-bottom-color: rgba(156,107,90,0.4); }
+  /* How To Use shares .instructions (pale card) but wants blue links, not the
+     orange of the Lists index. */
+  .howto-page a { color: #1d6fb8; border-bottom-color: rgba(29,111,184,0.35); }
+  .howto-page a:hover { background: rgba(29,111,184,0.12); border-bottom-color: #1d6fb8; }
+  .howto-page a:visited { color: #5a7fa0; border-bottom-color: rgba(90,127,160,0.35); }
+  .instructions code { background: rgba(27,58,91,0.1); color: #1b3a5b; padding: 2px 6px; border-radius: 4px; }
+  .instructions blockquote { border-left: 4px solid #20507e; padding-left: 15px;
+    font-style: italic; color: #44586b; margin: 20px 0; }
+  .instructions hr { border: none; border-top: 1px solid rgba(27,58,91,0.18); margin: 22px 0; }
+  /* list SUBPAGES (/lists/<name>): light card, dark text, for readable long lists.
+     Scoped to .booklist-page so the rest of the site keeps its dark styling.
+     Convention: #### = title (h4), ##### = author (h5, thin), paragraph = description. */
+  .booklist-page { background: #e8eef6; color: #1c2733; border-radius: 12px;
+    padding: 22px 22px; line-height: 1.65; font-size: 1.05em;
+    counter-reset: bookcount;
+    /* --- sticky bar geometry (two slots) ---------------------------------
+       Two pinned bars at most: a SECTION slot (h1/h2/h3 share it) directly
+       under the nav, and a BOOK slot (h4) directly under that. Offsets are
+       derived from these vars, NOT hand-stacked per level, so there's one
+       number to tune (--section-h) and h1/h2/h3 can't collide — whichever
+       section header is current simply occupies the single section slot.
+       --section-h is the section bar's height. It's set live by the script at
+       the bottom of this file (which measures the actually-pinned header, so a
+       wrapping h3 is handled); the value here is just the initial fallback used
+       before the first scroll/measure. Paired with a box-shadow seam-cover so a
+       few px of mismatch never shows through. */
+    --nav-h: 44px;
+    --section-h: 46px;
+    /* the section headers cast a solid 9px downward box-shadow (0 9px 0 0) to
+       cover the band between their box bottom and h4's top. h4 pins at
+       nav + section-h + section-shadow, so it clears that band exactly and the
+       shadow fills it with no flicker. Keep this equal to the section headers'
+       box-shadow Y-offset. */
+    --section-shadow: 9px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  /* each book title advances the counter; [resetnum] in markdown emits a
+     .num-reset div that restarts it (its inline counter-reset does the work). */
+  /* per-book wrapper (template v78 / renderer v30): bounds each sticky h4 to its
+     own book so a finished title rides UP and clears as the book ends, instead
+     of overlapping the next book's title. Essential: h4s all share the same
+     sticky `top`, and same-`top` sticky siblings overlap rather than evict each
+     other — without this bound, a two-line title's second line shows below the
+     next (one-line) title. Purely structural: NO padding/margin/overflow
+     (overflow would break the sticky containment). */
+  .booklist-page .book { /* containment boundary only */ }
+  .booklist-page h4 { counter-increment: bookcount; }
+  /* Heading hierarchy — TWO STICKY SLOTS (robust; no hand-stacked offsets).
+     ----------------------------------------------------------------------
+     SECTION slot: h1, h2 and h3 ALL pin at top:var(--nav-h). They share the
+       ONE slot, so they can never collide — whichever section header you've
+       most recently scrolled past occupies it (CSS sticky keeps the last
+       in-scope one of each, and since they share a `top` the deepest/newest
+       visually wins as it pushes up under the nav). This is "current section
+       context", whether that context is an h1 page-title, an h2 section, or
+       an h3 subsection.
+     BOOK slot: h4 pins just below, at top:calc(nav + section bar height).
+     Result: at most two bars — section + current book — which is the goal.
+
+     Robustness choices:
+       * Offsets come from --nav-h / --section-h (set on .booklist-page), not
+         from summing measured bar heights level-by-level. One knob.
+       * Every bar has a SOLID background + a 6px downward box-shadow. The
+         shadow paints over the seam between bars and over content scrolling
+         beneath, so a few px of height mismatch can never read as see-through.
+       * Section headers share z-index (5) and sit ABOVE the book bar (z-index
+         4), so the section bar always covers the book bar where they meet. */
+
+  /* shared look for the three section-slot headers */
+  .booklist-page h1, .booklist-page h2, .booklist-page h3 {
+    position: sticky; top: var(--nav-h); z-index: 5;
+    margin-left: -22px; margin-right: -22px;
+    background: #e8eef6;
+    box-shadow: 0 9px 0 0 #e8eef6; /* solid 9px cover — fills the gap below the
+      section box down to h4's top (h4 offset includes --section-shadow:9px), so
+      no body line flickers in the band between the two bars. */ }
+
+  .booklist-page h1 { color: #14304d; border: none;
+    font-size: 2.1em; font-weight: 700; letter-spacing: -0.01em;
+    margin-top: 0; margin-bottom: 0; padding: 6px 22px 24px 22px;
+    border-bottom: 2px solid rgba(20,48,77,0.12); }
+  .booklist-page h2 { color: #1d4e7c; font-size: 1.5em; font-weight: 650;
+    margin-top: 30px; margin-bottom: 0; padding: 6px 22px 18px 22px; }
+  .booklist-page h2:first-child { margin-top: 0; }
+  .booklist-page h3 { color: #356492; font-size: 1.2em; font-weight: 600;
+    margin-top: 22px; margin-bottom: 0; padding: 5px 22px 11px 22px; }
+  /* (h4 is the book title — styled separately below) */
+  /* ---- book entry layout (head row + body below) -----------------------
+     Renderer emits:
+       <h4>title</h4>
+       <div class="book-flow">
+         <div class="book-head">           flex row, h5 group centred vs cover
+           <div class="book-cover">…</div>  (optional)
+           <div class="book-meta"> h5… </div>
+         </div>
+         <p>body…</p>                       below the head, full width at rail 1
+       </div>
+     - h4 title: number hangs at rail 1, title text at rail 2 (full width, top)
+     - .book-head: cover on the left at rail 2, h5 rows beside it VERTICALLY
+       CENTRED against the cover's height
+     - body: always starts BELOW the cover, full width at rail 1 */
+
+  /* book title (h4) — sticky in the BOOK slot, directly below the section bar
+     at top = nav + section-bar height (the JS sets --section-h from the live
+     section-bar height, so a wrapping h3 is handled). z-index 4 keeps it under
+     the section headers (z-index 5). Bounded to its own <div class="book"> so a
+     finished (possibly two-line) title rides up and clears as the book ends,
+     rather than overlapping the next title. Solid bg + 6px seam shadow covers
+     the join to body content. Title text sits at rail 2 (40px past card edge). */
+  .booklist-page h4 { color: #14304d; font-size: 1.02em; font-weight: 600;
+    margin: 22px -22px 8px -22px; clear: both;
+    padding: 5px 22px 5px 62px; /* 62 = 22 card pad + 40 rail-2 indent */
+    position: sticky; top: calc(var(--nav-h) + var(--section-h) + var(--section-shadow)); z-index: 4;
+    background: #e8eef6;
+    box-shadow: 0 6px 6px -3px #e8eef6; }
+  /* number: kept in the NORMAL FLOW of the h4 (inline-block, not absolutely
+     positioned) so the browser baseline-aligns it with the title's first line
+     automatically — no magic top/centring that skews across browsers. It's the
+     first inline thing, then pulled left by a negative margin equal to its width
+     so it hangs out at rail 1 (the card content edge, where the quotemark also
+     hangs) while the title text stays at rail 2. A wrapping title flows below,
+     leaving the number on row 1. */
+  .booklist-page h4 .booknum { display: inline-block; width: 40px;
+    margin-left: -40px; /* pull out of the title's rail-2 indent to rail 1 */
+    color: #aab4be; font-weight: 400; font-size: 1.05em; vertical-align: baseline; }
+  /* the number itself is generated from the CSS counter (auto-numbered); the
+     markdown no longer carries it. */
+  .booklist-page h4 .booknum::before { content: counter(bookcount); }
+
+  /* head row: cover + meta side by side, meta centred against the cover height */
+  .booklist-page .book-head { display: flex; align-items: center; gap: 18px;
+    margin: 0 0 6px 40px; }
+  .booklist-page .book-cover { flex: 0 0 auto; }
+  .booklist-page .book-meta  { flex: 1 1 auto; min-width: 0; }
+  /* coverless: .book-head has no cover child, so the meta sits alone at rail 2
+     (the head's margin-left). Rail 2 alignment for body/quotes is handled
+     universally via .book-flow > p and .book-flow > blockquote margin-left. */
+
+  /* book cover */
+  .booklist-page .bookcover { display: block; width: 168px; height: auto;
+    border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    transition: transform 0.12s, box-shadow 0.12s; cursor: pointer; }
+  .booklist-page a:hover .bookcover,
+  .booklist-page .bookcover:hover { transform: scale(1.03);
+    box-shadow: 0 5px 16px rgba(0,0,0,0.4); }
+
+  /* author / tags / footer (h5) — stacked inside .book-meta, centred beside cover */
+  .booklist-page h5 { color: #6b7a89; font-size: 0.95em; font-weight: 200;
+    letter-spacing: 0.01em; margin: 1px 0 6px 0; }
+  .booklist-page h5 .sep { color: #b9c2cc; padding: 0 10px; font-weight: 200; }
+  /* description — with a cover, sits below the head at rail 1 (full width). */
+  .booklist-page p { margin: 0 0 6px 0; }
+  /* body paragraphs sit at rail 2 (40px) for ALL books — covered and coverless —
+     so the description lines up with the title text / meta rail consistently.
+     Scoped to DIRECT-child paragraphs so it doesn't double-indent <p> inside a
+     blockquote (the blockquote carries its own rail-2 margin below). */
+  .booklist-page .book-flow > p { margin-left: 40px; }
+  /* lead paragraph (first description para): more prominent for glanceability —
+     slightly larger, darker, medium weight. Tagged class="lead" by the renderer
+     (the old `h5 + p` selector no longer matches the restructured markup). */
+  .booklist-page p.lead { font-size: 1.05em; font-weight: 500; color: #1d5a8a;
+    margin-top: 4px; margin-bottom: 10px; }
+  .booklist-page .book-flow > p.lead { margin-left: 40px; }
+  /* closing paragraph: when a book has 3+ body paragraphs, colour the LAST one
+     blue too (a "verdict"/closing-line accent to match the blue lead). The
+     selector picks a direct-child <p> that is BOTH the last of its type AND the
+     3rd-or-later, so 1- and 2-paragraph books are untouched. Excludes <p> inside
+     blockquotes (those aren't direct children of .book-flow). */
+  .booklist-page .book-flow > p:last-of-type:nth-of-type(n+3) {
+    color: #1d5a8a; }
+  /* …and when a book OPENS with a blockquote (which counts as one of the blocks),
+     the last <p> only needs to be the 2nd-or-later <p> to reach 3 blocks total
+     (quote + 2 paragraphs). The `blockquote ~ p` requires a preceding blockquote. */
+  .booklist-page .book-flow > blockquote ~ p:last-of-type:nth-of-type(n+2) {
+    color: #1d5a8a; }
+  .booklist-page a { color: #1d6fb8; text-decoration: none;
+    border-bottom: 1px solid rgba(29,111,184,0.35); transition: background 0.12s, border-color 0.12s; }
+  .booklist-page a:hover { background: rgba(29,111,184,0.12); border-bottom-color: #1d6fb8; }
+  .booklist-page a:visited { color: #5a7fa0; border-bottom-color: rgba(90,127,160,0.35); }
+  /* book-title links (#### -> h4): blue when unvisited, with a faint blue dotted
+     underline. Visited titles turn warm gold — so the list doubles as a
+     read/unread cue: blue = not yet fetched, gold = already in the library. */
+  .booklist-page h4 a { color: #1d6fb8;
+    border-bottom: 1px dotted rgba(29,111,184,0.55); }
+  .booklist-page h4 a:hover { background: rgba(29,111,184,0.12);
+    border-bottom-style: dotted; border-bottom-color: #1d6fb8; }
+  .booklist-page h4 a:visited { color: #c39a45;
+    border-bottom-color: rgba(195,154,69,0.45); }
+  .booklist-page h4 a:visited:hover { background: rgba(212,167,71,0.12);
+    border-bottom-color: #e6bd5e; }
+  /* the cover's wrapping <a> shouldn't show the generic link tint/border —
+     only the cover's own hover-lift should respond */
+  .booklist-page a:has(.bookcover) { border-bottom: none; }
+  .booklist-page a:has(.bookcover):hover { background: none; }
+  .booklist-page ul, .booklist-page ol { padding-left: 22px; }
+  .booklist-page li { margin: 4px 0; }
+  .booklist-page code { background: rgba(27,58,91,0.1); color: #1b3a5b; padding: 2px 6px; border-radius: 4px; }
+  /* blockquote — use markdown '> ...' for an attributed pull-quote as a book's
+     opener, e.g.  > The Booker judges called it dazzling.
+     Renders italic with a big decorative quotemark hanging in the left margin. */
+  .booklist-page blockquote { position: relative;
+    padding: 2px 0 2px 0; margin: 6px 0 12px 0;
+    font-style: italic; color: #2d557e; font-size: 1.05em; }
+  .booklist-page blockquote::before { content: "\201C"; /* “ */
+    position: absolute; left: -40px; top: -0.12em;
+    font-family: Georgia, 'Times New Roman', serif; font-style: normal;
+    font-size: 3em; line-height: 1; color: rgba(74,127,176,0.35);
+    pointer-events: none; }
+  .booklist-page blockquote p { margin: 0 0 4px 0; }
+  .booklist-page blockquote p:last-child { margin-bottom: 0; }
+  /* quote sits at rail 2 like the body; its quotemark hangs to the left of that */
+  .booklist-page .book-flow > blockquote { margin-left: 40px; }
+  .booklist-page hr { border: none; border-top: 1px solid rgba(27,58,91,0.18); margin: 22px 0; }
+  .booklist-page > :first-child { margin-top: 0; }
+  .booklist-back { color: #7dd3fc; }
+  details summary { cursor: pointer; font-size: 1.8em; font-weight: bold; color: #f3f4f6; outline: none; }
+  details[open] summary { margin-bottom: 20px; }
+  /* top nav bar — thin, stays at top, present on every same-origin page */
+  .topnav { position: sticky; top: 0; z-index: 10; display: flex; gap: 4px;
+    flex-wrap: nowrap; align-items: center;
+    margin: -40px -40px 30px -40px; padding: 10px 40px;
+    background: rgba(0,0,0,0.25); backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .nav-link { color: #e8edf2; text-decoration: none; font-size: 1.05em;
+    padding: 6px 14px; border-radius: 8px; white-space: nowrap;
+    transition: background 0.15s, color 0.15s; }
+  .nav-link:hover { color: #fff; background: rgba(255,255,255,0.06); }
+  /* highlight only while being clicked, not as a persistent "you are here" */
+  .nav-link:active { color: #fff; background: rgba(96,165,250,0.25); }
+  @media (max-width: 600px) {
+    .topnav { gap: 2px; padding: 8px 12px; margin: -40px -40px 24px -40px;
+      justify-content: space-between; }
+    .nav-link { font-size: 0.9em; padding: 6px 8px; }
+    /* light card near-full-width: body has 40px padding; pull out 34px each
+       side, leaving a ~6px blue line. Trim internal padding for more text. */
+    .booklist-page, .instructions { margin-left: -34px; margin-right: -34px;
+      padding: 18px 16px; border-radius: 8px; }
+    /* shrink covers on tablet/large-phone to keep the meta column usable */
+    .booklist-page .bookcover { width: 140px; }
+    .booklist-page .book-head { gap: 14px; }
+    /* card padding is now 16px (was 22) — keep the sticky bars' negative margins
+       and the h4 number/title rails in sync with that, or the number overlaps
+       the title. Rail-2 indent stays 40px here. Also retune the sticky-slot
+       vars: nav bar is a touch shorter here, and section headers wrap more
+       readily on narrow widths, so give the book slot a bit more room. */
+    .booklist-page { --nav-h: 40px; --section-h: 52px; }
+    .booklist-page h1, .booklist-page h2, .booklist-page h3 {
+      margin-left: -16px; margin-right: -16px;
+      padding-left: 16px; padding-right: 16px; }
+    .booklist-page h4 { margin-left: -16px; margin-right: -16px;
+      padding-left: 56px; padding-right: 16px; } /* 16 card + 40 rail-2 */
+    /* rail-2 stays 40px here, so the number's -40px pull (from the base rule)
+       still lands it on rail 1 — no override needed. */
+  }
+  /* narrow phones: cover + meta side by side (meta centred), body below. Tighter
+     rail-2 (28px) to save width; keep h4 padding + number in sync with it. */
+  @media (max-width: 480px) {
+    .booklist-page .bookcover { width: 126px; }
+    .booklist-page .book-head { gap: 12px; margin-left: 28px; }
+    .booklist-page .book-flow > p { margin-left: 28px; }
+    /* lead para has a more-specific base rule (.book-flow > p.lead = 40px) that
+       outranks the plain-p override above; restate it here or the first paragraph
+       stays at 40px on phone while the rest drop to 28px (skews right). */
+    .booklist-page .book-flow > p.lead { margin-left: 28px; }
+    .booklist-page .book-flow > blockquote { margin-left: 28px; }
+    .booklist-page h4 { padding-left: 44px; } /* 16 card + 28 rail-2 */
+    /* rail-2 is 28px here, so the number must be pulled out by 28 (not the base
+       -40) to land on rail 1. .booknum is inline-block, not positioned, so its
+       horizontal offset comes from margin-left — `left:` would be inert. */
+    .booklist-page h4 .booknum { margin-left: -28px; width: 28px; font-size: 0.92em; }
+  }
+</style></head><body>
+
+  {{NAV}}
+
+  {{HOME}}
+
+  {{CONTENT}}
+
+<script>
+  let statusTimeout;
+  async function saveToggle(el) {
+    const status = document.getElementById('status');
+    clearTimeout(statusTimeout);
+    status.innerText = 'Saving...';
+    try {
+      const res = await fetch('/toggle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: el.dataset.key, value: el.checked })
+      });
+      status.innerText = res.ok ? 'Saved.' : 'Error saving.';
+      if (!res.ok) el.checked = !el.checked;
+    } catch (e) {
+      status.innerText = 'Network error.';
+      el.checked = !el.checked;
+    }
+    statusTimeout = setTimeout(() => { status.innerText = ''; }, 2500);
+  }
+</script>
+<script>
+  /* Sticky book-slot tracker (template v77).
+     h4 pins at top = nav + --section-h. A wrapping h3 (or h2/h1) is taller than
+     any fixed --section-h guess, so h4 would overlap it. CSS can't read a sticky
+     element's wrapped height, so we do it here: find the section header currently
+     pinned in the section slot, measure its REAL height, and write it to
+     --section-h. h4's calc() offset then always lands just beneath it.
+     Throttled with requestAnimationFrame; re-runs on scroll + resize. */
+  (function () {
+    const page = document.querySelector('.booklist-page');
+    if (!page) return;
+
+    const navH = () => {
+      const v = getComputedStyle(page).getPropertyValue('--nav-h').trim();
+      return parseFloat(v) || 44;
+    };
+
+    function update() {
+      const heads = page.querySelectorAll('h1, h2, h3');
+      if (!heads.length) return;
+      const slotTop = navH();
+      // The pinned section header is the last one whose top has reached the slot
+      // line (rect.top <= slotTop + 1px tolerance). If none has yet (you're above
+      // the first section), fall back to the first header's height so h4 still
+      // clears it when it arrives.
+      let pinned = null;
+      for (const h of heads) {
+        if (h.getBoundingClientRect().top <= slotTop + 1) pinned = h;
+      }
+      const ref = pinned || heads[0];
+      const h = Math.ceil(ref.getBoundingClientRect().height);
+      page.style.setProperty('--section-h', h + 'px');
+    }
+
+    let queued = false;
+    function onScrollOrResize() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; update(); });
+    }
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize);
+    // recompute once fonts have loaded (metrics shift, esp. the Gill Sans stack)
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
+    update();
+  })();
+</script>
+</body></html>
+
+<!-- template.html v80 -->
