@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- template.html v82 -->
+<!-- template.html v83 -->
 <!--
   ===========================================================================
   Gunit homepage template.  EDIT THIS FILE FREELY — changes show on refresh,
@@ -369,14 +369,12 @@
   }
 </script>
 <script>
-  /* Sticky book-slot tracker (template v82).
-     h4 pins at top = nav + --section-h + shadow (margin edge). CSS can't
-     read a sticky element's visual footprint, so we measure it here:
-       section-h = ref.rect.bottom - navH - h4.margin-top
-     ref.rect.bottom gives the section bar's full visual footprint (including
-     its own margin-top gap). Subtracting h4's margin-top accounts for the
-     fact that h4's sticky `top` positions its margin edge, not its border
-     edge — without it h4 sits 22px below the shadow instead of flush with it.
+  /* Sticky book-slot tracker (template v83).
+     h4 pins at top = nav + --section-h + shadow. CSS sticky `top` positions
+     the border edge, so h4 border-box top = nav + section-h + shadow exactly.
+     We set section-h = ref.rect.bottom - navH so that:
+       h4 border-box top = nav + (ref.rect.bottom - nav) + shadow
+                         = ref.rect.bottom + shadow  = shadow bottom  ✓
      Throttled via requestAnimationFrame; re-runs on scroll + resize. */
   (function () {
     const page = document.querySelector('.booklist-page');
@@ -387,34 +385,26 @@
       return parseFloat(v) || 44;
     };
 
-    // h4's sticky `top` anchors its margin edge, not its border edge. We must
-    // subtract margin-top so --section-h places h4's border-box flush at the
-    // section shadow's bottom, not 22px below it. Read once; margin-top is
-    // fixed (no responsive overrides for it).
-    const h4el = page.querySelector('h4');
-    const h4mt = h4el ? (parseFloat(getComputedStyle(h4el).marginTop) || 0) : 0;
-
     function update() {
       const heads = page.querySelectorAll('h1, h2, h3');
       if (!heads.length) return;
       const nav = navH();
-      // Detect the active (pinned) section header. rect.top < nav + 150 works
-      // for all levels: h2 with margin-top:30px has rect.top ≈ nav+30 when
-      // pinned, well within the threshold. The loop keeps the last match, so
-      // we always get the deepest qualifying header (the current context).
+      // Find the deepest section header that has entered the section slot.
+      // rect.top < nav + 150 catches any header that is pinned or very close
+      // to pinning; the loop keeps the last match (deepest in DOM = current
+      // context). Fall back to heads[0] before any header has pinned.
       let active = null;
       for (const h of heads) {
         if (h.getBoundingClientRect().top < nav + 150) active = h;
       }
       const ref = active || heads[0];
-      // rect.bottom captures the full visual footprint of the section bar
-      // (border-box bottom, which is below its margin-top gap). We subtract
-      // h4mt because h4's sticky `top` positions its margin edge: without the
-      // subtraction the border-box lands 22px below the shadow instead of
-      // flush with it. So: section-h = bottom - nav - h4mt, giving
-      // h4 border-box top = nav + section-h + shadow + h4mt = bottom + shadow.
+      // section-h = ref.rect.bottom - nav.
+      // CSS sticky `top` positions the BORDER edge, so:
+      //   h4 border-box top = nav + section-h + shadow
+      //                     = nav + (ref.rect.bottom - nav) + shadow
+      //                     = ref.rect.bottom + shadow  (= shadow bottom ✓)
       const bottom = Math.ceil(ref.getBoundingClientRect().bottom);
-      page.style.setProperty('--section-h', (bottom - nav - h4mt) + 'px');
+      page.style.setProperty('--section-h', (bottom - nav) + 'px');
     }
 
     let queued = false;
@@ -433,4 +423,4 @@
 </script>
 </body></html>
 
-<!-- template.html v82 -->
+<!-- template.html v83 -->
