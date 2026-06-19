@@ -98,9 +98,10 @@
     --nav-h: 44px;
     --section-h: 46px;
     /* h2 and h3 use padding-top (margin-top:0) so their border sticks at the
-       nav with no transparent content-peeking gap. h4 has margin-top:0 and
-       sticks border-to-border at ref.rect.bottom (--section-shadow:0). */
-    --section-shadow: 0px;
+       nav with no transparent content-peeking gap. The 9px box-shadow on
+       section headers overlaps h4's top 9px; --section-shadow:9px shifts h4
+       down to shadow-bottom so nothing is clipped. */
+    --section-shadow: 9px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
   /* each book title advances the counter; [resetnum] in markdown emits a
      .num-reset div that restarts it (its inline counter-reset does the work). */
