@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- template.html v83 -->
+<!-- template.html v84 -->
 <!--
   ===========================================================================
   Gunit homepage template.  EDIT THIS FILE FREELY — changes show on refresh,
@@ -369,12 +369,14 @@
   }
 </script>
 <script>
-  /* Sticky book-slot tracker (template v83).
-     h4 pins at top = nav + --section-h + shadow. CSS sticky `top` positions
-     the border edge, so h4 border-box top = nav + section-h + shadow exactly.
-     We set section-h = ref.rect.bottom - navH so that:
-       h4 border-box top = nav + (ref.rect.bottom - nav) + shadow
-                         = ref.rect.bottom + shadow  = shadow bottom  ✓
+  /* Sticky book-slot tracker (template v84).
+     h4 pins at top = nav + --section-h + shadow. We set:
+       section-h = ref.rect.bottom - nav
+     giving h4 border-box top = ref.rect.bottom + shadow = shadow bottom ✓.
+     The key is that `ref` must be the CURRENTLY PINNED section header, not
+     one still approaching. An approaching header has a larger rect.bottom,
+     inflating section-h and creating a visible gap below the shadow.
+     We detect "pinned" per-element: rect.top ≤ nav + margin-top + 2px.
      Throttled via requestAnimationFrame; re-runs on scroll + resize. */
   (function () {
     const page = document.querySelector('.booklist-page');
@@ -385,24 +387,28 @@
       return parseFloat(v) || 44;
     };
 
+    // Cache each section header's margin-top so we don't hit getComputedStyle
+    // on every scroll frame. Margins don't change at any responsive breakpoint.
+    const mtCache = new WeakMap();
+    function isPinned(el, nav) {
+      if (!mtCache.has(el)) mtCache.set(el, parseFloat(getComputedStyle(el).marginTop) || 0);
+      // A pinned header has rect.top = nav + margin-top (margin edge at nav).
+      // Allow 2px tolerance for sub-pixel rendering.
+      return el.getBoundingClientRect().top <= nav + mtCache.get(el) + 2;
+    }
+
     function update() {
       const heads = page.querySelectorAll('h1, h2, h3');
       if (!heads.length) return;
       const nav = navH();
-      // Find the deepest section header that has entered the section slot.
-      // rect.top < nav + 150 catches any header that is pinned or very close
-      // to pinning; the loop keeps the last match (deepest in DOM = current
-      // context). Fall back to heads[0] before any header has pinned.
+      // The active header is the deepest one that is currently pinned.
+      // Iterating in DOM order and keeping the last match gives us the most
+      // specific pinned context. Fall back to heads[0] before any pin.
       let active = null;
       for (const h of heads) {
-        if (h.getBoundingClientRect().top < nav + 150) active = h;
+        if (isPinned(h, nav)) active = h;
       }
       const ref = active || heads[0];
-      // section-h = ref.rect.bottom - nav.
-      // CSS sticky `top` positions the BORDER edge, so:
-      //   h4 border-box top = nav + section-h + shadow
-      //                     = nav + (ref.rect.bottom - nav) + shadow
-      //                     = ref.rect.bottom + shadow  (= shadow bottom ✓)
       const bottom = Math.ceil(ref.getBoundingClientRect().bottom);
       page.style.setProperty('--section-h', (bottom - nav) + 'px');
     }
@@ -423,4 +429,4 @@
 </script>
 </body></html>
 
-<!-- template.html v83 -->
+<!-- template.html v84 -->
