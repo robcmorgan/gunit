@@ -97,13 +97,12 @@
        few px of mismatch never shows through. */
     --nav-h: 44px;
     --section-h: 46px;
-    /* the section headers cast a solid downward box-shadow to cover the band
-       between their border-box and h4's border-box. The shadow must be at least
-       as tall as h4's margin-top (22px) so it fills the transparent margin gap
-       in normal flow. h4 pins at nav + section-h + section-shadow (border edge),
-       and section-h = ref.rect.bottom - nav, so h4 border-box = ref.rect.bottom +
-       section-shadow = shadow bottom — no gap. Keep equal to box-shadow Y-offset. */
-    --section-shadow: 22px;
+    /* the section headers cast a solid downward box-shadow to cover the 9px
+       transparent margin-top gap between the section header border-box and h4's
+       border-box. h4's margin-top is kept at 9px (= shadow Y-offset) so there is
+       no visible gap in normal flow. Keep equal to h4's margin-top and to the
+       box-shadow Y-offset below. */
+    --section-shadow: 9px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
   /* each book title advances the counter; [resetnum] in markdown emits a
      .num-reset div that restarts it (its inline counter-reset does the work). */
@@ -142,9 +141,8 @@
     position: sticky; top: var(--nav-h); z-index: 5;
     margin-left: -22px; margin-right: -22px;
     background: #e8eef6;
-    box-shadow: 0 22px 0 0 #e8eef6; /* solid 22px cover — matches h4's margin-top
-      so the shadow fills the transparent margin gap both in normal flow and when
-      h4 is sticky. Keep Y-offset in sync with --section-shadow above. */ }
+    box-shadow: 0 9px 0 0 #e8eef6; /* covers the 9px transparent margin above h4;
+      keep Y-offset in sync with h4 margin-top and --section-shadow above. */ }
 
   .booklist-page h1 { color: #14304d; border: none;
     font-size: 2.1em; font-weight: 700; letter-spacing: -0.01em;
@@ -179,8 +177,8 @@
      rather than overlapping the next title. Solid bg + 6px seam shadow covers
      the join to body content. Title text sits at rail 2 (40px past card edge). */
   .booklist-page h4 { color: #14304d; font-size: 1.02em; font-weight: 600;
-    margin: 22px -22px 8px -22px; clear: both;
-    padding: 5px 22px 5px 62px; /* 62 = 22 card pad + 40 rail-2 indent */
+    margin: 9px -22px 8px -22px; clear: both;
+    padding: 18px 22px 5px 62px; /* 62 = 22 card pad + 40 rail-2 indent; margin-top 9 + padding-top 18 = 27px visual gap (unchanged) */
     position: sticky; top: calc(var(--nav-h) + var(--section-h) + var(--section-shadow)); z-index: 4;
     background: #e8eef6;
     box-shadow: 0 6px 6px -3px #e8eef6; }
@@ -370,7 +368,7 @@
   }
 </script>
 <script>
-  /* Sticky book-slot tracker (template v86).
+  /* Sticky book-slot tracker (template v87).
      h4 sticky `top` positions the BORDER EDGE directly, so:
        section-h = ref.rect.bottom - nav
        h4 border-box top = nav + section-h + shadow = ref.rect.bottom + shadow ✓
