@@ -111,7 +111,7 @@
      other — without this bound, a two-line title's second line shows below the
      next (one-line) title. Purely structural: NO padding/margin/overflow
      (overflow would break the sticky containment). */
-  .booklist-page .book { /* containment boundary only */ }
+  .booklist-page .book { margin-bottom: 12px; /* breathing room before next section header */ }
   .booklist-page h4 { counter-increment: bookcount; }
   /* Heading hierarchy — TWO STICKY SLOTS (robust; no hand-stacked offsets).
      ----------------------------------------------------------------------
@@ -144,9 +144,9 @@
     margin-top: 0; margin-bottom: 0; padding: 6px 22px 24px 22px;
     border-bottom: 2px solid rgba(20,48,77,0.12); }
   .booklist-page h2 { color: #1d4e7c; font-size: 1.5em; font-weight: 650;
-    margin-top: 0; margin-bottom: 0; padding: 24px 22px 10px 22px; }
+    margin-top: 0; margin-bottom: 0; padding: 6px 22px 10px 22px; }
   .booklist-page h3 { color: #356492; font-size: 1.2em; font-weight: 600;
-    margin-top: 0; margin-bottom: 0; padding: 18px 22px 8px 22px; }
+    margin-top: 0; margin-bottom: 0; padding: 5px 22px 8px 22px; }
   /* (h4 is the book title — styled separately below) */
   /* ---- book entry layout (head row + body below) -----------------------
      Renderer emits:
