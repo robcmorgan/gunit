@@ -97,10 +97,9 @@
        few px of mismatch never shows through. */
     --nav-h: 44px;
     --section-h: 46px;
-    /* section headers pin their BORDER edge at the nav bottom (see h2/h3 top
-       overrides below). h4 sticks at ref.rect.bottom + 0 (border-to-border,
-       no gap). The 9px box-shadow on section headers is a visual seam-cover only
-       and is NOT used in the h4 top formula. */
+    /* h2 and h3 use padding-top (margin-top:0) so their border sticks at the
+       nav with no transparent content-peeking gap. h4 has margin-top:0 and
+       sticks border-to-border at ref.rect.bottom (--section-shadow:0). */
     --section-shadow: 0px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
   /* each book title advances the counter; [resetnum] in markdown emits a
@@ -116,13 +115,11 @@
   .booklist-page h4 { counter-increment: bookcount; }
   /* Heading hierarchy — TWO STICKY SLOTS (robust; no hand-stacked offsets).
      ----------------------------------------------------------------------
-     SECTION slot: h1, h2 and h3 all pin their BORDER EDGE at the nav bottom.
-       h1 margin-top is 0, so top:nav works. h2/h3 have positive margin-tops;
-       their `top` values are set to calc(nav - margin-top) so the MARGIN sits
-       above/behind the nav bar (invisible) and the border edge sticks at nav.
-       They share effectively ONE slot — whichever section header was most
-       recently scrolled past occupies it (deepest/newest in DOM wins). This
-       is "current section context": h1 page-title, h2 section, or h3 subsection.
+     SECTION slot: h1, h2 and h3 all use top:var(--nav-h) and margin-top:0.
+       Their border sticks immediately at the nav with no transparent gap.
+       Spacing above their text comes from padding-top (coloured background).
+       They share ONE slot; later-in-DOM wins when two are at the same top.
+       "Current section context": h1 page-title, h2 section, h3 subsection.
      BOOK slot: h4 pins just below, at top:calc(nav + section bar height).
      Result: at most two bars — section + current book — which is the goal.
 
@@ -135,29 +132,21 @@
        * Section headers share z-index (5) and sit ABOVE the book bar (z-index
          4), so the section bar always covers the book bar where they meet. */
 
-  /* shared look for the three section-slot headers.
-     Each pins its BORDER EDGE (not margin edge) at the nav bottom, so no
-     transparent margin zone shows between the nav and the header background.
-     h1 margin-top:0 → top:nav works directly.
-     h2 margin-top:30 → top:calc(nav-30) moves margin behind the nav bar.
-     h3 margin-top:22 → top:calc(nav-22) same. */
+  /* shared look for the three section-slot headers — all margin-top:0 */
   .booklist-page h1, .booklist-page h2, .booklist-page h3 {
     position: sticky; top: var(--nav-h); z-index: 5;
     margin-left: -22px; margin-right: -22px;
     background: #e8eef6;
-    box-shadow: 0 9px 0 0 #e8eef6; /* visual seam-cover; not used in h4 top */ }
+    box-shadow: 0 9px 0 0 #e8eef6; /* visual seam-cover only */ }
 
   .booklist-page h1 { color: #14304d; border: none;
     font-size: 2.1em; font-weight: 700; letter-spacing: -0.01em;
     margin-top: 0; margin-bottom: 0; padding: 6px 22px 24px 22px;
     border-bottom: 2px solid rgba(20,48,77,0.12); }
   .booklist-page h2 { color: #1d4e7c; font-size: 1.5em; font-weight: 650;
-    top: calc(var(--nav-h) - 30px); /* border edge sticks at nav */
-    margin-top: 30px; margin-bottom: 0; padding: 6px 22px 18px 22px; }
-  .booklist-page h2:first-child { margin-top: 0; top: var(--nav-h); }
+    margin-top: 0; margin-bottom: 0; padding: 24px 22px 10px 22px; }
   .booklist-page h3 { color: #356492; font-size: 1.2em; font-weight: 600;
-    top: calc(var(--nav-h) - 22px); /* border edge sticks at nav */
-    margin-top: 22px; margin-bottom: 0; padding: 5px 22px 11px 22px; }
+    margin-top: 0; margin-bottom: 0; padding: 18px 22px 8px 22px; }
   /* (h4 is the book title — styled separately below) */
   /* ---- book entry layout (head row + body below) -----------------------
      Renderer emits:
@@ -373,13 +362,12 @@
   }
 </script>
 <script>
-  /* Sticky book-slot tracker (template v88).
-     All section headers (h1/h2/h3) pin their BORDER edge at the nav bottom
-     (individual `top` overrides absorb each header's margin-top). So:
-       isPinned: border-top (rect.top) ≤ nav + 2px
-       section-h = ref.rect.bottom - nav   (border-bottom minus nav)
-       h4 top = nav + section-h + 0  →  h4 border-box = ref.rect.bottom ✓
-     h4 margin-top is 0, so there is no gap between section header and h4.
+  /* Sticky book-slot tracker (template v89).
+     All section headers have margin-top:0, so rect.top = nav when pinned.
+       isPinned: rect.top ≤ nav + 2px
+       section-h = ref.rect.bottom - nav
+       h4 top = nav + section-h + 0  →  h4 border = ref.rect.bottom ✓
+     h4 margin-top:0 — border-to-border flush, no gap ever.
      Throttled via requestAnimationFrame; re-runs on scroll + resize. */
   (function () {
     const page = document.querySelector('.booklist-page');
