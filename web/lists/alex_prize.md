@@ -121,7 +121,7 @@ Prepare to have your worldview completely rearranged by an autobiography that re
 
 A stunning, visually rich graphic narrative that weaves natural history with sharp social commentary.
 
-Forget standard nature documentaries; this is sequential art at its absolute finest, demanding you look closer at the world beneath your feet.
+Forget standard nature documentaries; this is sequential art at its absolute finest, demanding you look closer at the world beneath your feet.  
 
 ---
 
