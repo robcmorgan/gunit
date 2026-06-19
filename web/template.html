@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- template.html v85 -->
+<!-- template.html v86 -->
 <!--
   ===========================================================================
   Gunit homepage template.  EDIT THIS FILE FREELY — changes show on refresh,
@@ -97,12 +97,13 @@
        few px of mismatch never shows through. */
     --nav-h: 44px;
     --section-h: 46px;
-    /* the section headers cast a solid 9px downward box-shadow (0 9px 0 0) to
-       cover the band between their box bottom and h4's top. h4 pins at
-       nav + section-h + section-shadow, so it clears that band exactly and the
-       shadow fills it with no flicker. Keep this equal to the section headers'
-       box-shadow Y-offset. */
-    --section-shadow: 9px;
+    /* the section headers cast a solid downward box-shadow to cover the band
+       between their border-box and h4's border-box. The shadow must be at least
+       as tall as h4's margin-top (22px) so it fills the transparent margin gap
+       in normal flow. h4 pins at nav + section-h + section-shadow (border edge),
+       and section-h = ref.rect.bottom - nav, so h4 border-box = ref.rect.bottom +
+       section-shadow = shadow bottom — no gap. Keep equal to box-shadow Y-offset. */
+    --section-shadow: 22px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
   /* each book title advances the counter; [resetnum] in markdown emits a
      .num-reset div that restarts it (its inline counter-reset does the work). */
@@ -141,9 +142,9 @@
     position: sticky; top: var(--nav-h); z-index: 5;
     margin-left: -22px; margin-right: -22px;
     background: #e8eef6;
-    box-shadow: 0 9px 0 0 #e8eef6; /* solid 9px cover — fills the gap below the
-      section box down to h4's top (h4 offset includes --section-shadow:9px), so
-      no body line flickers in the band between the two bars. */ }
+    box-shadow: 0 22px 0 0 #e8eef6; /* solid 22px cover — matches h4's margin-top
+      so the shadow fills the transparent margin gap both in normal flow and when
+      h4 is sticky. Keep Y-offset in sync with --section-shadow above. */ }
 
   .booklist-page h1 { color: #14304d; border: none;
     font-size: 2.1em; font-weight: 700; letter-spacing: -0.01em;
@@ -369,15 +370,14 @@
   }
 </script>
 <script>
-  /* Sticky book-slot tracker (template v85).
-     h4 sticky `top` positions the MARGIN EDGE, so the border-box sits
-     margin-top (22px) below the top value. To land the border-box flush at
-     the section shadow's bottom we set:
-       section-h = ref.rect.bottom - nav - h4.margin-top
-     so: h4 border-box = nav + section-h + shadow + h4mt
-                       = ref.rect.bottom + shadow  = shadow bottom ✓
-     ref must be the CURRENTLY PINNED header (not one still approaching).
-     We detect "pinned" per element: rect.top ≤ nav + element.margin-top + 2px.
+  /* Sticky book-slot tracker (template v86).
+     h4 sticky `top` positions the BORDER EDGE directly, so:
+       section-h = ref.rect.bottom - nav
+       h4 border-box top = nav + section-h + shadow = ref.rect.bottom + shadow ✓
+     The shadow is 22px (= h4's margin-top) so it also fills the transparent
+     margin gap in normal flow — no page background peeks through in either state.
+     ref must be the CURRENTLY PINNED header; we detect "pinned" per element:
+       rect.top ≤ nav + element.margin-top + 2px  (border-box at nav + margin-top).
      Throttled via requestAnimationFrame; re-runs on scroll + resize. */
   (function () {
     const page = document.querySelector('.booklist-page');
@@ -388,40 +388,35 @@
       return parseFloat(v) || 44;
     };
 
-    // Cache each element's margin-top (section headers + h4) so we don't hit
-    // getComputedStyle on every scroll frame. These never change at any breakpoint.
+    // Cache section header margin-tops for isPinned — avoids getComputedStyle
+    // on every scroll frame. Margins don't change at any responsive breakpoint.
     const mtCache = new WeakMap();
     function mt(el) {
       if (!mtCache.has(el)) mtCache.set(el, parseFloat(getComputedStyle(el).marginTop) || 0);
       return mtCache.get(el);
     }
     function isPinned(el, nav) {
-      // A pinned header has its margin edge at nav, so border-box top = nav + margin-top.
+      // A pinned header's border-box sits at nav + margin-top (margin edge at nav).
       // Allow 2px tolerance for sub-pixel rendering.
       return el.getBoundingClientRect().top <= nav + mt(el) + 2;
     }
-
-    // h4's margin-top — read once, cached. Used to offset section-h so h4's
-    // border-box (not its margin edge) lands flush at the shadow bottom.
-    const h4el = page.querySelector('h4');
-    const h4mt = h4el ? mt(h4el) : 0;
 
     function update() {
       const heads = page.querySelectorAll('h1, h2, h3');
       if (!heads.length) return;
       const nav = navH();
-      // The active header is the deepest currently-pinned section header.
-      // Iterating in DOM order, keeping the last match = current section context.
-      // Fall back to heads[0] before any header has pinned.
+      // Deepest currently-pinned section header = current section context.
+      // Loop in DOM order, keep last match. Fall back to heads[0] before any pin.
       let active = null;
       for (const h of heads) {
         if (isPinned(h, nav)) active = h;
       }
       const ref = active || heads[0];
-      // Subtract h4mt: sticky top anchors h4's margin edge, not border edge.
-      // Without this, the border-box lands h4mt pixels below the shadow bottom.
+      // section-h = ref.rect.bottom - nav  →  h4 border-box = ref.rect.bottom + shadow.
+      // Shadow is 22px (= h4 margin-top), so shadow bottom lands exactly where
+      // h4's border-box begins — flush in both sticky and normal-flow positions.
       const bottom = Math.ceil(ref.getBoundingClientRect().bottom);
-      page.style.setProperty('--section-h', (bottom - nav - h4mt) + 'px');
+      page.style.setProperty('--section-h', (bottom - nav) + 'px');
     }
 
     let queued = false;
@@ -440,4 +435,4 @@
 </script>
 </body></html>
 
-<!-- template.html v85 -->
+<!-- template.html v86 -->
