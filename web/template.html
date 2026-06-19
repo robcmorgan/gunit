@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- template.html v80 -->
+<!-- template.html v81 -->
 <!--
   ===========================================================================
   Gunit homepage template.  EDIT THIS FILE FREELY — changes show on refresh,
@@ -369,13 +369,13 @@
   }
 </script>
 <script>
-  /* Sticky book-slot tracker (template v77).
-     h4 pins at top = nav + --section-h. A wrapping h3 (or h2/h1) is taller than
-     any fixed --section-h guess, so h4 would overlap it. CSS can't read a sticky
-     element's wrapped height, so we do it here: find the section header currently
-     pinned in the section slot, measure its REAL height, and write it to
-     --section-h. h4's calc() offset then always lands just beneath it.
-     Throttled with requestAnimationFrame; re-runs on scroll + resize. */
+  /* Sticky book-slot tracker (template v81).
+     h4 pins at top = nav + --section-h + shadow. CSS can't read a sticky
+     element's visual footprint, so we measure it here: find the section header
+     currently in the section slot and set --section-h = rect.bottom - navH.
+     This captures the full height including any margin-top gap (h2/h3 sticky
+     pins the margin edge, so height alone is too small). Throttled with
+     requestAnimationFrame; re-runs on scroll + resize. */
   (function () {
     const page = document.querySelector('.booklist-page');
     if (!page) return;
@@ -388,18 +388,23 @@
     function update() {
       const heads = page.querySelectorAll('h1, h2, h3');
       if (!heads.length) return;
-      const slotTop = navH();
-      // The pinned section header is the last one whose top has reached the slot
-      // line (rect.top <= slotTop + 1px tolerance). If none has yet (you're above
-      // the first section), fall back to the first header's height so h4 still
-      // clears it when it arrives.
-      let pinned = null;
+      const nav = navH();
+      // Detect the active header by rect.top < nav + 150. The old
+      // rect.top <= slotTop + 1 failed for h2/h3: CSS sticky pins the margin
+      // edge, so their border-box sits at navH + margin-top (e.g. 74px for
+      // h2 with margin-top:30px), never reaching slotTop + 1 = navH + 1.
+      let active = null;
       for (const h of heads) {
-        if (h.getBoundingClientRect().top <= slotTop + 1) pinned = h;
+        if (h.getBoundingClientRect().top < nav + 150) active = h;
       }
-      const ref = pinned || heads[0];
-      const h = Math.ceil(ref.getBoundingClientRect().height);
-      page.style.setProperty('--section-h', h + 'px');
+      const ref = active || heads[0];
+      // Use rect.bottom instead of height. When a header is sticky, height
+      // excludes its margin-top gap, so --section-h was too small and the
+      // book-slot shadow covered the top of h4. rect.bottom - navH captures
+      // the full visual footprint: h4's top = navH + (bottom - nav) + shadow
+      // = rect.bottom + shadow — always below the shadow.
+      const bottom = Math.ceil(ref.getBoundingClientRect().bottom);
+      page.style.setProperty('--section-h', (bottom - nav) + 'px');
     }
 
     let queued = false;
@@ -418,4 +423,4 @@
 </script>
 </body></html>
 
-<!-- template.html v80 -->
+<!-- template.html v81 -->
