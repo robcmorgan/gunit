@@ -394,7 +394,7 @@
         if (isPinned(h, nav)) active = h;
       }
       const ref = active || heads[0];
-      const bottom = Math.ceil(ref.getBoundingClientRect().bottom);
+      const bottom = Math.floor(ref.getBoundingClientRect().bottom);
       page.style.setProperty('--section-h', (bottom - nav) + 'px');
     }
 
