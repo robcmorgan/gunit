@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- template.html v81 -->
+<!-- template.html v82 -->
 <!--
   ===========================================================================
   Gunit homepage template.  EDIT THIS FILE FREELY — changes show on refresh,
@@ -369,13 +369,15 @@
   }
 </script>
 <script>
-  /* Sticky book-slot tracker (template v81).
-     h4 pins at top = nav + --section-h + shadow. CSS can't read a sticky
-     element's visual footprint, so we measure it here: find the section header
-     currently in the section slot and set --section-h = rect.bottom - navH.
-     This captures the full height including any margin-top gap (h2/h3 sticky
-     pins the margin edge, so height alone is too small). Throttled with
-     requestAnimationFrame; re-runs on scroll + resize. */
+  /* Sticky book-slot tracker (template v82).
+     h4 pins at top = nav + --section-h + shadow (margin edge). CSS can't
+     read a sticky element's visual footprint, so we measure it here:
+       section-h = ref.rect.bottom - navH - h4.margin-top
+     ref.rect.bottom gives the section bar's full visual footprint (including
+     its own margin-top gap). Subtracting h4's margin-top accounts for the
+     fact that h4's sticky `top` positions its margin edge, not its border
+     edge — without it h4 sits 22px below the shadow instead of flush with it.
+     Throttled via requestAnimationFrame; re-runs on scroll + resize. */
   (function () {
     const page = document.querySelector('.booklist-page');
     if (!page) return;
@@ -385,26 +387,34 @@
       return parseFloat(v) || 44;
     };
 
+    // h4's sticky `top` anchors its margin edge, not its border edge. We must
+    // subtract margin-top so --section-h places h4's border-box flush at the
+    // section shadow's bottom, not 22px below it. Read once; margin-top is
+    // fixed (no responsive overrides for it).
+    const h4el = page.querySelector('h4');
+    const h4mt = h4el ? (parseFloat(getComputedStyle(h4el).marginTop) || 0) : 0;
+
     function update() {
       const heads = page.querySelectorAll('h1, h2, h3');
       if (!heads.length) return;
       const nav = navH();
-      // Detect the active header by rect.top < nav + 150. The old
-      // rect.top <= slotTop + 1 failed for h2/h3: CSS sticky pins the margin
-      // edge, so their border-box sits at navH + margin-top (e.g. 74px for
-      // h2 with margin-top:30px), never reaching slotTop + 1 = navH + 1.
+      // Detect the active (pinned) section header. rect.top < nav + 150 works
+      // for all levels: h2 with margin-top:30px has rect.top ≈ nav+30 when
+      // pinned, well within the threshold. The loop keeps the last match, so
+      // we always get the deepest qualifying header (the current context).
       let active = null;
       for (const h of heads) {
         if (h.getBoundingClientRect().top < nav + 150) active = h;
       }
       const ref = active || heads[0];
-      // Use rect.bottom instead of height. When a header is sticky, height
-      // excludes its margin-top gap, so --section-h was too small and the
-      // book-slot shadow covered the top of h4. rect.bottom - navH captures
-      // the full visual footprint: h4's top = navH + (bottom - nav) + shadow
-      // = rect.bottom + shadow — always below the shadow.
+      // rect.bottom captures the full visual footprint of the section bar
+      // (border-box bottom, which is below its margin-top gap). We subtract
+      // h4mt because h4's sticky `top` positions its margin edge: without the
+      // subtraction the border-box lands 22px below the shadow instead of
+      // flush with it. So: section-h = bottom - nav - h4mt, giving
+      // h4 border-box top = nav + section-h + shadow + h4mt = bottom + shadow.
       const bottom = Math.ceil(ref.getBoundingClientRect().bottom);
-      page.style.setProperty('--section-h', (bottom - nav) + 'px');
+      page.style.setProperty('--section-h', (bottom - nav - h4mt) + 'px');
     }
 
     let queued = false;
@@ -423,4 +433,4 @@
 </script>
 </body></html>
 
-<!-- template.html v81 -->
+<!-- template.html v82 -->
