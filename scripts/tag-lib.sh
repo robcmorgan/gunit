@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-TAG_LIB_VERSION="5"   # bump on every change
+TAG_LIB_VERSION="6"   # bump on every change
+# v6: strip "(Series, #N)" from title before calibre title-search. Calibre stores
+#     titles without the Goodreads series label, so the full string yields no hits.
+#     Original title is kept for fuzzy scoring (book_match_fields is unaffected).
 # v5: FIX find_book_id FALSE-POSITIVE on same-author books (blob -> fields).
 #     find_book_id scored each candidate with book_match_score, which flattens the
 #     candidate's title+authors into ONE blob and runs the title gate against it.
@@ -173,11 +176,13 @@ find_book_id() {
         set -- $exact
         if [ "$#" -ge 1 ]; then printf '%s\tid\n' "$1"; return 0; fi
     fi
-    local ids="" field
+    local ids="" field sfield
     for field in "$f1" "$f2"; do
         local hit
-        hit="$(cdb search "title:\"$field\"" | tr ',' ' ')"
-        [ -z "$hit" ] && hit="$(cdb search "$field" | tr ',' ' ')"
+        # strip "(Series, #N)" for the search query — calibre titles don't carry it
+        sfield="$(printf '%s' "$field" | sed 's/ *([^)]*,  *#[0-9][0-9]*) *$//')"
+        hit="$(cdb search "title:\"$sfield\"" | tr ',' ' ')"
+        [ -z "$hit" ] && hit="$(cdb search "$sfield" | tr ',' ' ')"
         ids="$ids $hit"
     done
     ids="$(printf '%s\n' $ids | awk 'NF && !seen[$0]++' | tr '\n' ' ')"
