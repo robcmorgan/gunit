@@ -1,5 +1,5 @@
 [Unit]
-Description=gunit book cycle: sweep-import missed files, drain tag queue, sync tags to shelves
+Description=gunit book cycle: sweep-books v8 + tag-queue v5 + sync-tag-to-shelf v9
 After=docker.service watch-downloads.service
 Wants=docker.service
 

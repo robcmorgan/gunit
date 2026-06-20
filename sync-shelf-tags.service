@@ -14,7 +14,7 @@
 # =============================================================================
 
 [Unit]
-Description=Sync Calibre-Web shelves -> Calibre tags (shelf is boss)
+Description=Sync Calibre-Web shelves -> Calibre tags — sync-tag-to-shelf v9
 After=docker.service
 Requires=docker.service
 
