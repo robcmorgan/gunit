@@ -26,5 +26,12 @@
       "user": "shops@rob.me.uk",
       "enabled": true
     }
+        ,
+    {
+      "tags": "BookTok",
+      "shelf": "Young Adults",
+      "user": "shops@rob.me.uk",
+      "enabled": true
+    }
   ]
 }

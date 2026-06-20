@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- template.html v86 -->
+<!-- template.html v95 -->
 <!--
   ===========================================================================
   Gunit homepage template.  EDIT THIS FILE FREELY — changes show on refresh,
@@ -209,7 +209,7 @@
     box-shadow: 0 5px 16px rgba(0,0,0,0.4); }
 
   /* author / tags / footer (h5) — stacked inside .book-meta, centred beside cover */
-  .booklist-page h5 { color: #6b7a89; font-size: 0.95em; font-weight: 200;
+  .booklist-page h5 { color: #2d3a45; font-size: 0.95em; font-weight: 200;
     letter-spacing: 0.01em; margin: 1px 0 6px 0; }
   .booklist-page h5 .sep { color: #b9c2cc; padding: 0 10px; font-weight: 200; }
   /* description — with a cover, sits below the head at rail 1 (full width). */
@@ -252,6 +252,7 @@
     border-bottom-color: rgba(195,154,69,0.45); }
   .booklist-page h4 a:visited:hover { background: rgba(212,167,71,0.12);
     border-bottom-color: #e6bd5e; }
+  .booklist-page h4 .book-series { color: #676f77; font-weight: 400; font-size: 0.88em; }
   /* the cover's wrapping <a> shouldn't show the generic link tint/border —
      only the cover's own hover-lift should respond */
   .booklist-page a:has(.bookcover) { border-bottom: none; }
@@ -412,6 +413,30 @@
     update();
   })();
 </script>
+<script>
+  /* Wrap trailing (Series, #N) in h4 titles with a lighter .book-series span. */
+  (function () {
+    const page = document.querySelector('.booklist-page');
+    if (!page) return;
+    const re = /^([\s\S]*?)(\s*\([^)]+,\s*#\d+\))\s*$/;
+    page.querySelectorAll('h4').forEach(function (h4) {
+      const target = h4.querySelector('a') || h4;
+      const walk = document.createTreeWalker(target, NodeFilter.SHOW_TEXT);
+      const texts = [];
+      let n;
+      while ((n = walk.nextNode())) texts.push(n);
+      if (!texts.length) return;
+      const last = texts[texts.length - 1];
+      const m = last.textContent.match(re);
+      if (!m) return;
+      last.textContent = m[1];
+      const span = document.createElement('span');
+      span.className = 'book-series';
+      span.textContent = m[2];
+      last.parentNode.insertBefore(span, last.nextSibling);
+    });
+  })();
+</script>
 </body></html>
 
-<!-- template.html v86 -->
+<!-- template.html v95 -->

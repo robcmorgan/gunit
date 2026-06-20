@@ -1,6 +1,7 @@
 ## BookTok
 
-#### A Court of Mist and Fury (A Court of Thorns and Roses, #2)
+#### [A Court of Mist and Fury (A Court of Thorns and Roses, #2)](https://books.rob.me.uk/book/2151)
+[![](covers/2151.jpg)](https://books.rob.me.uk/book/2151)
 ##### trauma · healing · romantasy
 ##### Sarah J. Maas
 ##### Fiction, 2016, 624 pages
@@ -10,7 +11,8 @@ Swapping the claustrophobic fairy-tale elements of its predecessor for a sprawli
 Trapped in a suffocating bargain with the most feared High Lord in Prythian, Feyre must learn to weaponize her shattered spirit. War is looming on the horizon, and her only chance of survival means fully embracing the terrifying, intoxicating darkness of the Night Court.
 
 
-#### The Cruel Prince (The Folk of the Air, #1)
+#### [The Cruel Prince (The Folk of the Air, #1)](https://books.rob.me.uk/book/2152)
+[![](covers/2152.jpg)](https://books.rob.me.uk/book/2152)
 ##### ruthless · fae · political
 ##### Holly Black
 ##### Fiction, 2018, 370 pages
@@ -20,7 +22,8 @@ Dripping with venom and dark folklore, this razor-sharp novel strips away the ro
 Forget everything you know about sparkling fairies. To survive among immortal monsters who despise her humanity, a mortal girl named Jude decides to become far more dangerous than the creatures tormenting her, launching a deadly campaign of espionage and betrayal.
 
 
-#### Six of Crows (Six of Crows, #1)
+#### [Six of Crows (Six of Crows, #1)](https://books.rob.me.uk/book/2153)
+[![](covers/2153.jpg)](https://books.rob.me.uk/book/2153)
 ##### heist · gritty · syndicate
 ##### Leigh Bardugo
 ##### Fiction, 2015, 465 pages
@@ -30,7 +33,8 @@ Anchored by a brilliantly damaged ensemble cast, this dark fantasy caper perfect
 Six dangerous outcasts. One impossible heist. A criminal prodigy is offered a fortune to break into an impenetrable military stronghold, but to pull it off, he has to keep his crew of thieves, spies, and killers from murdering each other first.
 
 
-#### A Court of Thorns and Roses (A Court of Thorns and Roses, #1)
+#### [A Court of Thorns and Roses (A Court of Thorns and Roses, #1)](https://books.rob.me.uk/book/2160)
+[![](covers/2160.jpg)](https://books.rob.me.uk/book/2160)
 ##### curses · survival · retelling
 ##### Sarah J. Maas
 ##### Fiction, 2015, 416 pages
@@ -70,7 +74,8 @@ Written with an intense, fractured prose style utilizing crossed-out thoughts an
 Locked in a sterile cell for nearly a year, Juliette knows her touch is lethal, but she has no idea why. When the ruthless Reestablishment decides they want to use her as a living weapon, she must finally choose between submitting to a monster or fighting for her freedom.
 
 
-#### The Lightning Thief (Percy Jackson and the Olympians, #1)
+#### [The Lightning Thief (Percy Jackson and the Olympians, #1)](https://books.rob.me.uk/book/1689)
+[![](covers/1689.jpg)](https://books.rob.me.uk/book/1689)
 ##### mythology · humorous · quest
 ##### Rick Riordan
 ##### Fiction, 2005, 377 pages
@@ -90,7 +95,8 @@ Transitioning the narrative from intimate court politics to continent-spanning m
 With a devastating army marching toward their borders, Feyre returns to the treacherous Spring Court to play a lethal game of deception. If she fails to secure unlikely alliances and expose the king's weaknesses from the inside, her entire world will burn to ash.
 
 
-#### The Song of Achilles
+#### [The Song of Achilles](https://books.rob.me.uk/book/2175)
+[![](covers/2175.jpg)](https://books.rob.me.uk/book/2175)
 ##### poetic · tragedy · classical
 ##### Madeline Miller
 ##### Fiction, 2011, 378 pages
@@ -190,7 +196,8 @@ Revitalizing the classic survival-tournament structure, this high-energy debut l
 In a kingdom that actively executes the ordinary, Paedyn survives the slums by faking psychic abilities. Her ruse works perfectly until she accidentally saves a royal prince, thrusting her directly into a brutal, televised competition designed to weed out the weak with lethal force.
 
 
-#### Shadow and Bone (Shadow and Bone, #1)
+#### [Shadow and Bone (Shadow and Bone, #1)](https://books.rob.me.uk/book/2155)
+[![](covers/2155.jpg)](https://books.rob.me.uk/book/2155)
 ##### grisha · fold · darkness
 ##### Leigh Bardugo
 ##### Fiction, 2012, 358 pages
@@ -200,7 +207,8 @@ Establishing a rich, Tsar-inspired aesthetic completely separate from traditiona
 A terrifying swath of impenetrable darkness swarming with monsters splits the nation of Ravka in two. When a lowly mapmaker unleashes a dormant, legendary power to save her best friend, she is swept into the glamorous, dangerous world of the magical military elite.
 
 
-#### It Ends with Us (It Ends with Us, #1)
+#### [It Ends with Us (It Ends with Us, #1)](https://books.rob.me.uk/book/2156)
+[![](covers/2156.jpg)](https://books.rob.me.uk/book/2156)
 ##### contemporary · emotional · boundaries
 ##### Colleen Hoover
 ##### Fiction, 2016, 385 pages
@@ -241,7 +249,8 @@ Driven by intense psychological tests and grueling physical training, this dysto
 In a futuristic Chicago, society is strictly divided into five factions dedicated to specific virtues. When sixteen-year-old Tris takes her aptitude test, she discovers she possesses a rare, dangerous anomaly that the government considers a threat to their entire social order.
 
 
-#### A Court of Silver Flames (A Court of Thorns and Roses, #5)
+#### [A Court of Silver Flames (A Court of Thorns and Roses, #5)](https://books.rob.me.uk/book/2159)
+[![](covers/2159.jpg)](https://books.rob.me.uk/book/2159)
 ##### redemption · training · intense
 ##### Sarah J. Maas
 ##### Fiction, 2021, 757 pages
@@ -251,7 +260,8 @@ Pivoting away from diplomatic war rooms to focus fiercely on physical empowermen
 Nesta Archeron is drowning in trauma and burning bridges in the Night Court until she is given an ultimatum: train in the mountains or face exile. Forced into close quarters with a battle-hardened warrior who matches her fiery temper, she must learn to wield a blade to slay her internal demons.
 
 
-#### A Court of Frost and Starlight (A Court of Thorns and Roses, #4)
+#### [A Court of Frost and Starlight (A Court of Thorns and Roses, #4)](https://books.rob.me.uk/book/2160)
+[![](covers/2160.jpg)](https://books.rob.me.uk/book/2160)
 ##### transitional · cozy · rebuilding
 ##### Sarah J. Maas
 ##### Fiction, 2018, 229 pages
@@ -261,7 +271,8 @@ Acting as a peaceful, character-driven bridge between massive narrative arcs, th
 The war has ended, and the Winter Solstice is finally approaching, bringing a much-needed reprieve to the battered residents of Velaris. But beneath the festive celebrations, deep emotional wounds and shifting political responsibilities prove that peace is sometimes harder to navigate than conflict.
 
 
-#### Red Queen (Red Queen, #1)
+#### [Red Queen (Red Queen, #1)](https://books.rob.me.uk/book/2161)
+[![](covers/2161.jpg)](https://books.rob.me.uk/book/2161)
 ##### class-divide · superhuman · betrayal
 ##### Victoria Aveyard
 ##### Fiction, 2015, 383 pages
@@ -394,7 +405,8 @@ Tightening its focus around structural castle espionage and hidden magical symbo
 Now officially serving as the King’s Champion, Celaena Sardothien is ordered to execute the very rebel leaders she sympathizes with. Faking their deaths to buy time, she dives into the dark, subterranean secrets of the glass castle, uncovering a monstrous truth that threatens the entire continent.
 
 
-#### A Kingdom of Flesh and Fire (Blood and Ash, #2)
+#### [A Kingdom of Flesh and Fire (Blood and Ash, #2)](https://books.rob.me.uk/book/2163)
+[![](covers/2163.jpg)](https://books.rob.me.uk/book/2163)
 ##### expansion · alliance · betrayal
 ##### Jennifer L. Armentrout
 ##### Fiction, 2020, 626 pages
@@ -444,7 +456,8 @@ Reimagining ancient pantheons as modern media empires and glamorous nightclubs, 
 Persephone is the goddess of spring, but she hides her failing magic in New Athens by pretending to be an ordinary journalism student. Her quiet life explodes when she enters the most exclusive nightclub in the city and accidentally loses an impossible bet to the King of the Underworld.
 
 
-#### Legendborn (Legendborn #1)
+#### [Legendborn (Legendborn #1)](https://books.rob.me.uk/book/2165)
+[![](covers/2165.jpg)](https://books.rob.me.uk/book/2165)
 ##### arthurian · campus · root-magic
 ##### Tracy Deonn
 ##### Fiction, 2020, 501 pages
@@ -525,7 +538,8 @@ Elevating the emotional stakes by diving deep into its characters' traumatic his
 Double-crossed and stripped of their fortune after a successful heist, Kaz Brekker and his crew are trapped in Ketterdam with enemies closing in from every side. With no allies and no resources, they must execute a multi-layered, desperate war against the city's most powerful merchants to survive.
 
 
-#### Legend (Legend, #1)
+#### [Legend (Legend, #1)](https://books.rob.me.uk/book/2167)
+[![](covers/2167.jpg)](https://books.rob.me.uk/book/2167)
 ##### prodigy · criminal · sci-fi
 ##### Marie Lu
 ##### Fiction, 2011, 305 pages
@@ -535,7 +549,8 @@ Moving at the breakneck speed of a cinematic chase sequence, this fast-paced thr
 June is a fifteen-year-old military prodigy born into the elite ruling class of the Republic, while Day is the nation's most wanted teenage street criminal. Their worlds violently collide when June's brother is murdered, and Day becomes the prime suspect in a deadly, high-stakes game of cat and mouse.
 
 
-#### Empire of Storms (Throne of Glass, #5)
+#### [Empire of Storms (Throne of Glass, #5)](https://books.rob.me.uk/book/2168)
+[![](covers/2168.jpg)](https://books.rob.me.uk/book/2168)
 ##### global-war · armadas · strategy
 ##### Sarah J. Maas
 ##### Fiction, 2016, 693 pages

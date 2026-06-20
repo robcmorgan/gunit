@@ -14,6 +14,10 @@
 
 Teen and young adult favourites, based on user votes
 
+[BookTok](/lists/booktok)
+
+Favourites from BookTok, based on Goodreads user votes
+
 ## The Best Books... Ever [📚](https://books.rob.me.uk/shelf/7)
 
 [Guardian Best Books Ever](/lists/guardian_best_ever)
