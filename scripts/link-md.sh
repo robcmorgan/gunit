@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-LINK_MD_VERSION="14"  # bump on every change; echoed at startup AND footer below.
+LINK_MD_VERSION="15"  # bump on every change; echoed at startup AND footer below.
+# v15: strip "(Series, #N)" from title before calibre title-search. Calibre stores
+#      titles without Goodreads series labels, so the full string yields no hits.
+#      Original title is kept for fuzzy scoring (book_match_score is unaffected).
 # v14: FIX nnn multi-select reader. v13 read the -p selection file with
 #      `mapfile -d ''` (NUL-delimited), but nnn's selection separator depends on
 #      the build/config — robmorgan's writes NEWLINE-separated, so all three
@@ -424,9 +427,11 @@ lib_find_id() {
     [ -z "$title" ] && return 1
 
     # candidate ids: exact-ish title search first, then a looser bare search.
-    local ids hit
-    hit="$(cdb search "title:\"$title\"" 2>/dev/null | tr ',' ' ')"
-    [ -z "$hit" ] && hit="$(cdb search "title:\"$title\"" 2>/dev/null | tr ',' ' ')"
+    # strip "(Series, #N)" for the search — calibre titles don't carry the label.
+    local stitle ids hit
+    stitle="$(printf '%s' "$title" | sed 's/ *([^)]*,  *#[0-9][0-9]*) *$//')"
+    hit="$(cdb search "title:\"$stitle\"" 2>/dev/null | tr ',' ' ')"
+    [ -z "$hit" ] && hit="$(cdb search "title:\"$stitle\"" 2>/dev/null | tr ',' ' ')"
     ids="$(printf '%s\n' $hit | awk 'NF && /^[0-9]+$/ && !seen[$0]++')"
     [ -z "$ids" ] && return 1
 

@@ -15,7 +15,7 @@
 #  Stop:       sudo systemctl stop watch-downloads
 # =============================================================================
 [Unit]
-Description=Shelfmark download watcher (auto-shelf to Calibre-Web per kindleSync toggle)
+Description=Shelfmark download watcher — watch-downloads v2
 # Don't start before Docker is up — the script does `docker exec calibre ...`
 After=docker.service network-online.target
 Wants=network-online.target

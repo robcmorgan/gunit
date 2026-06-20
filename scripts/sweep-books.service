@@ -1,22 +1,21 @@
 [Unit]
-Description=gunit book cycle: sweep-import missed files, drain tag queue, sync tags to shelves
+Description=gunit book cycle: sweep-books v8 + tag-queue v5 + sync-shelf-tags v1 + sync-tag-to-shelf v9
 After=docker.service watch-downloads.service
 Wants=docker.service
 
 [Service]
 Type=oneshot
-# runs as root, like watch-downloads.service, so it can docker exec + move files
 User=root
-# 1) import any files the live watcher missed, then 2) tag whatever's now in the
-# library that's waiting in the tag queue, then 3) mirror configured tags onto
-# their calibre-web shelves. Sequential and in dependency order: a book can go
-# import -> tag -> shelf in a single cycle. The '-' on steps 2 and 3 means an
-# earlier step's failure doesn't abort the later ones.
-ExecStart=/home/robmorgan/gunit/sweep-books.sh
-ExecStart=-/home/robmorgan/gunit/tag-queue.sh
-ExecStart=-/home/robmorgan/gunit/sync-tag-to-shelf.sh
-# don't let a slow sweep run forever; the single-instance flock also guards overlap
+# Full book cycle in dependency order — a book can go import->tag->shelf in one run.
+# Steps 2-4 use '-' so a failure in one doesn't abort the rest.
+# 1) import any files the watcher missed
+ExecStart=/home/robmorgan/gunit/scripts/sweep-books.sh
+# 2) drain the tag queue (apply pending calibre tags)
+ExecStart=-/home/robmorgan/gunit/scripts/tag-queue.sh
+# 3) SHELF IS BOSS: pull shelf membership -> calibre tags (user-curated shelves)
+ExecStart=-/home/robmorgan/gunit/scripts/sync-shelf-tags.sh
+# 4) TAG IS BOSS: push calibre tags -> shelf membership (pipeline-driven shelves)
+ExecStart=-/home/robmorgan/gunit/scripts/sync-tag-to-shelf.sh
 TimeoutStartSec=600
-# log to the journal (view with: journalctl -u sweep-books.service)
 StandardOutput=journal
 StandardError=journal

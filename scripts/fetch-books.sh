@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-FETCH_BOOKS_VERSION="86"   # bump on every change; echoed at startup so you can
+FETCH_BOOKS_VERSION="87"   # bump on every change; echoed at startup so you can
+# v87: strip trailing "(Series, #N)" from title before building Anna's Archive
+#      search query. Anna's indexes by title alone; the Goodreads series label
+#      causes false nomatches. Raw title is unchanged for matching/verification.
 # v86: EXPLICIT COLUMN ORDER via "#columns:" header. Lists may now declare their
 #      order: "#columns: Author | Title" or "#columns: Title | Author". Parsed like
 #      #tag:. When a list is Author|Title, the two fields are swapped right after the
@@ -1547,8 +1550,12 @@ search_one() {
     # and/or Juliet") to spaces, BEFORE encoding. quote_plus would otherwise send
     # a literal '/' (%2F) that Anna's search handles poorly -> false nomatch. We
     # clean only the QUERY here; matching still uses the raw title via norm().
-    local _qclean
-    _qclean="$(printf '%s' "${title} ${author}" | sed 's#[/\\|<>]# #g; s/  */ /g')"
+    # v87: also strip trailing "(Series, #N)" series suffixes from the title
+    # before searching — Anna's indexes by book title alone, not Goodreads series
+    # labels, so including them produces false nomatches.
+    local _qtitle _qclean
+    _qtitle="$(printf '%s' "${title}" | sed 's/ *([^)]*,  *#[0-9][0-9]*) *$//')"
+    _qclean="$(printf '%s' "${_qtitle} ${author}" | sed 's#[/\\|<>]# #g; s/  */ /g')"
     q="$(printf '%s' "$_qclean" | python3 -c \
         'import sys,urllib.parse; print(urllib.parse.quote_plus(sys.stdin.read().strip()))' 2>/dev/null)"
     [ -z "$q" ] && q="$(echo "$_qclean" | sed 's/ /+/g')"   # fallback
