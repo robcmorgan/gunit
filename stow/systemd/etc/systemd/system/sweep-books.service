@@ -1,5 +1,5 @@
 [Unit]
-Description=gunit book cycle: sweep-books v8 + tag-queue v5 + sync-shelf-tags v1 + sync-tag-to-shelf v9
+Description=gunit book cycle: sweep-books v8 + tag-queue v5 + tag-all-lists v1 + sync-shelf-tags v1 + sync-tag-to-shelf v9
 After=docker.service watch-downloads.service
 Wants=docker.service
 
@@ -7,15 +7,17 @@ Wants=docker.service
 Type=oneshot
 User=root
 # Full book cycle in dependency order — a book can go import->tag->shelf in one run.
-# Steps 2-4 use '-' so a failure in one doesn't abort the rest.
+# Steps 2-5 use '-' so a failure in one doesn't abort the rest.
 # 1) import any files the watcher missed
 ExecStart=/home/robmorgan/gunit/scripts/sweep-books.sh
 # 2) drain the tag queue (apply pending calibre tags)
 ExecStart=-/home/robmorgan/gunit/scripts/tag-queue.sh
-# 3) SHELF IS BOSS: pull shelf membership -> calibre tags (user-curated shelves)
+# 3) tag all TSV lists (downloaded -> tagged in each tsv-lists/*.tsv)
+ExecStart=-/home/robmorgan/gunit/scripts/tag-all-lists.sh
+# 4) SHELF IS BOSS: pull shelf membership -> calibre tags (user-curated shelves)
 ExecStart=-/home/robmorgan/gunit/scripts/sync-shelf-tags.sh
-# 4) TAG IS BOSS: push calibre tags -> shelf membership (pipeline-driven shelves)
+# 5) TAG IS BOSS: push calibre tags -> shelf membership (pipeline-driven shelves)
 ExecStart=-/home/robmorgan/gunit/scripts/sync-tag-to-shelf.sh
-TimeoutStartSec=600
+TimeoutStartSec=1800
 StandardOutput=journal
 StandardError=journal
