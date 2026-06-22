@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-TAG_BOOKS_VERSION="15"   # bump on every change; echoed at startup
+TAG_BOOKS_VERSION="16"   # bump on every change; echoed at startup
+# v16: #columns: header support. TSVs can declare column order with a header
+#     line like "#columns: title|author". Default (no header) is author|title.
+#     Only the position of 'author' and 'title' matters; status/md5/date are
+#     always columns 3/4/5.
 # v15: --limit N flag. Processes at most N downloaded books per file (tags them,
 #     updates TSV), leaving the rest as-is. Useful for verifying the mktemp/mv/
 #     ownership fixes are all working without waiting for a full run.
@@ -136,9 +140,10 @@ process_file() {
     local tmp; tmp="$(mktemp -p "$(dirname "$file")")"
     local n_tag=0 n_skip=0 n_missing=0
     local file_tag="$TAG"   # --tag overrides; else taken from #tag: header
+    local author_col=1 title_col=2   # default: author|title; overridden by #columns: header
 
     while IFS= read -r raw || [ -n "$raw" ]; do
-        # pick up the #tag: header (unless --tag was given)
+        # pick up the #tag: and #columns: headers
         case "$raw" in
             \#tag:*|\#tag\ *)
                 if [ -z "$TAG" ]; then
@@ -146,12 +151,19 @@ process_file() {
                     log "  list tag from header: '$file_tag'"
                 fi
                 printf '%s\n' "$raw" >> "$tmp"; continue ;;
+            \#columns:*)
+                local _first; _first="$(printf '%s' "$raw" | sed 's/^#columns:[[:space:]]*//' | cut -d'|' -f1 | tr -d ' ')"
+                case "$_first" in
+                    title)  title_col=1; author_col=2; log "  columns: title|author" ;;
+                    author) author_col=1; title_col=2 ;;
+                esac
+                printf '%s\n' "$raw" >> "$tmp"; continue ;;
         esac
         case "$raw" in ''|\#*) printf '%s\n' "$raw" >> "$tmp"; continue;; esac
 
         local author title status md5 date
-        author="$(printf '%s' "$raw" | cut -d'|' -f1)"
-        title="$(printf '%s' "$raw" | cut -d'|' -f2)"
+        author="$(printf '%s' "$raw" | cut -d'|' -f$author_col)"
+        title="$(printf '%s' "$raw" | cut -d'|' -f$title_col)"
         status="$(printf '%s' "$raw" | cut -d'|' -f3)"
         md5="$(printf '%s' "$raw" | cut -d'|' -f4)"
         date="$(printf '%s' "$raw" | cut -d'|' -f5)"
