@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-TAG_LIB_VERSION="6"   # bump on every change
+TAG_LIB_VERSION="7"   # bump on every change
+# v7: don't retry on "No books matching" — that's a definitive zero-result from
+#     calibredb (printed to stderr), not a lock. Was costing 4 retries × 4
+#     searches per missing book, making lists heavy with unlibrary'd books
+#     extremely slow. Lock errors don't print "No books matching".
 # v6: strip "(Series, #N)" from title before calibre title-search. Calibre stores
 #     titles without the Goodreads series label, so the full string yields no hits.
 #     Original title is kept for fuzzy scoring (book_match_fields is unaffected).
@@ -118,7 +122,15 @@ cdb() {
             return 0
         fi
 
-        # empty stdout. Decide whether to retry. Retry if (a) attempts remain AND
+        # empty stdout. Fast-path: "No books matching" on stderr is a definitive
+        # zero-result from calibredb — not a lock. Return immediately; retrying
+        # would only waste time since the answer won't change.
+        if printf '%s' "$err" | grep -q 'No books matching'; then
+            rm -f "$errfile"
+            return "$rc"
+        fi
+
+        # Decide whether to retry. Retry if (a) attempts remain AND
         # (b) it plausibly was a lock — i.e. a lock signature on stderr, OR we just
         # treat any empty result as retryable up to the cap (cheap; only on misses).
         if [ "$attempt" -ge "$CDB_RETRIES" ]; then
