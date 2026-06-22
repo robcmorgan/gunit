@@ -725,7 +725,7 @@ process_file() {
             else
                 printf '%s\n' "$line" >> "$tmp"
                 if [ "$DO_LINK" -eq 1 ]; then
-                    log "  NOT FOUND in library: $title (left as plain text)" "$C_YELLOW"
+                    log "  NOT FOUND in library: $title${author:+ — $author}" "$C_YELLOW"
                     n_miss=$((n_miss+1))
                 fi
             fi
