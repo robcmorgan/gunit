@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-TAG_BOOKS_VERSION="13"   # bump on every change; echoed at startup
+TAG_BOOKS_VERSION="14"   # bump on every change; echoed at startup
+# v14: PRESERVE FILE OWNERSHIP/MODE after mv. mktemp creates tmp as root (when
+#     the service runs as root), so mv was replacing the user-owned TSV with a
+#     root:root 600 file — git couldn't read it, and the sweep owned all TSVs
+#     after one pass. Fix: stat the original file before the loop, then chown+chmod
+#     the written file back to original owner:group and mode after mv succeeds.
 # v13: FIX SILENT mv FAILURE. mktemp was creating the tmp file in /tmp (tmpfs)
 #     while the TSV lives on a different filesystem; cross-filesystem mv can fail
 #     silently (no set -e to catch it), leaving the TSV permanently stuck on
@@ -120,6 +125,9 @@ fi
 process_file() {
     local file="$1"
     [ -f "$file" ] || { log "skip (not found): $file"; return; }
+    local orig_owner orig_mode
+    orig_owner="$(stat -c '%U:%G' "$file" 2>/dev/null || true)"
+    orig_mode="$(stat -c '%a' "$file" 2>/dev/null || true)"
     local tmp; tmp="$(mktemp -p "$(dirname "$file")")"
     local n_tag=0 n_skip=0 n_missing=0
     local file_tag="$TAG"   # --tag overrides; else taken from #tag: header
@@ -256,6 +264,8 @@ print(",".join(out))
     done < "$file"
 
     mv "$tmp" "$file" || { log "ERROR: failed to write updated TSV (mv $tmp -> $file)"; rm -f "$tmp"; return 1; }
+    [ -n "$orig_owner" ] && chown "$orig_owner" "$file" 2>/dev/null || true
+    [ -n "$orig_mode"  ] && chmod "$orig_mode"  "$file" 2>/dev/null || true
     log "FILE $file — tagged:$n_tag already/none:$n_skip not-in-library:$n_missing"
 }
 
