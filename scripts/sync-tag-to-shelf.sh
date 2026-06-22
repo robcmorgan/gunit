@@ -1,5 +1,13 @@
 #!/bin/bash
-SYNC_TAG_SHELF_VERSION="9"   # bump on every change; echoed at startup
+SYNC_TAG_SHELF_VERSION="10"   # bump on every change; echoed at startup
+# v10: FIX OSCILLATION when multiple pairs target the same shelf (e.g. both
+#      'Best for Teens' and 'BookTok' → 'Young Adults'). The remove phase of
+#      pair A was removing books that only had pair B's tag, then pair B added
+#      them back — an endless add/remove cycle every sweep. Fix: before the
+#      main loop, pre-compute the union of all tags from all enabled pairs for
+#      each (user, shelf). The remove phase now only strips a book from the
+#      shelf if it has NONE of those tags (OR query); the add phase is unchanged
+#      (a book still needs all of this pair's specific tags to be added).
 # v9: default CONFIG path corrected to web/shelves.json (the deployed location).
 #     Was config/tag-shelf-sync.json, which was never deployed there, so the
 #     timer-driven sync fataled "config not found" every cycle while manual runs
@@ -88,7 +96,7 @@ if [ "$DRY_RUN" -eq 0 ] && [ "$FORCE" -eq 0 ]; then
 fi
 
 sync_pair() {
-    local tags="$1" shelf="$2" cwUser="$3"
+    local tags="$1" shelf="$2" cwUser="$3" all_shelf_tags="${4:-$1}"
     LOG "=== tags='$tags' (ALL required) -> shelf='$shelf' (owner $cwUser) ==="
 
     # resolve owner + shelf id. A shelf is normally identified by name + owner
@@ -146,13 +154,40 @@ sync_pair() {
     have_count=$(echo $have_ids | wc -w)
     LOG "  shelf currently has $have_count book(s)"
 
+    # --- safe_ids: books with ANY tag that maps to this shelf (union across all
+    #     pairs for this shelf). Used for the remove guard so that a book kept
+    #     by ANOTHER pair's tag is not stripped by this pair's remove phase.
+    #     Falls back to want_ids if the OR query errors (conservative: don't
+    #     remove books we'd normally want to keep).
+    local safe_query="" safe_ids t2
+    local IFSsave2="$IFS"; IFS=','
+    for t2 in $all_shelf_tags; do
+        t2="$(printf '%s' "$t2" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')"
+        [ -z "$t2" ] && continue
+        if [ -z "$safe_query" ]; then safe_query="tags:=\"=$t2\""
+        else safe_query="$safe_query or tags:=\"=$t2\""; fi
+    done
+    IFS="$IFSsave2"
+    if [ -n "$safe_query" ]; then
+        local safe_csv
+        safe_csv=$(cdb_ro search "$safe_query" 2>&1)
+        if printf '%s' "$safe_csv" | grep -qi 'Another calibre program\|Traceback\|Permission denied'; then
+            LOG "  WARN: safe-ids query failed — using this pair's want_ids as remove guard"
+            safe_ids="$want_ids"
+        else
+            safe_ids=$(printf '%s' "$safe_csv" | grep -oE '[0-9]+' | sort -un | tr '\n' ' ')
+        fi
+    else
+        safe_ids="$want_ids"
+    fi
+
     # --- diff ---
     local to_add="" to_remove="" id
     for id in $want_ids; do
         case " $have_ids " in *" $id "*) : ;; *) to_add="$to_add $id" ;; esac
     done
     for id in $have_ids; do
-        case " $want_ids " in *" $id "*) : ;; *) to_remove="$to_remove $id" ;; esac
+        case " $safe_ids " in *" $id "*) : ;; *) to_remove="$to_remove $id" ;; esac
     done
     to_add="$(echo $to_add)"; to_remove="$(echo $to_remove)"
     local n_add n_rem
@@ -201,6 +236,21 @@ sync_pair() {
 }
 
 LOG "=== sync-tag-to-shelf v$SYNC_TAG_SHELF_VERSION starting (dry-run=$DRY_RUN, allow-empty=$ALLOW_EMPTY) ==="
+
+# Pre-compute union of all tags per (user|shelf) so the remove phase can use
+# an OR guard across all pairs targeting the same shelf (v10 oscillation fix).
+declare -A _all_shelf_tags
+while IFS= read -r p2; do
+    local_enabled=$(printf '%s' "$p2" | jq -r '.enabled // true')
+    [ "$local_enabled" = "true" ] || continue
+    local_tags=$(printf '%s' "$p2" | jq -r '.tags // .tag // empty')
+    local_shelf=$(printf '%s' "$p2" | jq -r '.shelf')
+    local_user=$(printf '%s'  "$p2" | jq -r '.user')
+    [ -z "$local_tags" ] || [ -z "$local_shelf" ] || [ -z "$local_user" ] && continue
+    local_key="${local_user}|${local_shelf}"
+    _all_shelf_tags[$local_key]="${_all_shelf_tags[$local_key]:+${_all_shelf_tags[$local_key]},}${local_tags}"
+done < <(jq -c '.pairs[]' "$CONFIG")
+
 # iterate enabled pairs on FD 3 (docker exec inside loop must not eat the list)
 while read -r p <&3; do
     enabled=$(echo "$p" | jq -r '.enabled // true')
@@ -210,10 +260,11 @@ while read -r p <&3; do
     shelf=$(echo "$p" | jq -r '.shelf')
     user=$(echo  "$p" | jq -r '.user')
     [ -z "$tags" ] || [ -z "$shelf" ] || [ -z "$user" ] && { LOG "skip incomplete pair: $p"; continue; }
-    sync_pair "$tags" "$shelf" "$user"
+    _key="${user}|${shelf}"
+    sync_pair "$tags" "$shelf" "$user" "${_all_shelf_tags[$_key]:-$tags}"
 done 3< <(jq -c '.pairs[]' "$CONFIG")
 LOG "tag->shelf sync complete"
 # =============================================================================
-#  sync-tag-to-shelf.sh version 9  (footer stamp — must match SYNC_TAG_SHELF_VERSION
+#  sync-tag-to-shelf.sh version 10  (footer stamp — must match SYNC_TAG_SHELF_VERSION
 #  at top; if these disagree the deployed copy on otis is a stale partial paste.)
 # =============================================================================
