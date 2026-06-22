@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-TAG_BOOKS_VERSION="16"   # bump on every change; echoed at startup
+TAG_BOOKS_VERSION="17"   # bump on every change; echoed at startup
+# v17: imported_but_unfound status. When a downloaded book can't be found in
+#     calibre, write "imported_but_unfound" into the status field instead of
+#     leaving it as "downloaded". Subsequent runs skip these rows (no calibredb
+#     calls), so lists with many missing books don't burn time on futile retries.
+#     sweep-books.sh can reset the status to "downloaded" if it re-imports the file.
 # v16: #columns: header support. TSVs can declare column order with a header
 #     line like "#columns: title|author". Default (no header) is author|title.
 #     Only the position of 'author' and 'title' matters; status/md5/date are
@@ -138,7 +143,7 @@ process_file() {
     orig_owner="$(stat -c '%U:%G' "$file" 2>/dev/null || true)"
     orig_mode="$(stat -c '%a' "$file" 2>/dev/null || true)"
     local tmp; tmp="$(mktemp -p "$(dirname "$file")")"
-    local n_tag=0 n_skip=0 n_missing=0
+    local n_tag=0 n_skip=0 n_missing=0 n_unfound=0
     local file_tag="$TAG"   # --tag overrides; else taken from #tag: header
     local author_col=1 title_col=2   # default: author|title; overridden by #columns: header
 
@@ -176,7 +181,7 @@ process_file() {
         # only tag books that have actually downloaded (in the library).
         # 'downloaded' = fetch-books pulled it via fast-download; 'completed' =
         # legacy Stacks status. 'tagged' = already done.
-        if [ "$status" = "tagged" ]; then
+        if [ "$status" = "tagged" ] || [ "$status" = "imported_but_unfound" ]; then
             printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
         fi
         if [ "$status" != "downloaded" ] && [ "$status" != "completed" ]; then
@@ -190,8 +195,9 @@ process_file() {
         local found id via
         found="$(find_book_id "$author" "$title" "$md5")"
         if [ -z "$found" ]; then
-            log "  not in library yet: $author — $title  (download pending/failed?)"
-            printf '%s\n' "$raw" >> "$tmp"; n_missing=$((n_missing+1)); continue
+            log "  imported_but_unfound: $author — $title"
+            printf '%s\n' "$raw" | awk -F'|' -v OFS='|' '{$3="imported_but_unfound"; print}' >> "$tmp"
+            n_unfound=$((n_unfound+1)); continue
         fi
         id="$(printf '%s' "$found" | cut -f1)"
         via="$(printf '%s' "$found" | cut -f2)"
@@ -287,7 +293,7 @@ print(",".join(out))
     mv "$tmp" "$file" || { log "ERROR: failed to write updated TSV (mv $tmp -> $file)"; rm -f "$tmp"; return 1; }
     [ -n "$orig_owner" ] && chown "$orig_owner" "$file" 2>/dev/null || true
     [ -n "$orig_mode"  ] && chmod "$orig_mode"  "$file" 2>/dev/null || true
-    log "FILE $file — tagged:$n_tag already/none:$n_skip not-in-library:$n_missing"
+    log "FILE $file — tagged:$n_tag already/none:$n_skip imported_but_unfound:$n_unfound"
 }
 
 log "=== tag-books v$TAG_BOOKS_VERSION start (container:$CALIBRE_CONTAINER lib:$CALIBRE_LIBRARY confidence:$CONFIDENCE id-scheme:$ID_SCHEME dry-run:$DRY_RUN) ==="
