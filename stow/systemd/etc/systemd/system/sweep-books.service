@@ -18,6 +18,6 @@ ExecStart=-/home/robmorgan/gunit/scripts/tag-all-lists.sh
 ExecStart=-/home/robmorgan/gunit/scripts/sync-shelf-tags.sh
 # 5) TAG IS BOSS: push calibre tags -> shelf membership (pipeline-driven shelves)
 ExecStart=-/home/robmorgan/gunit/scripts/sync-tag-to-shelf.sh
-TimeoutStartSec=1800
+TimeoutStartSec=infinity
 StandardOutput=journal
 StandardError=journal

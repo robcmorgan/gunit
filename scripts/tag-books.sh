@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
-TAG_BOOKS_VERSION="13"   # bump on every change; echoed at startup
+TAG_BOOKS_VERSION="15"   # bump on every change; echoed at startup
+# v15: --limit N flag. Processes at most N downloaded books per file (tags them,
+#     updates TSV), leaving the rest as-is. Useful for verifying the mktemp/mv/
+#     ownership fixes are all working without waiting for a full run.
+# v14: PRESERVE FILE OWNERSHIP/MODE after mv. mktemp creates tmp as root (when
+#     the service runs as root), so mv was replacing the user-owned TSV with a
+#     root:root 600 file — git couldn't read it, and the sweep owned all TSVs
+#     after one pass. Fix: stat the original file before the loop, then chown+chmod
+#     the written file back to original owner:group and mode after mv succeeds.
 # v13: FIX SILENT mv FAILURE. mktemp was creating the tmp file in /tmp (tmpfs)
 #     while the TSV lives on a different filesystem; cross-filesystem mv can fail
 #     silently (no set -e to catch it), leaving the TSV permanently stuck on
@@ -67,12 +75,14 @@ TSV_DIR="${TSV_DIR:-../tsv-lists}"
 DRY_RUN=0
 REPLACE=0
 TAG=""
+LIMIT=0
 FILES=()
 while [ $# -gt 0 ]; do
     case "$1" in
         --dry-run) DRY_RUN=1; shift ;;
         --replace-tags) REPLACE=1; shift ;;
         --tag) TAG="$(printf '%s' "${2:-}" | sed 's/[[:space:]]*,[[:space:]]*/,/g; s/,\{2,\}/,/g; s/^[[:space:]]*//; s/[[:space:]]*$//; s/^,//; s/,$//')"; shift 2 ;;
+        --limit) LIMIT="${2:-10}"; shift 2 ;;
         --help|-h) sed -n '2,30p' "$0"; exit 0 ;;
         -*) echo "unknown option: $1" >&2; exit 1 ;;
         *) FILES+=("$1"); shift ;;
@@ -120,6 +130,9 @@ fi
 process_file() {
     local file="$1"
     [ -f "$file" ] || { log "skip (not found): $file"; return; }
+    local orig_owner orig_mode
+    orig_owner="$(stat -c '%U:%G' "$file" 2>/dev/null || true)"
+    orig_mode="$(stat -c '%a' "$file" 2>/dev/null || true)"
     local tmp; tmp="$(mktemp -p "$(dirname "$file")")"
     local n_tag=0 n_skip=0 n_missing=0
     local file_tag="$TAG"   # --tag overrides; else taken from #tag: header
@@ -175,6 +188,10 @@ process_file() {
         # input (older files used spaces, newer ones commas)
         local taglist; taglist="$(printf '%s' "$file_tag" \
             | sed 's/[[:space:]]*,[[:space:]]*/,/g; s/,\{2,\}/,/g; s/^[[:space:]]*//; s/[[:space:]]*$//; s/^,//; s/,$//')"
+
+        if [ "$LIMIT" -gt 0 ] && [ "$n_tag" -ge "$LIMIT" ]; then
+            printf '%s\n' "$raw" >> "$tmp"; continue
+        fi
 
         if [ "$DRY_RUN" -eq 1 ]; then
             log "  DRY: would tag id $id [$via] ($author — $title) += [$taglist] (+ clear rating)"
@@ -256,6 +273,8 @@ print(",".join(out))
     done < "$file"
 
     mv "$tmp" "$file" || { log "ERROR: failed to write updated TSV (mv $tmp -> $file)"; rm -f "$tmp"; return 1; }
+    [ -n "$orig_owner" ] && chown "$orig_owner" "$file" 2>/dev/null || true
+    [ -n "$orig_mode"  ] && chmod "$orig_mode"  "$file" 2>/dev/null || true
     log "FILE $file — tagged:$n_tag already/none:$n_skip not-in-library:$n_missing"
 }
 
