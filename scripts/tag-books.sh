@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-TAG_BOOKS_VERSION="12"   # bump on every change; echoed at startup
+TAG_BOOKS_VERSION="13"   # bump on every change; echoed at startup
+# v13: FIX SILENT mv FAILURE. mktemp was creating the tmp file in /tmp (tmpfs)
+#     while the TSV lives on a different filesystem; cross-filesystem mv can fail
+#     silently (no set -e to catch it), leaving the TSV permanently stuck on
+#     'downloaded' even after a successful calibre tag. Fix: mktemp -p uses the
+#     TSV's own directory so the mv is an atomic same-filesystem rename.
+#     Also added explicit mv error logging so future failures are visible.
 # v12: INTERACTIVE MODE (nnn TSV picker). Running with no file args opens nnn
 #      in $TSV_DIR (default ../tsv-lists), you select a .tsv, and that list is
 #      processed — mirrors fetch-books v61's picker exactly. nnn is required
@@ -114,7 +120,7 @@ fi
 process_file() {
     local file="$1"
     [ -f "$file" ] || { log "skip (not found): $file"; return; }
-    local tmp; tmp="$(mktemp)"
+    local tmp; tmp="$(mktemp -p "$(dirname "$file")")"
     local n_tag=0 n_skip=0 n_missing=0
     local file_tag="$TAG"   # --tag overrides; else taken from #tag: header
 
@@ -249,7 +255,7 @@ print(",".join(out))
         fi
     done < "$file"
 
-    mv "$tmp" "$file"
+    mv "$tmp" "$file" || { log "ERROR: failed to write updated TSV (mv $tmp -> $file)"; rm -f "$tmp"; return 1; }
     log "FILE $file — tagged:$n_tag already/none:$n_skip not-in-library:$n_missing"
 }
 
