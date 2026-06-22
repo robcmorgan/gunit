@@ -26,6 +26,9 @@ web/lists/*.bak
 tsv-lists/*.bak
 scripts/*.bak*
 
+# Temp files written by tag-books mktemp -p (same-dir atomic rename)
+tsv-lists/tmp.*
+
 # Scratch / throwaway
 temp.sh
 tmp/
