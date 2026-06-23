@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
-TAG_BOOKS_VERSION="19"   # bump on every change; echoed at startup
+TAG_BOOKS_VERSION="20"   # bump on every change; echoed at startup
+# v20: gate imported_but_unfound retries on (a) sweep imported new books this
+#     cycle AND/OR (b) row hasn't been retried in the last UNFOUND_RETRY_HOURS
+#     (default 6h). sweep-books.sh v9 writes /tmp/gunit-import-count after each
+#     run (0 = idle, N = books imported). If count is 0 (or unknown) AND the row
+#     was retried recently, skip it — no new books means no point searching again.
+#     Also updates the date field in the TSV each time a retry is actually
+#     attempted, so the clock resets and the next skip window starts fresh.
 # v19: retry imported_but_unfound rows that have an md5. A book marked unfound
 #     may have been imported to calibre in a later sweep cycle. On each run, do
 #     a single fast md5 identifier lookup before skipping; if the book is now in
@@ -80,6 +87,11 @@ DEFAULT_LANG="${DEFAULT_LANG:-eng}"   # set this language when a book's language
 CONFIDENCE="${CONFIDENCE:-0.6}"    # 0..1; fuzzy fallback hit must score >= this
 ID_SCHEME="${ID_SCHEME:-annas}"    # calibre identifier scheme used to store the md5
 LOG="${LOG:-${GUNIT_LOG:-$HOME/logs/gunit.log}}"   # shared log for all gunit scripts
+# imported_but_unfound retry gating: only retry if sweep brought new books this
+# cycle OR the row hasn't been retried in UNFOUND_RETRY_HOURS. sweep-books v9
+# writes the import count to IMPORT_COUNT_FILE after each run.
+UNFOUND_RETRY_HOURS="${UNFOUND_RETRY_HOURS:-6}"
+IMPORT_COUNT_FILE="${IMPORT_COUNT_FILE:-/tmp/gunit-import-count}"
 # Interactive-mode (no file args) nnn picker start dir. Relative paths resolve
 # against the script's own dir, so the default points at /gunit/tsv-lists/.
 TSV_DIR="${TSV_DIR:-../tsv-lists}"
@@ -146,6 +158,14 @@ fi
 # calibredb wrapper, find_book_id, stamp_identifier, merge_tags, apply_tags all
 # come from tag-lib.sh (sourced above) — shared with tag-queue.sh, no drift.
 
+# Read the import count written by sweep-books.sh v9. -1 = unknown (file absent
+# or pre-v9 sweep). process_file() reads _new_imports as a global.
+_new_imports=-1
+if [ -r "$IMPORT_COUNT_FILE" ]; then
+    _cnt="$(cat "$IMPORT_COUNT_FILE" 2>/dev/null)"
+    case "$_cnt" in [0-9]*) _new_imports="$_cnt";; esac
+fi
+
 process_file() {
     local file="$1"
     [ -f "$file" ] || { log "skip (not found): $file"; return; }
@@ -194,8 +214,22 @@ process_file() {
         if [ "$status" = "tagged" ]; then
             printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
         fi
+        if [ "$status" = "imported_but_unfound" ]; then
+            # Compute hours since the date field was last written (set when the
+            # row was first marked unfound and updated on every retry attempt).
+            local _elapsed_h=9999   # default: assume old (retry)
+            if [ -n "$date" ]; then
+                local _ep; _ep="$(date -d "$date" +%s 2>/dev/null)" || _ep=0
+                _elapsed_h=$(( ( $(date +%s) - _ep ) / 3600 ))
+            fi
+            # Skip if: (no new imports this cycle, or unknown) AND checked recently.
+            # Retry if: sweep brought new books (could be this one) OR row is old enough.
+            if [ "$_new_imports" -le 0 ] && [ "$_elapsed_h" -lt "$UNFOUND_RETRY_HOURS" ]; then
+                printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
+            fi
+        fi
         # Process: downloaded, completed, blank (pending), and imported_but_unfound
-        # (retried each cycle via full find_book_id — book may have arrived since marking).
+        # (retried when gated above — book may have arrived since marking).
         # Skip definitively failed statuses: nomatch, pdf-only, failed, quota_blocked, etc.
         if [ "$status" != "downloaded" ] && [ "$status" != "completed" ] && \
            [ "$status" != "imported_but_unfound" ] && [ -n "$status" ]; then
@@ -211,7 +245,9 @@ process_file() {
         if [ -z "$found" ]; then
             if [ -n "$status" ]; then
                 log "  imported_but_unfound: $author — $title"
-                printf '%s\n' "$raw" | awk -F'|' -v OFS='|' '{$3="imported_but_unfound"; print}' >> "$tmp"
+                local _now; _now="$(date -u '+%Y-%m-%dT%H:%M')"
+                printf '%s\n' "$raw" | awk -F'|' -v OFS='|' -v now="$_now" \
+                    '{$3="imported_but_unfound"; $5=now; print}' >> "$tmp"
                 n_unfound=$((n_unfound+1))
             else
                 printf '%s\n' "$raw" >> "$tmp"   # blank/pending — not downloaded yet, leave as-is

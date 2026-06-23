@@ -1,6 +1,9 @@
 #!/bin/bash
-SWEEP_BOOKS_VERSION="8"   # bump on every change; echoed at startup
+SWEEP_BOOKS_VERSION="9"   # bump on every change; echoed at startup
 #                          (version stamp also at end of file.)
+# v9: write successful import count to /tmp/gunit-import-count so tag-books.sh
+#     can skip imported_but_unfound retries on idle cycles (no new books = no
+#     point re-searching). 0 on an idle cycle, N on a cycle with real imports.
 # v8: RUN calibredb AS ROOT (drop -u 2001:2002). The sweep was the ONLY script
 #     still invoking calibredb as uid 2001:2002; every other gunit script runs it
 #     as root. Against this library that uid STRUCTURALLY collides with the
@@ -461,6 +464,11 @@ if [ "$total" -gt 0 ]; then
     [ "$deferred" -gt 0 ] && LOG "$deferred deferred on a library lock — left loose, will retry next slot."
     [ "$fail" -gt 0 ] && LOG "failures in $ERROR_DIR_NAME/ — re-swept each slot; inspect if one persists."
 fi
+# Publish import count so tag-books.sh can gate imported_but_unfound retries.
+# 0 on an idle cycle; N when books were imported. tag-books reads this each run
+# and skips unfound retries when no new books arrived (unless the row is old
+# enough to warrant a periodic recheck regardless).
+printf '%d\n' "$ok" > /tmp/gunit-import-count 2>/dev/null || true
 exit 0
 
-# version: SWEEP_BOOKS_VERSION 8
+# version: SWEEP_BOOKS_VERSION 9
