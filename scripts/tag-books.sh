@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-TAG_BOOKS_VERSION="17"   # bump on every change; echoed at startup
+TAG_BOOKS_VERSION="18"   # bump on every change; echoed at startup
+# v18: also process blank-status rows. A book in the TSV with no status is
+#     "pending" (fetch-books hasn't downloaded it yet), but it may already be in
+#     calibre via another path (manual import, different list, tag-queue). If
+#     found, tag it and mark "tagged". If not found, leave blank (still pending —
+#     distinct from imported_but_unfound which means it was downloaded but missing).
 # v17: imported_but_unfound status. When a downloaded book can't be found in
 #     calibre, write "imported_but_unfound" into the status field instead of
 #     leaving it as "downloaded". Subsequent runs skip these rows (no calibredb
@@ -184,7 +189,9 @@ process_file() {
         if [ "$status" = "tagged" ] || [ "$status" = "imported_but_unfound" ]; then
             printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
         fi
-        if [ "$status" != "downloaded" ] && [ "$status" != "completed" ]; then
+        # process: downloaded, completed, AND blank (pending — may already be in calibre).
+        # skip everything else (nomatch, pdf-only, failed, quota_blocked, etc.)
+        if [ "$status" != "downloaded" ] && [ "$status" != "completed" ] && [ -n "$status" ]; then
             printf '%s\n' "$raw" >> "$tmp"; continue
         fi
         if [ -z "$file_tag" ]; then
@@ -195,9 +202,14 @@ process_file() {
         local found id via
         found="$(find_book_id "$author" "$title" "$md5")"
         if [ -z "$found" ]; then
-            log "  imported_but_unfound: $author — $title"
-            printf '%s\n' "$raw" | awk -F'|' -v OFS='|' '{$3="imported_but_unfound"; print}' >> "$tmp"
-            n_unfound=$((n_unfound+1)); continue
+            if [ -n "$status" ]; then
+                log "  imported_but_unfound: $author — $title"
+                printf '%s\n' "$raw" | awk -F'|' -v OFS='|' '{$3="imported_but_unfound"; print}' >> "$tmp"
+                n_unfound=$((n_unfound+1))
+            else
+                printf '%s\n' "$raw" >> "$tmp"   # blank/pending — not downloaded yet, leave as-is
+            fi
+            continue
         fi
         id="$(printf '%s' "$found" | cut -f1)"
         via="$(printf '%s' "$found" | cut -f2)"
