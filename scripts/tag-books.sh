@@ -162,7 +162,7 @@ process_file() {
                 fi
                 printf '%s\n' "$raw" >> "$tmp"; continue ;;
             \#columns:*)
-                local _first; _first="$(printf '%s' "$raw" | sed 's/^#columns:[[:space:]]*//' | cut -d'|' -f1 | tr -d ' ')"
+                local _first; _first="$(printf '%s' "$raw" | sed 's/^#columns:[[:space:]]*//' | cut -d'|' -f1 | tr -d ' ' | tr '[:upper:]' '[:lower:]')"
                 case "$_first" in
                     title)  title_col=1; author_col=2; log "  columns: title|author" ;;
                     author) author_col=1; title_col=2 ;;
