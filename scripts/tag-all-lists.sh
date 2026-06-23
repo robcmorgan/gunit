@@ -26,4 +26,4 @@ for tsv in "$TSV_DIR"/*.tsv; do
     "$TAG_BOOKS" "$tsv" || LOG "  WARN: tag-books exited non-zero for $(basename "$tsv")"
 done
 
-[ "$found" -eq 0 ] && LOG "tag-all-lists: no TSV files with #tag: header found in $TSV_DIR"
+if [ "$found" -eq 0 ]; then LOG "tag-all-lists: no TSV files with #tag: header found in $TSV_DIR"; fi
