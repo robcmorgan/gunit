@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
-TAG_LIB_VERSION="7"   # bump on every change
+TAG_LIB_VERSION="8"   # bump on every change
+# v8: strip "(Series, #N)" from f1/f2 before book_match_fields scoring. v6 only
+#     stripped the label for the search query (sfield); the original strings with
+#     the label were still passed to book_match_fields, where title_full_match
+#     requires EVERY meaningful word of the wanted title to appear in the
+#     candidate. "Daevabad" and "Trilogy" (from "(The Daevabad Trilogy, #1)") don't
+#     appear in calibre's stored title "The City of Brass" → gate returned 0.
+#     Fix: also strip the series label from f1/f2 before scoring.
 # v7: don't retry on "No books matching" — that's a definitive zero-result from
 #     calibredb (printed to stderr), not a lock. Was costing 4 retries × 4
 #     searches per missing book, making lists heavy with unlibrary'd books
@@ -209,8 +216,12 @@ find_book_id() {
         cauthor="${fields#*$'\t'}"
         [ "$cauthor" = "$fields" ] && cauthor=""   # no TAB -> author empty
         # STRUCTURED score: wanted title vs candidate TITLE, wanted author vs
-        # candidate AUTHOR. This is the contamination-safe matcher (v5).
-        s="$(book_match_fields "$f1" "$f2" "$ctitle" "$cauthor")"
+        # candidate AUTHOR. Strip "(Series, #N)" before scoring — calibre titles
+        # don't carry the label, so those words would fail title_full_match (v8).
+        local sf1 sf2
+        sf1="$(printf '%s' "$f1" | sed 's/ *([^)]*,  *#[0-9][0-9]*) *$//')"
+        sf2="$(printf '%s' "$f2" | sed 's/ *([^)]*,  *#[0-9][0-9]*) *$//')"
+        s="$(book_match_fields "$sf1" "$sf2" "$ctitle" "$cauthor")"
         if ge "$s" "$best_score"; then best_score="$s"; best_id="$id"; fi
     done
     if [ -n "$best_id" ] && ge "$best_score" "$CONFIDENCE"; then
