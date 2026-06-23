@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-TAG_BOOKS_VERSION="18"   # bump on every change; echoed at startup
+TAG_BOOKS_VERSION="19"   # bump on every change; echoed at startup
+# v19: retry imported_but_unfound rows that have an md5. A book marked unfound
+#     may have been imported to calibre in a later sweep cycle. On each run, do
+#     a single fast md5 identifier lookup before skipping; if the book is now in
+#     calibre, fall through to normal tagging. No fuzzy fallback on the retry —
+#     if the identifier isn't stamped, the row stays imported_but_unfound.
 # v18: also process blank-status rows. A book in the TSV with no status is
 #     "pending" (fetch-books hasn't downloaded it yet), but it may already be in
 #     calibre via another path (manual import, different list, tag-queue). If
@@ -186,8 +191,21 @@ process_file() {
         # only tag books that have actually downloaded (in the library).
         # 'downloaded' = fetch-books pulled it via fast-download; 'completed' =
         # legacy Stacks status. 'tagged' = already done.
-        if [ "$status" = "tagged" ] || [ "$status" = "imported_but_unfound" ]; then
+        if [ "$status" = "tagged" ]; then
             printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
+        fi
+        if [ "$status" = "imported_but_unfound" ]; then
+            if [ -n "$md5" ]; then
+                local _quick; _quick="$(cdb search "identifiers:${ID_SCHEME}:${md5}" | tr ',' ' ')"
+                if [ -n "$_quick" ]; then
+                    log "  retry (now in calibre): $author — $title"
+                    status="downloaded"   # fall through to normal tagging
+                else
+                    printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
+                fi
+            else
+                printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
+            fi
         fi
         # process: downloaded, completed, AND blank (pending — may already be in calibre).
         # skip everything else (nomatch, pdf-only, failed, quota_blocked, etc.)
