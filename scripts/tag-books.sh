@@ -194,22 +194,11 @@ process_file() {
         if [ "$status" = "tagged" ]; then
             printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
         fi
-        if [ "$status" = "imported_but_unfound" ]; then
-            if [ -n "$md5" ]; then
-                local _quick; _quick="$(cdb search "identifiers:${ID_SCHEME}:${md5}" | tr ',' ' ')"
-                if [ -n "$_quick" ]; then
-                    log "  retry (now in calibre): $author — $title"
-                    status="downloaded"   # fall through to normal tagging
-                else
-                    printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
-                fi
-            else
-                printf '%s\n' "$raw" >> "$tmp"; n_skip=$((n_skip+1)); continue
-            fi
-        fi
-        # process: downloaded, completed, AND blank (pending — may already be in calibre).
-        # skip everything else (nomatch, pdf-only, failed, quota_blocked, etc.)
-        if [ "$status" != "downloaded" ] && [ "$status" != "completed" ] && [ -n "$status" ]; then
+        # Process: downloaded, completed, blank (pending), and imported_but_unfound
+        # (retried each cycle via full find_book_id — book may have arrived since marking).
+        # Skip definitively failed statuses: nomatch, pdf-only, failed, quota_blocked, etc.
+        if [ "$status" != "downloaded" ] && [ "$status" != "completed" ] && \
+           [ "$status" != "imported_but_unfound" ] && [ -n "$status" ]; then
             printf '%s\n' "$raw" >> "$tmp"; continue
         fi
         if [ -z "$file_tag" ]; then
