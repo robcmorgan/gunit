@@ -12,10 +12,9 @@
         "Good to see you again.",
         "Back for more, are we?"
       ],
-      "shelf": "forKindle",
-      "tag": "robm"
+      "shelf": "forKindle"
     },
-        {
+    {
       "email": "robert.whiteing@gmail.com",
       "name": "Rob W",
       "greetings": [
@@ -23,11 +22,57 @@
         "Get stewed",
         "My life is a delicate balance",
         "Still buyable",
-        "There's more to life than books, I'm told",
-        "In my view she hadn't even read the thing."
+        "There's more to life than books",
+        "In my view she hadn't even read the thing.",
+        "I had a bad reaction to your feared public hobby writings",
+        "I get no satisfaction from your very recent sightings",
+        "I'm not feeling your buzz, I only smell your crack of stew",
+        "She had some beauty of manners, but she looked like a bug",
+        "Migrations of their type are such good planners and not smug",
+        "You are proselytizing alone, listening to the voice with your ears",
+        "You have regurgitated the tone, now sat in your tract for many years",
+        "I lost my temper with a friend",
+        "Mocked him and treated him with rudeness",
+        "Of my own making, I walk a dark corridor over my heart",
+        "Hoping one day a door will be ajar",
+        "In vulgar and arrogant abeyance",
+        "J. McCarthy, approximately ten-fifteen days",
+        "I got down, I was depressed",
+        "Turn the radio on",
+        "To cheer myself up",
+        "Put the radio on, get the magazine out",
+        "Checklist, I never leave home without",
+        "Three, Palm Pilot",
+        "It's my lifeline",
+        "I think it's my P.A.'s computer",
+        "She rules my diary and I download it",
+        "Four, mobile phone",
+        "Five, Amex card",
+        "I was in the realm of the essence of Tong",
+        "What you've done is Ignoramus 103",
+        "I know you called, I know you called",
+        "I know all about the warehouse fire",
+        "I know squirrelys didn't chew the wires",
+        "Three people have my number, the other two were with me",
+        "I don't like to tattle-tale but I'm not your patsy",
+        "This reads like some dork Inside Edition, Hard Copy",
+        "I can't be your character witness, I can't be your alibi",
+        "Doorbell rings, it's the FBI, we learned Spy vs. Spy",
+        "You, my friend, are guilty as can be",
+        "I know you hung up my line"
       ],
       "shelf": "forKindle",
       "tag": "robw"
+    },
+    {
+      "email": "bex@rob.me.uk",
+      "name": "Beccy",
+      "greetings": [
+        "Hello my love.",
+        "Hello pops"
+      ],
+      "tag": "beccy_kindle",
+      "shelf": "forKindle"
     }
   ]
 }

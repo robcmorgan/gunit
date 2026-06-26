@@ -2,7 +2,8 @@
 
 ### Nobel Winners 2020s
 
-#### Septology
+#### [Septology](https://books.rob.me.uk/book/2322)
+[![](covers/2322.jpg)](https://books.rob.me.uk/book/2322)
 ##### Jon Fosse        
 #####            hypnotic · meditative · identity
 
@@ -26,7 +27,8 @@ Relying on a hypnotic, highly repetitive prose style, the book physically simula
 
 
 
-#### Human Acts
+#### [Human Acts](https://books.rob.me.uk/book/2117)
+[![](covers/2117.jpg)](https://books.rob.me.uk/book/2117)
 ##### Han Kang
 ##### collective · trauma · resistance
 
@@ -51,7 +53,8 @@ Witness Yeong-hye’s psychological descent through the biased, increasingly dis
 
 
 
-#### Averno
+#### [Averno](https://books.rob.me.uk/book/2314)
+[![](covers/2314.jpg)](https://books.rob.me.uk/book/2314)
 ##### Louise Glück
 ##### mythic · fragmented · decay
 
@@ -63,7 +66,8 @@ These verses read like a fractured, modern dialogue between the earthly realm an
 
 
 
-#### The Wild Iris
+#### [The Wild Iris](https://books.rob.me.uk/book/2319)
+[![](covers/2319.jpg)](https://books.rob.me.uk/book/2319)
 ##### Louise Glück
 ##### luminous · spiritual · transformation
 
@@ -75,7 +79,8 @@ Meticulously following the cycle of a single summer, the verses alternate betwee
 
 
 
-#### By the Sea
+#### [By the Sea](https://books.rob.me.uk/book/2321)
+[![](covers/2321.jpg)](https://books.rob.me.uk/book/2321)
 ##### Abdulrazak Gurnah
 ##### immigration · memory · betrayal
 
@@ -87,7 +92,8 @@ Two elderly refugees cross paths in a quiet English seaside town, only to realiz
 
 
 
-#### Paradise
+#### [Paradise](https://books.rob.me.uk/book/2315)
+[![](covers/2315.jpg)](https://books.rob.me.uk/book/2315)
 ##### Abdulrazak Gurnah
 ##### historical · colonial · coming-of-age
 
@@ -192,7 +198,8 @@ Unfolding during a post-war motoring trip, an aging butler’s polished, polite 
 
 
 
-#### The Great Enigma
+#### [The Great Enigma](https://books.rob.me.uk/book/2340)
+[![](covers/2340.jpg)](https://books.rob.me.uk/book/2340)
 ##### Tomas Tranströmer
 ##### minimalist · luminescent · clarity
 
@@ -204,7 +211,8 @@ Stripping away all unnecessary rhetoric, the poet presents stark, luminous contr
 
 
 
-#### The Half-Finished Heaven
+#### [The Half-Finished Heaven](https://books.rob.me.uk/book/2338)
+[![](covers/2338.jpg)](https://books.rob.me.uk/book/2338)
 ##### Tomas Tranströmer
 ##### dreamlike · observant · mystery
 
@@ -240,7 +248,8 @@ Discarding traditional plot, punctuation, and character arcs entirely, the text 
 
 
 
-#### The Feast of the Goat
+#### [The Feast of the Goat](https://books.rob.me.uk/book/2325)
+[![](covers/2325.jpg)](https://books.rob.me.uk/book/2325)
 ##### Mario Vargas Llosa
 ##### political · dynamic · terror
 
@@ -252,7 +261,8 @@ You will jump between the dictator's decaying final hours, the tense roadside wa
 
 
 
-#### The Time of the Hero
+#### [The Time of the Hero](https://books.rob.me.uk/book/2327)
+[![](covers/2327.jpg)](https://books.rob.me.uk/book/2327)
 ##### Mario Vargas Llosa
 ##### military · violence · hierarchy
 
@@ -329,7 +339,8 @@ Alternating between a detective's surreal investigation in "Liquorland" and a se
 
 
 
-#### Red Sorghum
+#### [Red Sorghum](https://books.rob.me.uk/book/2333)
+[![](covers/2333.jpg)](https://books.rob.me.uk/book/2333)
 ##### Mo Yan
 ##### visceral · historical · heritage
 
@@ -354,7 +365,8 @@ Serving as a meticulous sociological investigation, the text examines the patria
 
 
 
-#### The Goalie's Anxiety at the Penalty Kick
+#### [The Goalie's Anxiety at the Penalty Kick](https://books.rob.me.uk/book/2317)
+[![](covers/2317.jpg)](https://books.rob.me.uk/book/2317)
 ##### Peter Handke
 ##### detached · paranoia · isolation
 
@@ -368,7 +380,8 @@ After casually murdering a cinema cashier, a disgraced football player wanders t
 
 ### Nobel Winners 2000s
 
-#### The Hunger Angel
+#### [The Hunger Angel](https://books.rob.me.uk/book/2328)
+[![](covers/2328.jpg)](https://books.rob.me.uk/book/2328)
 ##### Herta Müller
 ##### visceral · survival · language
 
@@ -380,7 +393,8 @@ Trapped in a brutal labor camp, a teenage boy survives by inventing a new, surre
 
 
 
-#### The Appointment
+#### [The Appointment](https://books.rob.me.uk/book/2320)
+[![](covers/2320.jpg)](https://books.rob.me.uk/book/2320)
 ##### Herta Müller
 ##### paranoia · totalitarianism · routine
 
@@ -392,7 +406,8 @@ Compressed entirely into the duration of a single tram ride, a factory worker co
 
 
 
-#### Snow
+#### [Snow](https://books.rob.me.uk/book/2316)
+[![](covers/2316.jpg)](https://books.rob.me.uk/book/2316)
 ##### Orhan Pamuk
 ##### political · isolation · crisis
 
@@ -533,7 +548,8 @@ The protagonist keeps four separate colored notebooks to categorize her African 
 
 
 
-#### The Grass is Singing
+#### [The Grass is Singing](https://books.rob.me.uk/book/2326)
+[![](covers/2326.jpg)](https://books.rob.me.uk/book/2326)
 ##### Doris Lessing
 ##### psychological · racial · decay
 
@@ -545,7 +561,8 @@ Beginning with the shocking murder of a white farmer's wife by her black servant
 
 
 
-#### Desert
+#### [Desert](https://books.rob.me.uk/book/2324)
+[![](covers/2324.jpg)](https://books.rob.me.uk/book/2324)
 ##### J. M. G. Le Clézio
 ##### mythic · displacement · contrast
 
@@ -557,7 +574,7 @@ Weaving two distinct timelines, the book pairs a tragic 1910 migration of Tuareg
 
 
 
-#### The Interrogation
+#### [The Interrogation](https://books.rob.me.uk/book/2318)
 ##### J. M. G. Le Clézio
 ##### isolation · erratic · alienation
 
@@ -645,7 +662,8 @@ Incredibly tactile, muscular language brings the physical labor of potato diggin
 
 
 
-#### Blindness
+#### [Blindness](https://books.rob.me.uk/book/2337)
+[![](covers/2337.jpg)](https://books.rob.me.uk/book/2337)
 ##### José Saramago
 ##### nightmarish · systemic · survival
 
@@ -707,7 +725,8 @@ Operating through an intricate, rolling rhyme scheme, the verse weaves together 
 
 
 
-#### Beloved
+#### [Beloved](https://books.rob.me.uk/book/2147)
+[![](covers/2147.jpg)](https://books.rob.me.uk/book/2147)
 ##### Toni Morrison
 ##### haunting · trauma · survival
 
@@ -820,7 +839,8 @@ Armed only with a glass-shattering scream and a toy drum, Oskar Matzerath decide
 
 
 
-#### Accidental Death of an Anarchist
+#### [Accidental Death of an Anarchist](https://books.rob.me.uk/book/2334)
+[![](covers/2334.jpg)](https://books.rob.me.uk/book/2334)
 ##### Dario Fo
 ##### satirical · political · farce
 
@@ -993,7 +1013,8 @@ Obsessed entirely with his massive private library, the protagonist marries his 
 
 
 
-#### The Inheritors
+#### [The Inheritors](https://books.rob.me.uk/book/2335)
+[![](covers/2335.jpg)](https://books.rob.me.uk/book/2335)
 ##### William Golding
 ##### primitive · evolutionary · conflict
 
@@ -1169,7 +1190,8 @@ Rejecting traditional melody, the verses utilize harsh, rugged consonant sounds 
 
 
 
-#### Herzog
+#### [Herzog](https://books.rob.me.uk/book/2330)
+[![](covers/2330.jpg)](https://books.rob.me.uk/book/2330)
 ##### Saul Bellow
 ##### intellectual · crisis · chaotic
 
@@ -1181,7 +1203,8 @@ Oscillating between traditional third-person storytelling and a frantic stream o
 
 
 
-#### The Adventures of Augie March
+#### [The Adventures of Augie March](https://books.rob.me.uk/book/2331)
+[![](covers/2331.jpg)](https://books.rob.me.uk/book/2331)
 ##### Saul Bellow
 ##### vibrant · identity · coming of age
 
@@ -1393,7 +1416,8 @@ Making three winter visits to a passionate, doomed rural geisha, a wealthy Tokyo
 
 
 
-#### The Bridge on the Drina
+#### [The Bridge on the Drina](https://books.rob.me.uk/book/2367)
+[![](covers/2367.jpg)](https://books.rob.me.uk/book/2367)
 ##### Ivo Andrić
 ##### generational · historical · endurance
 
@@ -1571,7 +1595,8 @@ Wandering across decades, from the shadowed alleys of Jerusalem to the brutal, s
 
 
 
-#### The Dwarf
+#### [The Dwarf](https://books.rob.me.uk/book/2150)
+[![](covers/2150.jpg)](https://books.rob.me.uk/book/2150)
 ##### Pär Lagerkvist
 ##### malicious · political · corruption
 

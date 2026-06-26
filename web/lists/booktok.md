@@ -64,7 +64,8 @@ Merging the cutthroat military tension of a survival thriller with explosive rom
 Welcome to a war college where graduation is rare and the dragons are perfectly willing to incinerate cadets who show weakness. A frail scribe is forced into the elite rider quadrant, thrusting her into a vicious daily fight for her life against both beasts and classmates.
 
 
-#### Shatter Me (Shatter Me, #1)
+#### [Shatter Me (Shatter Me, #1)](https://books.rob.me.uk/book/2173)
+[![](covers/2173.jpg)](https://books.rob.me.uk/book/2173)
 ##### psychological · dystopian · superpowers
 ##### Tahereh Mafi
 ##### Fiction, 2011, 338 pages
@@ -85,7 +86,8 @@ Infusing ancient Greek lore with a deeply sarcastic, modern teenage voice, this 
 Twelve-year-old Percy Jackson is just trying to survive boarding school, but his math teacher just turned into a monster and tried to kill him. Now, accused of stealing Zeus's master lightning bolt, he has ten days to cross the United States, battle angry gods, and clear his name.
 
 
-#### A Court of Wings and Ruin (A Court of Thorns and Roses, #3)
+#### [A Court of Wings and Ruin (A Court of Thorns and Roses, #3)](https://books.rob.me.uk/book/2174)
+[![](covers/2174.jpg)](https://books.rob.me.uk/book/2174)
 ##### warfare · alliances · culmination
 ##### Sarah J. Maas
 ##### Fiction, 2017, 705 pages
@@ -106,7 +108,8 @@ This luminous, literary retelling breathes profound psychological depth and haun
 Exiled in disgrace, the awkward young prince Patroclus forms an unbreakable bond with Achilles, the golden son of a sea goddess. But as the drums of war call them to the shores of Troy, they are forced to confront a prophecy that demands the ultimate sacrifice for eternal glory.
 
 
-#### The Inheritance Games (The Inheritance Games, #1)
+#### [The Inheritance Games (The Inheritance Games, #1)](https://books.rob.me.uk/book/2290)
+[![](covers/2290.jpg)](https://books.rob.me.uk/book/2290)
 ##### puzzles · billionaires · twisty
 ##### Jennifer Lynn Barnes
 ##### Fiction, 2020, 376 pages
@@ -116,7 +119,8 @@ Operating like a high-speed literary escape room, this sleek thriller thrives on
 Avery Grambs was scraping by in high school until an eccentric billionaire she’s never met died and left her his entire fortune. To inherit the cash, she has to move into a sprawling, trap-filled mansion alongside the dangerous, newly disinherited family who wants her gone.
 
 
-#### A Good Girl's Guide to Murder (A Good Girl's Guide to Murder, #1)
+#### [A Good Girl's Guide to Murder (A Good Girl's Guide to Murder, #1)](https://books.rob.me.uk/book/2285)
+[![](covers/2285.jpg)](https://books.rob.me.uk/book/2285)
 ##### true-crime · podcast · investigative
 ##### Holly Jackson
 ##### Fiction, 2019, 433 pages
@@ -126,7 +130,8 @@ Utilizing interview transcripts, digital maps, and police logs to break up the p
 Five years ago, a tragic murder-suicide closed the book on a local high school tragedy—or so the police thought. Armed with a senior project prompt and a refusal to let sleeping dogs lie, a bright teenager begins asking questions that someone in town is desperate to keep quiet.
 
 
-#### The Seven Husbands of Evelyn Hugo
+#### [The Seven Husbands of Evelyn Hugo](https://books.rob.me.uk/book/2291)
+[![](covers/2291.jpg)](https://books.rob.me.uk/book/2291)
 ##### glamorous · hollywood · scandalous
 ##### Taylor Jenkins Reid
 ##### Fiction, 2017, 389 pages
@@ -136,7 +141,8 @@ This captivating historical drama dissects the ruthless machinery of the mid-cen
 Aging, reclusive cinematic icon Evelyn Hugo is finally ready to reveal the unvarnished truth about her scandalous life and her seven high-profile marriages. Bypassing major publications, she selects a completely unknown reporter to write the definitive biography, a choice that hides a devastating final secret.
 
 
-#### Caraval (Caraval, #1)
+#### [Caraval (Caraval, #1)](https://books.rob.me.uk/book/2176)
+[![](covers/2176.jpg)](https://books.rob.me.uk/book/2176)
 ##### immersive · illusion · whimsical
 ##### Stephanie Garber
 ##### Fiction, 2017, 407 pages
@@ -146,7 +152,8 @@ Drenched in sensory details and carnival aesthetics, this narrative operates lik
 Welcome to Caraval, a legendary, once-a-year performance where the audience participates in a deadly game of illusion. Scarlett finally receives an invitation, but when her sister is kidnapped by the show's mastermind, she realizes this year's game is a terrifying reality she must win to survive.
 
 
-#### From Blood and Ash (Blood and Ash, #1)
+#### [From Blood and Ash (Blood and Ash, #1)](https://books.rob.me.uk/book/2154)
+[![](covers/2154.jpg)](https://books.rob.me.uk/book/2154)
 ##### forbidden · duty · vampires
 ##### Jennifer L. Armentrout
 ##### Fiction, 2020, 622 pages
@@ -156,7 +163,8 @@ Blending traditional chosen-one fantasy tropes with explosive, tension-filled ro
 Poppy’s entire existence as the Maiden is defined by strict isolation, waiting for a divine ascension that will supposedly save her realm. Her restricted world fractures completely when a sharp-witted new royal guard enters her life, making her question every rule she has ever been forced to obey.
 
 
-#### The Wicked King (The Folk of the Air, #2)
+#### [The Wicked King (The Folk of the Air, #2)](https://books.rob.me.uk/book/2292)
+[![](covers/2292.jpg)](https://books.rob.me.uk/book/2292)
 ##### betrayal · underwater · machiavellian
 ##### Holly Black
 ##### Fiction, 2019, 336 pages
@@ -186,7 +194,8 @@ Bringing the razor-sharp trilogy to a tight, focused close, this installment for
 Banished to the mortal realm, the exiled Queen of Faerie bides her time until a threat against her sister forces her back into the magical court. Stepping back into a web of dark politics, Jude discovers Elfhame is on the brink of war, and a terrifying curse has been unleashed.
 
 
-#### Powerless (The Powerless Trilogy, #1)
+#### [Powerless (The Powerless Trilogy, #1)](https://books.rob.me.uk/book/2208)
+[![](covers/2208.jpg)](https://books.rob.me.uk/book/2208)
 ##### tournament · deception · survival
 ##### Lauren Roberts
 ##### Fiction, 2023, 532 pages
@@ -218,7 +227,8 @@ Handling complex cycles of domestic trauma with an unflinching, compassionate le
 Lily Bloom worked hard to escape her difficult childhood, finally opening her own business and falling for a brilliant neurosurgeon. But as his behavior triggers haunting memories of her past, the sudden reappearance of her first love forces her into the hardest decision of her life.
 
 
-#### The Selection (The Selection, #1)
+#### [The Selection (The Selection, #1)](https://books.rob.me.uk/book/2157)
+[![](covers/2157.jpg)](https://books.rob.me.uk/book/2157)
 ##### competition · castes · romance
 ##### Kiera Cass
 ##### Fiction, 2012, 336 pages
@@ -228,7 +238,8 @@ Offering a highly entertaining, glittering escape, this novel blends the social 
 For thirty-five girls, the Selection is the chance of a lifetime to escape their rigid caste and compete for the heart of a handsome prince. But for America Singer, being chosen is a nightmare that forces her to abandon her secret love and fight for a crown she doesn't want.
 
 
-#### Throne of Glass (Throne of Glass, #1)
+#### [Throne of Glass (Throne of Glass, #1)](https://books.rob.me.uk/book/2179)
+[![](covers/2179.jpg)](https://books.rob.me.uk/book/2179)
 ##### assassin · tournament · epic
 ##### Sarah J. Maas
 ##### Fiction, 2012, 404 pages
@@ -282,7 +293,8 @@ Fusing X-Men style power mechanics with classic palace intrigue, this high-stake
 Mare Barrow is a poor, red-blooded thief in a world ruled by a silver-blooded elite with god-like magical abilities. When she accidentally displays an impossible power of her own, the king forces her to masquerade as a lost noble princess to suppress an impending revolution.
 
 
-#### Better Than the Movies (Better Than the Movies, #1)
+#### [Better Than the Movies (Better Than the Movies, #1)](https://books.rob.me.uk/book/2203)
+[![](covers/2203.jpg)](https://books.rob.me.uk/book/2203)
 ##### cinematic · rom-com · fake-dating
 ##### Lynn Painter
 ##### Fiction, 2021, 356 pages
@@ -313,7 +325,8 @@ This sharp, analytical guide dissects the hidden architecture of modern digital 
 Behind the seamless interface of your favorite social app lies a multi-billion dollar machine engineered to predict your habits and monetize your time. Step away from the screen and discover the sobering reality of what you are actually agreeing to when you click 'Accept'.
 
 
-#### Once Upon a Broken Heart (Once Upon a Broken Heart, #1)
+#### [Once Upon a Broken Heart (Once Upon a Broken Heart, #1)](https://books.rob.me.uk/book/2178)
+[![](covers/2178.jpg)](https://books.rob.me.uk/book/2178)
 ##### whimsical · curses · dangerous
 ##### Stephanie Garber
 ##### Fiction, 2021, 408 pages
@@ -323,7 +336,8 @@ Drenched in vibrant, shifting aesthetics and unpredictable folklore, this narrat
 Desperate to stop the love of her life from marrying someone else, Evangeline Fox strikes a terrible bargain with the charismatic, immortal Prince of Hearts. He demands three kisses at a time and place of his choosing, pulling her into a deadly game where happily ever after is never guaranteed.
 
 
-#### Kingdom of Ash (Throne of Glass, #7)
+#### [Kingdom of Ash (Throne of Glass, #7)](https://books.rob.me.uk/book/2179)
+[![](covers/2179.jpg)](https://books.rob.me.uk/book/2179)
 ##### epic · culmination · sacrifice
 ##### Sarah J. Maas
 ##### Fiction, 2018, 984 pages
@@ -344,7 +358,8 @@ Narrated by Death itself, this incredibly unique structural masterpiece uses the
 In the dark heart of Nazi Germany, a young foster girl named Liesel discovers a dangerous habit of stealing books to share with her neighbors. As the bombs begin to fall, the words she reads become the only thing tethering her family to their humanity.
 
 
-#### The Invisible Life of Addie LaRue
+#### [The Invisible Life of Addie LaRue](https://books.rob.me.uk/book/2180)
+[![](covers/2180.jpg)](https://books.rob.me.uk/book/2180)
 ##### immortality · art · memory
 ##### V.E. Schwab
 ##### Fiction, 2020, 442 pages
@@ -365,7 +380,8 @@ Tackling severe peer pressure and the toxic realities of social conformity, this
 Misha and Ryen have been anonymous pen pals for seven years, operating under a strict rule to never meet in person or look each other up online. When a twist of fate throws them into the same high school, Misha realizes the girl he poured his soul out to is a cruel, superficial bully he absolutely despises.
 
 
-#### The Wrath and the Dawn (The Wrath and the Dawn, #1)
+#### [The Wrath and the Dawn (The Wrath and the Dawn, #1)](https://books.rob.me.uk/book/2181)
+[![](covers/2181.jpg)](https://books.rob.me.uk/book/2181)
 ##### storytelling · vengeance · silk-road
 ##### Renée Ahdieh
 ##### Fiction, 2015, 416 pages
@@ -385,7 +401,8 @@ Serving as the foundational pillar for a massive, sprawling supernatural franchi
 When fifteen-year-old Clary Fray witnesses a murder in a New York nightclub committed by teenagers covered in bizarre tattoos, her ordinary life vanishes. Thrust into the invisible world of the Shadowhunters, she discovers she possesses her own angelic heritage and must hunt demons to find her missing mother.
 
 
-#### Heartless
+#### [Heartless](https://books.rob.me.uk/book/2182)
+[![](covers/2182.jpg)](https://books.rob.me.uk/book/2182)
 ##### wonderland · origin · baking
 ##### Marissa Meyer
 ##### Fiction, 2016, 453 pages
@@ -416,7 +433,8 @@ Slowing the immediate plot to heavily expand the mythological world-building and
 Following a devastating betrayal, Poppy finds herself a captive of the very people she was raised to destroy, marching toward an unfamiliar, war-torn kingdom. Surrounded by enemies who view her as a dangerous weapon, she must forge an uneasy alliance with the man who shattered her trust.
 
 
-#### Verity
+#### [Verity](https://books.rob.me.uk/book/2184)
+[![](covers/2184.jpg)](https://books.rob.me.uk/book/2184)
 ##### psychological · manuscript · disturbing
 ##### Colleen Hoover
 ##### Fiction, 2018, 314 pages
@@ -436,7 +454,8 @@ Balancing the quiet, professional tension of a 1910s-style newsroom with the dev
 While rival journalists Iris and Roman compete fiercely for a promotion at the local paper, ancient gods wake up to wage a brutal war across the country. Unknown to Iris, the vulnerable letters she slips into her wardrobe are magically transported to Roman's typewriter, forming an intimate connection that alters both of their lives.
 
 
-#### The Prison Healer (The Prison Healer, #1)
+#### [The Prison Healer (The Prison Healer, #1)](https://books.rob.me.uk/book/2185)
+[![](covers/2185.jpg)](https://books.rob.me.uk/book/2185)
 ##### triage · survival · trials
 ##### Lynette Noni
 ##### Fiction, 2021, 416 pages
@@ -477,7 +496,8 @@ Discarding standard European tropes for a dense, brilliant exploration of Middle
 Nahri is a clever Cairo con-artist who doesn't believe in magic until she accidentally summons a battle-scarred, ancient djinn warrior during a fake ritual. Fleeing a terrifying supernatural threat, they cross the desert to Daevabad, a legendary hidden city where her arrival threatens to spark a devastating magical civil war.
 
 
-#### The Poppy War (The Poppy War, #1)
+#### [The Poppy War (The Poppy War, #1)](https://books.rob.me.uk/book/2188)
+[![](covers/2188.jpg)](https://books.rob.me.uk/book/2188)
 ##### grimdark · academy · shamanic
 ##### R.F. Kuang
 ##### Fiction, 2018, 530 pages
@@ -487,7 +507,8 @@ Inspired by the brutal realities of the Second Sino-Japanese War, this uncomprom
 An impoverished war orphan shocks the nation by testing into Nikan’s most elite military academy, discovering she possesses an ancient, volatile connection to a fire god. As a devastating foreign invasion sweeps across the country, she must decide if the power to save her people is worth losing her humanity.
 
 
-#### Assistant to the Villain (Assistant to the Villain, #1)
+#### [Assistant to the Villain (Assistant to the Villain, #1)](https://books.rob.me.uk/book/2189)
+[![](covers/2189.jpg)](https://books.rob.me.uk/book/2189)
 ##### cozy-villainy · workplace · humor
 ##### Hannah Nicole Maehrer
 ##### Fiction, 2023, 340 pages
@@ -507,7 +528,8 @@ This standalone maritime fantasy offers a dark, hard-boiled reimagining of *The 
 Princess Lira is a notorious siren who collects the hearts of princes, until her mother curses her into a fragile, human body. To reclaim her true form, she must deliver the heart of Prince Elian, a royal pirate hunter who roams the deadly seas tracking down creatures exactly like her.
 
 
-#### Serpent & Dove (Serpent & Dove, #1)
+#### [Serpent & Dove (Serpent & Dove, #1)](https://books.rob.me.uk/book/2301)
+[![](covers/2301.jpg)](https://books.rob.me.uk/book/2301)
 ##### witch-hunter · marriage-of-convenience · magic
 ##### Shelby Mahurin
 ##### Fiction, 2019, 513 pages
@@ -528,7 +550,8 @@ Prioritizing magnificent sensory imagery and historical atmosphere over fast-pac
 Opening only at night, *Le Cirque des Rêves* is a mysterious, awe-inspiring venue of black-and-white tents that appear without warning. Behind the scenes, the circus serves as a designated arena for a lifelong, deadly magical competition between two young illusionists who were bound to this duel since childhood.
 
 
-#### Crooked Kingdom (Six of Crows, #2)
+#### [Crooked Kingdom (Six of Crows, #2)](https://books.rob.me.uk/book/2209)
+[![](covers/2209.jpg)](https://books.rob.me.uk/book/2209)
 ##### defense · strategy · revenge
 ##### Leigh Bardugo
 ##### Fiction, 2016, 536 pages
@@ -581,7 +604,8 @@ Accurately tracking the realities of modern digital investigations, this sequel 
 Having successfully launched a viral true-crime podcast about her last case, Pippa Fitz-Amobi promises she is officially done playing detective. Her plans dissolve when a close friend vanishes on the exact anniversary of the town's tragedy, forcing her to live-stream a brand new, dangerous search.
 
 
-#### As Good As Dead (A Good Girl's Guide to Murder, #3)
+#### [As Good As Dead (A Good Girl's Guide to Murder, #3)](https://books.rob.me.uk/book/2207)
+[![](covers/2207.jpg)](https://books.rob.me.uk/book/2207)
 ##### stalker · vigilante · dark
 ##### Holly Jackson
 ##### Fiction, 2021, 459 pages
@@ -642,7 +666,8 @@ This dense, brilliant historical dark academia novel functions as a deeply intel
 In an alternative 1830s London, an orphan from Canton is trained in classical languages to enter Oxford’s elite Royal Institute of Translation. There, he uncovers the secret mechanics of silver-working—a magic system powered by the lost meaning of translated words—and must decide whether to serve the British Empire or destroy it.
 
 
-#### Binding 13 (Boys of Tommen, #1)
+#### [Binding 13 (Boys of Tommen, #1)](https://books.rob.me.uk/book/2295)
+[![](covers/2295.jpg)](https://books.rob.me.uk/book/2295)
 ##### rugby · protective · trauma
 ##### Chloe Walsh
 ##### Fiction, 2018, 600 pages
@@ -652,7 +677,8 @@ Dealing with heavy, realistic domestic struggles and the intense social pressure
 Johnny Kavanagh is a popular high school rugby star with a glittering athletic future, while Shannon Lynch is a vulnerable new student trying to survive severe bullying and a violent home life. An accidental collision on the sports field sparks an intense, fiercely protective bond that will change both of their trajectories forever.
 
 
-#### The Silent Patient
+#### [The Silent Patient](https://books.rob.me.uk/book/2204)
+[![](covers/2204.jpg)](https://books.rob.me.uk/book/2204)
 ##### psychological · asylum · puzzle
 ##### Alex Michaelides
 ##### Fiction, 2019, 336 pages
@@ -662,7 +688,8 @@ Frameworked around classical Greek tragedy elements and modern psychiatric proce
 Alicia Berenson’s glamorous life as a famous painter shatters the night she shoots her fashion-photographer husband five times in the face and never speaks another word. Locked away in a secure psychiatric facility, her prolonged silence becomes an obsession for an ambitious criminal psychotherapist desperate to uncover her motive.
 
 
-#### Belladonna (Belladonna, #1)
+#### [Belladonna (Belladonna, #1)](https://books.rob.me.uk/book/2294)
+[![](covers/2294.jpg)](https://books.rob.me.uk/book/2294)
 ##### gothic · poison · death
 ##### Adalyn Grace
 ##### Fiction, 2022, 416 pages
@@ -683,7 +710,8 @@ Targeting modern media culture, this sharp contemporary mystery examines how onl
 Eighteen-year-old Bel has lived her entire life under the shadow of her mother's mysterious disappearance, a high-profile case currently being adapted into a true-crime documentary. Production grinds to a halt when her mother unexpectedly walks back into their lives with an unbelievable survival story that Bel simply refuses to trust.
 
 
-#### The Priory of the Orange Tree (The Priory of the Orange Tree, #1)
+#### [The Priory of the Orange Tree (The Priory of the Orange Tree, #1)](https://books.rob.me.uk/book/2190)
+[![](covers/2190.jpg)](https://books.rob.me.uk/book/2190)
 ##### high-fantasy · dragons · queens
 ##### Samantha Shannon
 ##### Fiction, 2019, 848 pages
@@ -703,7 +731,8 @@ Featuring a gritty, high-friction road trip through dangerous wilderness areas p
 A runaway changeling queen named Suren hides in the human woods, desperate to forget the horrific tortures of the Court of Teeth. Her isolation shatters when Prince Oak, a clever warrior from her past, tracks her down to request her assistance on a dangerous, deceptive quest into the icy northern territories.
 
 
-#### Emily Wilde’s Encyclopaedia of Faeries (Emily Wilde #1)
+#### [Emily Wilde’s Encyclopaedia of Faeries (Emily Wilde #1)](https://books.rob.me.uk/book/2297)
+[![](covers/2297.jpg)](https://books.rob.me.uk/book/2297)
 ##### academic · folklore · cozy
 ##### Heather Fawcett
 ##### Fiction, 2023, 336 pages
@@ -723,7 +752,8 @@ Offering a highly creative science fiction update to classic fairytales, this fa
 In the bustling futuristic metropolis of New Beijing, a highly skilled teenage cyborg mechanic is despised by her stepmother and blamed for her sister's sudden illness. Her quiet workshop life changes instantly when Prince Kai arrives in disguise, asking her to repair a broken royal android that holds a dangerous secret.
 
 
-#### Behind Closed Doors
+#### [Behind Closed Doors](https://books.rob.me.uk/book/2293)
+[![](covers/2293.jpg)](https://books.rob.me.uk/book/2293)
 ##### domestic-suspense · facade · terrifying
 ##### B.A. Paris
 ##### Fiction, 2016, 293 pages
@@ -733,7 +763,8 @@ Staying hyper-focused on a single house, this compact domestic suspense novel bu
 To the outside world, Jack and Grace are the perfect couple—he is a successful attorney and she is a glamorous homemaker who keeps a flawless house. But as the front door closes, a dark, psychological prison is revealed, forcing Grace to calculate her every move to protect her younger sister.
 
 
-#### Five Survive
+#### [Five Survive](https://books.rob.me.uk/book/2298)
+[![](covers/2298.jpg)](https://books.rob.me.uk/book/2298)
 ##### claustrophobic · sniper · real-time
 ##### Holly Jackson
 ##### Fiction, 2022, 400 pages
@@ -743,7 +774,8 @@ Taking place entirely inside a single vehicle over the course of eight high-tens
 Eighteen-year-old Red and her five friends are driving a massive RV on a cross-country spring break road trip when the vehicle breaks down in a dead-zone area of the highway. As they investigate a blown tire, a hidden roadside sniper reveals himself, declaring that one of them is harboring a secret he is willing to kill for.
 
 
-#### The Bridge Kingdom (The Bridge Kingdom, #1)
+#### [The Bridge Kingdom (The Bridge Kingdom, #1)](https://books.rob.me.uk/book/2302)
+[![](covers/2302.jpg)](https://books.rob.me.uk/book/2302)
 ##### strategy · spy · enemies-to-lovers
 ##### Danielle L. Jensen
 ##### Fiction, 2018, 354 pages
@@ -753,7 +785,8 @@ Leaning heavily into geopolitical strategy, naval architecture, and defensive is
 Lara has spent her entire life training in an isolated desert compound to become a lethal spy, prepared to infiltrate the Bridge Kingdom under the guise of an arranged marriage. Tasked with gathering military intelligence to dismantle their global trade monopoly, she arrives to find the king is completely different from the monster her father described.
 
 
-#### Crier's War (Crier's War, #1)
+#### [Crier's War (Crier's War, #1)](https://books.rob.me.uk/book/2296)
+[![](covers/2296.jpg)](https://books.rob.me.uk/book/2296)
 ##### androids · resistance · slow-burn
 ##### Nina Varela
 ##### Fiction, 2019, 435 pages
@@ -774,7 +807,8 @@ Combining the distinct styles of two legendary authors, this comedic masterpiece
 Aziraphale is a fastidious angel who collects old books, and Crowley is a fast-living demon who enjoys modern luxury, both having lived comfortably on Earth for centuries. When the literal apocalypse is scheduled for next Saturday, the unlikely duo realizes they have misplaced the Antichrist, forcing them to team up to save the world.
 
 
-#### The Starless Sea
+#### [The Starless Sea](https://books.rob.me.uk/book/2202)
+[![](covers/2202.jpg)](https://books.rob.me.uk/book/2202)
 ##### underground · lyrical · library
 ##### Erin Morgenstern
 ##### Fiction, 2019, 498 pages
@@ -784,7 +818,8 @@ Mimicking a shifting, poetic maze, this narrative weaves short fables, historica
 While sorting through his university library archives, a graduate student stumbles upon an old, leather-bound book that details a bizarre incident from his own childhood. His search for the book's origin exposes a hidden network of subterranean portals leading to an ancient, magical library of forgotten stories.
 
 
-#### King of Scars (King of Scars, #1)
+#### [King of Scars (King of Scars, #1)](https://books.rob.me.uk/book/2300)
+[![](covers/2300.jpg)](https://books.rob.me.uk/book/2300)
 ##### rebuilding · curse · politics
 ##### Leigh Bardugo
 ##### Fiction, 2019, 527 pages
@@ -815,7 +850,8 @@ Delivering an exceptionally dark, atmospheric gothic retelling of *The Twelve Da
 Annaleigh lives inside a grand, isolated manor by the sea alongside her twelve sisters, four of whom have died mysteriously, leading the villagers to whisper about a family curse. When her sisters begin sneaking out at night to attend glamorous, ghostly balls, Annaleigh must investigate if the visions she sees are real or a sign of insanity.
 
 
-#### Furyborn (Empirium, #1)
+#### [Furyborn (Empirium, #1)](https://books.rob.me.uk/book/2304)
+[![](covers/2304.jpg)](https://books.rob.me.uk/book/2304)
 ##### dual-timeline · cosmic · trials
 ##### Claire Legrand
 ##### Fiction, 2018, 501 pages
@@ -825,7 +861,8 @@ Utilizing two dual timelines set centuries apart, this high-fantasy epic tracks 
 Rielle is a queen who must undergo seven brutal elemental trials to prove she is the prophesied savior rather than a destructive monster. Centuries later, a bounty hunter named Eliana navigates a corrupt empire built on Rielle's devastating legacy, uncovering a cosmic truth that binds them together.
 
 
-#### You've Reached Sam
+#### [You've Reached Sam](https://books.rob.me.uk/book/2196)
+[![](covers/2196.jpg)](https://books.rob.me.uk/book/2196)
 ##### grief · magical-realism · tearjerker
 ##### Dustin Thao
 ##### Fiction, 2021, 296 pages
@@ -835,7 +872,8 @@ Handling themes of sudden adolescent loss and terminal grief through a gentle le
 Seventeen-year-old Julie has her entire future planned out with her boyfriend Sam, until he passes away unexpectedly right before graduation. Desperate to hear his voice one last time, she calls his old mobile phone just to listen to his voicemail, only for Sam to miraculously answer the call from the other side.
 
 
-#### Twisted Lies (Twisted, #4)
+#### [Twisted Lies (Twisted, #4)](https://books.rob.me.uk/book/2197)
+[![](covers/2197.jpg)](https://books.rob.me.uk/book/2197)
 ##### fake-dating · tech-security · stalker
 ##### Ana Huang
 ##### Fiction, 2022, 578 pages
@@ -856,7 +894,8 @@ Written with sharp, uncompromising comedic timing, this autobiography transforms
 Former Nickelodeon child star Jennette McCurdy outlines her traumatic upbringing under an overbearing mother who strictly controlled her career, relationships, and eating habits. Following her mother’s passing, she begins the long, agonizing process of entering therapy to unpack industry exploitation and finally reclaim her individual autonomy.
 
 
-#### Twisted Love (Twisted, #1)
+#### [Twisted Love (Twisted, #1)](https://books.rob.me.uk/book/2305)
+[![](covers/2305.jpg)](https://books.rob.me.uk/book/2305)
 ##### grumpy-sunshine · protective · secrets
 ##### Ana Huang
 ##### Fiction, 2021, 354 pages
@@ -876,7 +915,8 @@ Standing out by casting a completely unrepentant, fashion-obsessed anti-heroine 
 Alessandra is tired of being overlooked and hatches a calculated plan to conquer the kingdom: woo the elusive Shadow King, marry him, and then assassinate him to claim the crown for herself. Her flawless plan hits a massive obstacle when she realizes someone else is actively trying to kill the king, forcing her to keep him alive.
 
 
-#### Cinderella Is Dead
+#### [Cinderella Is Dead](https://books.rob.me.uk/book/2193)
+[![](covers/2193.jpg)](https://books.rob.me.uk/book/2193)
 ##### queer-revolution · subversion · patriarchy
 ##### Kalynn Bayron
 ##### Fiction, 2020, 389 pages
@@ -886,7 +926,8 @@ Completely tearing down classic romantic myths, this fast-paced fairytale subver
 Two hundred years after Cinderella found her prince, the kingdom has transformed her story into a tyrannical legal decree, forcing young girls to attend an annual royal ball to be selected like property. Fleeing the ball, sixteen-year-old Sophia hides in Cinderella’s old tomb and teams up with a rebel descendant to overthrow the king.
 
 
-#### Red Rising (Red Rising Saga, #1)
+#### [Red Rising (Red Rising Saga, #1)](https://books.rob.me.uk/book/2194)
+[![](covers/2194.jpg)](https://books.rob.me.uk/book/2194)
 ##### infiltration · caste-system · survival
 ##### Pierce Brown
 ##### Fiction, 2014, 382 pages
@@ -896,7 +937,7 @@ Perfectly matching the strategic depth of a survival tournament with the vast sc
 Darrow is a low-caste Red miner drilling deep beneath the surface of Mars, believing his agonizing labor is preparing the planet for human colonization. When he discovers the elite Gold class has been living in planetary luxury for centuries, he undergoes a dangerous physical modification to infiltrate their elite military academy and tear it down.
 
 
-#### Bone Crier's Moon
+#### [Bone Crier's Moon](https://books.rob.me.uk/book/2306)
 ##### bone-magic · sacrifice · rituals
 ##### Kathryn Purdie
 ##### Fiction, 2020, 466 pages
@@ -906,7 +947,8 @@ Featuring an original, dark magic system based on animal bones and celestial tim
 Ailesse belongs to a secret order of women who ferry the dead to the afterlife, a ritual that requires them to sacrifice the love of their life to the moon god. Her initialization ritual goes violently wrong when she is captured by Sabine, a young man seeking vengeance for his father's death.
 
 
-#### Six Crimson Cranes
+#### [Six Crimson Cranes](https://books.rob.me.uk/book/2198)
+[![](covers/2198.jpg)](https://books.rob.me.uk/book/2198)
 ##### east-asian · curses · paper-birds
 ##### Elizabeth Lim
 ##### Fiction, 2021, 454 pages
@@ -927,7 +969,8 @@ Expanding the world layout of its predecessor, this spin-off fantasy romance foc
 Jase Ballenger is the newly crowned leader of an outlaw frontier clan, while Jace is a reformed street thief dispatched as an elite soldier to investigate crimes on the border. When a sudden ambush leaves them chained together in the wilderness, they must fake a temporary truce to survive the elements.
 
 
-#### The Reckoning (The Unadjusteds, #3)
+#### [The Reckoning (The Unadjusteds, #3)](https://books.rob.me.uk/book/2199)
+[![](covers/2199.jpg)](https://books.rob.me.uk/book/2199)
 ##### cybernetic · resistance · hacking
 ##### Marisa Noelle
 ##### Fiction, 2020, 300 pages
@@ -947,7 +990,8 @@ This gorgeously illustrated printed manhwa offers a brilliant, highly addictive 
 An ordinary college student wakes up inside a cutthroat video game as Penelope Eckart, the despised fake daughter of a noble house. To prevent an immediate game-over, she must navigate a floating menu system and increase the affection percentages of five dangerous male leads who currently view her with absolute hatred.
 
 
-#### Smile
+#### [Smile](https://books.rob.me.uk/book/2200)
+[![](covers/2200.jpg)](https://books.rob.me.uk/book/2200)
 ##### graphic-memoir · dental-trauma · coming-of-age
 ##### Raina Telgemeier
 ##### Graphic Novel, 2010, 214 pages
@@ -967,7 +1011,7 @@ Perfectly capturing the quiet, everyday micro-aggressions and hidden bonds of si
 Shifting between childhood memories and a lengthy family road trip from California to Colorado, Raina focuses on her complex, high-friction relationship with her younger sister Amara. Packed into a tight family vehicle for days on end, the two sisters are forced to confront their absolute differences and find common ground.
 
 
-#### Today Tonight Tomorrow
+#### [Today Tonight Tomorrow](https://books.rob.me.uk/book/2329)
 ##### scavenger-hunt · academic-rivals · seattle
 ##### Rachel Lynn Solomon
 ##### Fiction, 2020, 364 pages
@@ -977,7 +1021,8 @@ Unfolding entirely within a tight twenty-four-hour timeline, this contemporary Y
 Rowan and Neil have been fierce academic rivals throughout their entire high school career, competing for every grade, test score, and leadership position. On the final day of senior year, they are forced to form an unexpected alliance to win a city-wide scavenger hunt across Seattle, drastically shifting their perspective on each other.
 
 
-#### Who Was William Shakespeare?
+#### [Who Was William Shakespeare?](https://books.rob.me.uk/book/2313)
+[![](covers/2313.jpg)](https://books.rob.me.uk/book/2313)
 ##### biography · elizabethan · accessible
 ##### Celeste Davidson Mannis
 ##### Non-fiction, 2006, 106 pages
@@ -987,7 +1032,8 @@ Using a clean, highly scannable layout packed with historical timelines and cult
 Trace the historical trajectory of the world's most famous playwright, mapping his journey from rural Stratford-upon-Avon to the cutthroat theater subcultures of Elizabethan London. Uncover exactly how his theatrical company navigated global plagues, royal court patronage, and the physical construction of the legendary Globe Theatre.
 
 
-#### The Silent Sister
+#### [The Silent Sister](https://books.rob.me.uk/book/2201)
+[![](covers/2201.jpg)](https://books.rob.me.uk/book/2201)
 ##### family-archives · domestic-mystery · secrets
 ##### Diane Chamberlain
 ##### Fiction, 2014, 345 pages
@@ -997,7 +1043,8 @@ Operating as a slow-burning domestic drama, this contemporary mystery focuses he
 Tasked with cleaning out a massive archive of family documents following her father’s passing, Riley MacPherson returns to her childhood home in North Carolina. Her sorting process uncovers a shocking legal record that reveals her older sister, who supposedly died by suicide decades ago, is actually alive and living under an assumed identity.
 
 
-#### Check & Mate
+#### [Check & Mate](https://books.rob.me.uk/book/2307)
+[![](covers/2307.jpg)](https://books.rob.me.uk/book/2307)
 ##### competitive-chess · banter · sports-romance
 ##### Ali Hazelwood
 ##### Fiction, 2023, 352 pages
@@ -1007,7 +1054,8 @@ Seamlessly matching the high-stress mechanics of international tournament clocks
 Mallory Greenleaf swore off chess after the game destroyed her family, focusing entirely on a low-wage garage job to support her sisters. Her plans are upended when she accidentally enters a local charity tournament and effortlessly defeats the arrogant world champion, instantly drawing the intense scrutiny of the international chess circuit.
 
 
-#### The Ballad of Never After (Once Upon a Broken Heart, #2)
+#### [The Ballad of Never After (Once Upon a Broken Heart, #2)](https://books.rob.me.uk/book/2206)
+[![](covers/2206.jpg)](https://books.rob.me.uk/book/2206)
 ##### reluctant-alliance · curses · tension
 ##### Stephanie Garber
 ##### Fiction, 2022, 403 pages

@@ -39,7 +39,3 @@ The Booker Prize is a literary award given each year for the best fiction book w
 [Nobel Prize for Literature](/lists/nobel)
 
 The Nobel Prize for literature is given to the person, not the book.
-
----
-
-> Books are tagged as categories in the library too. For example "Summer Reads", "Guardian".

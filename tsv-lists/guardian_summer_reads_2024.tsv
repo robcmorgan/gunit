@@ -6,6 +6,7 @@
 #  lines beginning with # are comments; "#tag: NAME[, NAME...]" sets the calibre tags for this whole list
 #tag: Summer Reads, Guardian, 2024 list
 
+# Format:   Title | Author    (spaces around the pipe are fine and get trimmed)
 
 
 
@@ -122,7 +123,7 @@ Politics on the Edge|Rory Stewart|tagged|96bd3be0478016449598c5fed2b218ea|2026-0
 
 All That She Carried: The Journey of Ashley’s Sack, a Black Family Keepsake|Tiya Miles|tagged|7672c0de60705d6e7700817f4b1e3183|2026-06-06T11:30
 
-Kairos|Jenny Erpenbeck|downloaded|1e3b39caa20849ce1e228c224983060d|2026-06-05T21:02
+Kairos|Jenny Erpenbeck|imported_but_unfound|1e3b39caa20849ce1e228c224983060d|2026-06-26T07:58
 
 The Bee Sting|Paul Murray|tagged|e03f1c050ca066eb2433642767a4fe83|2026-06-06T11:30
 

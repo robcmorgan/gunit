@@ -5,42 +5,43 @@
 #  col6: calibre book id on DONE rows; the literal "se-empty" on quota_blocked/nomatch rows means SE was already searched and had nothing (skip re-search)
 #  lines beginning with # are comments; "#tag: NAME[, NAME...]" sets the calibre tags for this whole list
 #tag: Summer Reads, Guardian
+# Format:   Title | Author    (spaces around the pipe are fine and get trimmed)
 
-Transcription|Ben Lerner|downloaded|9af5bf8f31d900fd3d71b7220b388613|2026-06-14T04:22|2020
+Transcription|Ben Lerner|tagged|9af5bf8f31d900fd3d71b7220b388613|2026-06-22T13:11
 Land|Maggie O’Farrell|failed|4f4b0fbd51e6cc8c33c5891bb543b0be|2026-06-18T18:39
-Yesteryear|Caro Claire Burke|downloaded||2026-06-14T04:25|1189
-John of John|Douglas Stuart|downloaded||2026-06-18T18:44|2021
-The Palm House|Gwendoline Riley|downloaded|74aa39e296dc5365ea8bb8fbfbabca43|2026-06-14T04:41|2022
-The Infamous Gilberts|Angela Tomaski|downloaded|223dd6edf61a213f31143e31bccbac24|2026-06-14T11:39|2023
+Yesteryear|Caro Claire Burke|tagged||2026-06-22T13:12
+John of John|Douglas Stuart|tagged||2026-06-22T13:16
+The Palm House|Gwendoline Riley|tagged|74aa39e296dc5365ea8bb8fbfbabca43|2026-06-22T13:16
+The Infamous Gilberts|Angela Tomaski|tagged|223dd6edf61a213f31143e31bccbac24|2026-06-22T13:16
 Honey|Imani Thompson|nomatch||2026-06-18T18:46|se-empty
 The Children|Melissa Albert|nomatch||2026-06-18T18:47|se-empty
 Villa Coco|Andrew Sean Greer|failed|6c99982dae5f1b5b45e8e111fe864399|2026-06-18T18:49
 A Bad, Bad Place|Frances Crawford|nomatch||2026-06-18T18:51|se-empty
 Prestige Drama|Seamus O’Reilly|nomatch||2026-06-18T18:52|se-empty
 Nonesuch|Francis Spufford|nomatch||2026-06-18T18:53|se-empty
-Black Bag|Luke Kennard|downloaded|5638e1c17d6f6ce225df170a6dec4b76|2026-06-14T12:52|2024
+Black Bag|Luke Kennard|tagged|5638e1c17d6f6ce225df170a6dec4b76|2026-06-22T13:17
 The Daffodil Days|Helen Bain|nomatch||2026-06-18T18:55|se-empty
-Good People|Patmeena Sabit|downloaded||2026-06-14T12:54|2025
+Good People|Patmeena Sabit|tagged||2026-06-22T13:17
 Cast Away|Francesca de Tores|nomatch||2026-06-18T18:56|se-empty
-Lost Lambs|Madeline Cash|downloaded||2026-06-14T12:55|2031
+Lost Lambs|Madeline Cash|tagged||2026-06-22T13:17
 I Want You to Be Happy|Jem Calder|nomatch||2026-06-18T18:58|se-empty
 The Things We Never Say|Elizabeth Strout|pdf-only|6def91e4a108b70d9aecce2aa484a965|2026-06-18T18:59|se-empty
 Wimmy Road Boyz|Sufiyaan Salam|nomatch||2026-06-18T19:00|se-empty
 Glyph|Ali Smith|failed|5e5a8096593009e87b81c51e36b01528|2026-06-18T19:02
-Jean|Madeleine Dunnigan|downloaded|5292a1a3189ed03df1a518459e3095b1|2026-06-14T13:03|2032
+Jean|Madeleine Dunnigan|tagged|5292a1a3189ed03df1a518459e3095b1|2026-06-22T13:17
 Natural Disaster|Lisa Owens|nomatch||2026-06-18T19:04|se-empty
-The Ten Year Affair|Erin Somers|downloaded|291059a41b248713cac21f890bcea74f|2026-06-14T13:05|2033
+The Ten Year Affair|Erin Somers|tagged|291059a41b248713cac21f890bcea74f|2026-06-22T13:17
 Kin|Tayari Jones|nomatch||2026-06-18T19:07|se-empty
-The Correspondent|Virginia Evans|downloaded|01513b516e7a9e6c1c0c912730f41178|2026-06-14T13:09|2034
-Seascraper|Benjamin Wood|downloaded||2026-06-14T13:10|2026
-The Director|Daniel Kehlmann|downloaded||2026-06-14T13:10|2027
-Heart the Lover|Lily King|downloaded||2026-06-14T13:10|2028
-Dominion|Addie E Citchens|downloaded||2026-06-14T13:10|2029
+The Correspondent|Virginia Evans|tagged|01513b516e7a9e6c1c0c912730f41178|2026-06-22T13:18
+Seascraper|Benjamin Wood|tagged||2026-06-22T13:18
+The Director|Daniel Kehlmann|tagged||2026-06-22T13:18
+Heart the Lover|Lily King|tagged||2026-06-22T13:19
+Dominion|Addie E Citchens|tagged||2026-06-22T13:19
 Famesick|Lena Dunham|nomatch||2026-06-18T19:08|se-empty
-The Art Cure|Daisy Fancourt|downloaded||2026-06-14T13:13|2030
+The Art Cure|Daisy Fancourt|tagged||2026-06-22T13:21
 This Dark Night|Deborah Lutz|nomatch||2026-06-18T19:11|se-empty
 Enough Said|Alan Bennett|nomatch||2026-06-18T19:12|se-empty
-Super Nintendo|Keza MacDonald|downloaded||2026-06-14T13:17|2012
+Super Nintendo|Keza MacDonald|tagged||2026-06-22T13:21
 A World Appears|Michael Pollan|nomatch||2026-06-18T19:14|se-empty
 On Morrison|Namwali Serpell|nomatch||2026-06-18T19:16|se-empty
 Ancient|Luke Barley|nomatch||2026-06-18T19:17|se-empty
@@ -58,11 +59,11 @@ Tonight the Music Seems So Loud|Sathnam Sanghera|nomatch||2026-06-18T19:32|se-em
 Leaving Home|Mark Haddon|nomatch||2026-06-18T19:33|se-empty
 Lady C|Guy Cuthbertson|nomatch||2026-06-18T19:35|se-empty
 Iran and the Revolution|Homa Katouzian|pdf-only|9e7a160dceab56f596c4e2842ff8e7b4|2026-06-18T19:36|se-empty
-Strangers: A Memoir of Marriage|Belle Burden|downloaded|33af36f62aa20beea2735c4965c1a998|2026-06-14T13:43|2035
+Strangers: A Memoir of Marriage|Belle Burden|tagged|33af36f62aa20beea2735c4965c1a998|2026-06-22T13:21
 Why Populists Are Winning|Liam Byrne|nomatch||2026-06-18T19:37|se-empty
-David Bowie and the Search for Life, Death and God|Peter Ormerod|downloaded|75f25b2350611d83d733afa44fda83ec|2026-06-14T13:45|2036
+David Bowie and the Search for Life, Death and God|Peter Ormerod|tagged|75f25b2350611d83d733afa44fda83ec|2026-06-22T13:21
 A Mind of My Own|Kathy Burke|failed|f448bda9ef81cad3325e412714a2734f|2026-06-18T19:40
-The Age of Diagnosis|Suzanne O’Sullivan|downloaded|17e2915e718e545850599f3b2b837378|2026-06-14T13:48|2037
-Careless People|Sarah Wynn-William|downloaded||2026-06-14T13:48|1523
-Proto|Laura Spinney|downloaded|924d59bf3f7d4f0048f99d179eeb00bd|2026-06-14T13:49|2038
-Mother Mary Comes to Me|Arundhati Roy|downloaded|20a40fb5eabc0265712064485bbb830b|2026-06-14T13:50|2039
+The Age of Diagnosis|Suzanne O’Sullivan|tagged|17e2915e718e545850599f3b2b837378|2026-06-22T13:21
+Careless People|Sarah Wynn-William|tagged||2026-06-22T13:22
+Proto|Laura Spinney|tagged|924d59bf3f7d4f0048f99d179eeb00bd|2026-06-22T13:22
+Mother Mary Comes to Me|Arundhati Roy|tagged|20a40fb5eabc0265712064485bbb830b|2026-06-22T13:22
