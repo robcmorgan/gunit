@@ -1,5 +1,8 @@
 #!/bin/bash
-SYNC_SHELF_TAGS_VERSION="2"   # bump on every change; echoed at startup
+SYNC_SHELF_TAGS_VERSION="3"   # bump on every change; echoed at startup
+# v3: tolerate both "forKindle" and "for Kindle" shelf spellings. If the
+#     configured name isn't found in app.db, the alternate spelling is tried
+#     automatically — users.json needn't be consistent about which form is used.
 # v2: strip "Integration status: True" suffix calibredb appends to --for-machine
 #     output; was corrupting JSON and causing jq to fail, emptying cur and
 #     stripping all existing tags from every book touched.
@@ -81,6 +84,17 @@ while read -r u <&3; do
     [ -z "$userid" ] && { LOG "  user not found in app.db; skip"; continue; }
 
     shelfid=$(sqlite3 "$DBRO" "SELECT id FROM shelf WHERE name='$shelf' AND user_id=$userid;")
+    if [ -z "$shelfid" ]; then
+        case "$shelf" in
+            "forKindle") alt="for Kindle" ;;
+            "for Kindle") alt="forKindle" ;;
+            *) alt="" ;;
+        esac
+        if [ -n "$alt" ]; then
+            shelfid=$(sqlite3 "$DBRO" "SELECT id FROM shelf WHERE name='$alt' AND user_id=$userid;")
+            [ -n "$shelfid" ] && LOG "  (shelf '$shelf' not found; using alternate spelling '$alt')"
+        fi
+    fi
     [ -z "$shelfid" ] && { LOG "  shelf '$shelf' not found; skip"; continue; }
 
     # shelf book ids (calibre book ids)
