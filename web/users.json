@@ -73,6 +73,24 @@
       ],
       "tag": "beccy_kindle",
       "shelf": "forKindle"
+    },
+    {
+      "email": "hello.alice.morgan@gmail.com",
+      "name": "Alice",
+      "greetings": [
+        "Alice is so great."
+      ],
+      "tag": "alice_kindle",
+      "shelf": "forKindle"
+    },
+    {
+      "email": "this.is.violet.morgan@gmail.com",
+      "name": "Violet",
+      "greetings": [
+        "Violet is so great."
+      ],
+      "tag": "violet_kindle",
+      "shelf": "forKindle"
     }
   ]
 }
