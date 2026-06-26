@@ -1,5 +1,8 @@
 #!/bin/bash
-SYNC_SHELF_TAGS_VERSION="1"   # bump on every change; echoed at startup
+SYNC_SHELF_TAGS_VERSION="2"   # bump on every change; echoed at startup
+# v2: strip "Integration status: True" suffix calibredb appends to --for-machine
+#     output; was corrupting JSON and causing jq to fail, emptying cur and
+#     stripping all existing tags from every book touched.
 # v1: completed from partial implementation. Fixes: correct default paths
 #     (web/users.json, cwa_config/app.db); --dry-run flag; GUNIT_LOG integration;
 #     trailing-comma bug in id list; tag search syntax; set_metadata arg order.
@@ -90,7 +93,7 @@ while read -r u <&3; do
     # ADD: give the tag to every book on the shelf that doesn't already have it
     if [ "$shelf_count" -gt 0 ]; then
         idquery=$(printf '%s' "$shelf_ids" | tr ' ' ',')
-        meta=$(cdb list -s "id:=$idquery" -f id,tags --for-machine 2>/dev/null)
+        meta=$(cdb list -s "id:=$idquery" -f id,tags --for-machine 2>/dev/null | sed 's/^\].*/]/')
         for id in $shelf_ids; do
             cur=$(printf '%s' "$meta" | jq -r --argjson i "$id" \
                 '.[] | select(.id==$i) | (.tags // []) | join(",")')
@@ -120,6 +123,7 @@ while read -r u <&3; do
             *" $id "*) : ;;   # still on the shelf — keep tag
             *)
                 cur=$(cdb list -s "id:=$id" -f tags --for-machine 2>/dev/null \
+                    | sed 's/^\].*/]/' \
                     | jq -r --arg t "$tag" \
                         '.[0].tags // [] | map(select(. != $t)) | join(",")')
                 if [ "$DRY_RUN" -eq 1 ]; then
