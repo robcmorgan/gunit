@@ -1,5 +1,8 @@
 #!/bin/bash
-SYNC_SHELF_TAGS_VERSION="3"   # bump on every change; echoed at startup
+SYNC_SHELF_TAGS_VERSION="4"   # bump on every change; echoed at startup
+# v4: strip "Integration status: True" suffix from calibredb search output in
+#     REMOVE phase (same issue v2 fixed for list --for-machine; only numeric
+#     tokens from search are kept, preventing phantom untag attempts).
 # v3: tolerate both "forKindle" and "for Kindle" shelf spellings. If the
 #     configured name isn't found in app.db, the alternate spelling is tried
 #     automatically — users.json needn't be consistent about which form is used.
@@ -131,7 +134,7 @@ while read -r u <&3; do
         continue
     fi
 
-    tagged_ids=$(cdb search "tags:\"$tag\"" 2>/dev/null | tr ',' ' ')
+    tagged_ids=$(cdb search "tags:\"$tag\"" 2>/dev/null | tr ',' '\n' | grep -E '^[0-9]+$' | tr '\n' ' ')
     for id in $tagged_ids; do
         case " $shelf_ids " in
             *" $id "*) : ;;   # still on the shelf — keep tag
