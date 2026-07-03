@@ -1,5 +1,9 @@
 #!/bin/bash
-SYNC_SHELF_TAGS_VERSION="4"   # bump on every change; echoed at startup
+SYNC_SHELF_TAGS_VERSION="5"   # bump on every change; echoed at startup
+# v5: fix Integration status stripping for list --for-machine in both ADD and
+#     REMOVE phases. v2's sed 's/^\].*/]/' only matched when ] was on its own
+#     line; now strips inline suffix too, preventing jq parse errors that were
+#     silently wiping existing tags when tagging a book.
 # v4: strip "Integration status: True" suffix from calibredb search output in
 #     REMOVE phase (same issue v2 fixed for list --for-machine; only numeric
 #     tokens from search are kept, preventing phantom untag attempts).
@@ -110,7 +114,7 @@ while read -r u <&3; do
     # ADD: give the tag to every book on the shelf that doesn't already have it
     if [ "$shelf_count" -gt 0 ]; then
         idquery=$(printf '%s' "$shelf_ids" | tr ' ' ',')
-        meta=$(cdb list -s "id:=$idquery" -f id,tags --for-machine 2>/dev/null | sed 's/^\].*/]/')
+        meta=$(cdb list -s "id:=$idquery" -f id,tags --for-machine 2>/dev/null | sed 's/]Integration status:.*$/]/' | sed '/^Integration status:/d')
         for id in $shelf_ids; do
             cur=$(printf '%s' "$meta" | jq -r --argjson i "$id" \
                 '.[] | select(.id==$i) | (.tags // []) | join(",")')
@@ -140,7 +144,7 @@ while read -r u <&3; do
             *" $id "*) : ;;   # still on the shelf — keep tag
             *)
                 cur=$(cdb list -s "id:=$id" -f tags --for-machine 2>/dev/null \
-                    | sed 's/^\].*/]/' \
+                    | sed 's/]Integration status:.*$/]/' | sed '/^Integration status:/d' \
                     | jq -r --arg t "$tag" \
                         '.[0].tags // [] | map(select(. != $t)) | join(",")')
                 if [ "$DRY_RUN" -eq 1 ]; then
