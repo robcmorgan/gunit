@@ -1,6 +1,13 @@
 #!/bin/bash
-SWEEP_BOOKS_VERSION="9"   # bump on every change; echoed at startup
+SWEEP_BOOKS_VERSION="10"   # bump on every change; echoed at startup
 #                          (version stamp also at end of file.)
+# v10: repoint CALIBRE_CONTAINER default calibre -> calibre-web-automated (and
+#      CALIBRE_LIB/MOUNT_CONTAINER_ROOT /books -> /calibre-library to match its
+#      mount). The standalone 'calibre' GUI container this pointed at no longer
+#      exists (decommissioned) - every sweep since then has failed at container
+#      start with "FATAL: can't start calibre", silently stalling ALL imports
+#      (watch-downloads.sh hit the same dead end). calibre-web-automated bundles
+#      its own calibredb (v9.1, confirmed working) against the same library.
 # v9: write successful import count to /tmp/gunit-import-count so tag-books.sh
 #     can skip imported_but_unfound retries on idle cycles (no new books = no
 #     point re-searching). 0 on an idle cycle, N on a cycle with real imports.
@@ -117,12 +124,12 @@ ROOT="${ROOT:-/Nutmeg/Media/Books/incoming/gunit_user_folders}"
 USERS_JSON="${USERS_JSON:-/home/robmorgan/gunit/web/users.json}"
 MAPPING="${MAPPING:-$USERS_JSON}"
 PREFS_DIR="${PREFS_DIR:-/home/robmorgan/gunit/userprefs}"
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 CALIBRE_USER="${CALIBRE_USER:-2001:2002}"
-CALIBRE_LIB="${CALIBRE_LIB:-/books/Calibre}"
+CALIBRE_LIB="${CALIBRE_LIB:-/calibre-library/Calibre}"
 CW_APP_DB="${CW_APP_DB:-/home/robmorgan/cwa_config/app.db}"
 MOUNT_HOST_ROOT="${MOUNT_HOST_ROOT:-/Nutmeg/Media/Books}"
-MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/books}"
+MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/calibre-library}"
 ERROR_DIR_NAME="${ERROR_DIR_NAME:-witherrors}"   # failed imports parked here; ALSO re-swept (v7)
 EXTS="${EXTS:-epub azw3 mobi fb2}"            # formats to sweep
 # Lock-retry tuning: re-attempts for an add that hit a transient library lock,
@@ -471,4 +478,4 @@ fi
 printf '%d\n' "$ok" > /tmp/gunit-import-count 2>/dev/null || true
 exit 0
 
-# version: SWEEP_BOOKS_VERSION 9
+# version: SWEEP_BOOKS_VERSION 10

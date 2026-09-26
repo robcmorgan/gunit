@@ -77,7 +77,7 @@ TAG_BOOKS_VERSION="20"   # bump on every change; echoed at startup
 # =============================================================================
 set -uo pipefail
 
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 CALIBRE_LIBRARY="${CALIBRE_LIBRARY:-/books/Calibre}"
 MAX_TAG_LEN="${MAX_TAG_LEN:-40}"   # drop existing tags longer than this (junk); 0 = keep all
 # existing tags matching these (case-insensitive, exact) are dropped as junk —

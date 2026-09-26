@@ -1,7 +1,14 @@
 #!/bin/bash
-WATCH_DOWNLOADS_VERSION="2"   # bump on every change; echoed at startup so you can
+WATCH_DOWNLOADS_VERSION="3"   # bump on every change; echoed at startup so you can
                               # confirm the running service matches the latest edit.
 #                              (version stamp also at end of file.)
+# v3: repoint CALIBRE_CONTAINER default calibre -> calibre-web-automated (and
+#     CALIBRE_LIB/MOUNT_CONTAINER_ROOT /books -> /calibre-library to match its
+#     mount). The standalone 'calibre' GUI container this pointed at no longer
+#     exists (decommissioned) - every import since then failed at container
+#     start with "ERROR: could not start 'calibre'", silently stalling the
+#     whole pipeline. calibre-web-automated bundles its own calibredb (v9.1,
+#     confirmed working) against the same library.
 # v2: STOP KILLING CALIBRE. calibredb_add no longer kills the GUI/server/parallel
 #     to break a library lock — it waits and retries instead. WHY: the calibre
 #     content server is EMBEDDED in the GUI process, and fetch-books' library
@@ -54,16 +61,16 @@ BOOKS_ROOT="${BOOKS_ROOT:-/Nutmeg/Media/Books/incoming/gunit_user_folders}"   # 
 # CONTAINER root. Translation replaces one prefix with the other — this must be
 # the MOUNT root, not BOOKS_ROOT, so it stays correct however deep BOOKS_ROOT is.
 MOUNT_HOST_ROOT="${MOUNT_HOST_ROOT:-/Nutmeg/Media/Books}"
-MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/books}"
+MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/calibre-library}"
 MAPPING="${MAPPING:-/home/robmorgan/gunit/web/users.json}"
 PREFS_DIR="${PREFS_DIR:-/home/robmorgan/gunit/userprefs}"
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 # Live CWA database. The OLD /data/compose/1/calibre_web_config/app.db is the
 # dead calibre-web container's db — shelving there silently does nothing.
 CW_APP_DB="${CW_APP_DB:-/home/robmorgan/cwa_config/app.db}"
 SETTLE_SECS="${SETTLE_SECS:-15}"                          # size must be stable this long
 # calibre library target for calibredb (TEST THIS — see notes in chat):
-CALIBRE_LIB="${CALIBRE_LIB:-/books/Calibre}"
+CALIBRE_LIB="${CALIBRE_LIB:-/calibre-library/Calibre}"
 # Run calibredb as the SAME user the calibre app uses (abc), NOT root. Otherwise
 # `docker exec` defaults to root (uid 0) and creates root-owned book files that
 # the calibre GUI (running as abc) then cannot delete. abc == PUID/PGID here.
@@ -465,4 +472,4 @@ while IFS='|' read -r event path; do
     process_file "$path" "$event" &     # background so a long settle doesn't block the queue
 done
 
-# version: WATCH_DOWNLOADS_VERSION 2
+# version: WATCH_DOWNLOADS_VERSION 3

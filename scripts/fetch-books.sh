@@ -915,7 +915,7 @@ LANGS="${LANGS:-en}"                 # language codes to allow (space-separated)
 # if so, marking the row as in-library rather than burning a quota slot. Set
 # LIB_CHECK=0 to disable (falls back to TSV-status dedup only).
 LIB_CHECK="${LIB_CHECK:-1}"
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 CALIBRE_LIBRARY="${CALIBRE_LIBRARY:-/books/Calibre}"
 CALIBRE_USER="${CALIBRE_USER:-2001:2002}"   # run calibredb as abc, not root
 ID_SCHEME="${ID_SCHEME:-annas}"             # identifier scheme tag-books stamps md5 under

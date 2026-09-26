@@ -26,7 +26,7 @@ TAG_FORMAT_FLAG_VERSION="1"   # bump on every change; echoed at startup. (Also a
 # =============================================================================
 set -uo pipefail
 
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 CALIBRE_LIBRARY="${CALIBRE_LIBRARY:-/books/Calibre}"
 FMT_COL="${FMT_COL:-format_flag}"
 # busy-toggle (same semantics as sweep-books / tag-pdf-type)

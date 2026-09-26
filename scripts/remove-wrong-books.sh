@@ -27,7 +27,7 @@ REMOVE_WRONG_VERSION="1"
 # =============================================================================
 set -uo pipefail
 
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 CALIBRE_LIBRARY="${CALIBRE_LIBRARY:-/books/Calibre}"
 ID_SCHEME="${ID_SCHEME:-annas}"
 CONFIDENCE="${CONFIDENCE:-0.6}"

@@ -41,12 +41,12 @@ set -uo pipefail
 ROOT="${ROOT:-/Nutmeg/Media/Books/incoming/gunit_user_folders}"
 USERS_JSON="${USERS_JSON:-/home/robmorgan/gunit/web/users.json}"
 PREFS_DIR="${PREFS_DIR:-/home/robmorgan/gunit/userprefs}"
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 CALIBRE_USER="${CALIBRE_USER:-2001:2002}"
-CALIBRE_LIB="${CALIBRE_LIB:-/books/Calibre}"
+CALIBRE_LIB="${CALIBRE_LIB:-/calibre-library/Calibre}"
 CW_APP_DB="${CW_APP_DB:-/data/compose/1/calibre_web_config/app.db}"
 MOUNT_HOST_ROOT="${MOUNT_HOST_ROOT:-/Nutmeg/Media/Books}"
-MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/books}"
+MOUNT_CONTAINER_ROOT="${MOUNT_CONTAINER_ROOT:-/calibre-library}"
 DONE_DIR_NAME="${DONE_DIR_NAME:-done}"  # processed files moved here (per-user subfolder)
 DRY_RUN=0
 [ "${1:-}" = "--dry-run" ] && DRY_RUN=1

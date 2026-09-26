@@ -53,7 +53,7 @@ TAG_PDF_TYPE_VERSION="5"   # bump on every change; echoed at startup. (Also at E
 set -uo pipefail
 
 # ---- config (same conventions as the other gunit scripts) ------------------
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 CALIBRE_LIBRARY="${CALIBRE_LIBRARY:-/books/Calibre}"
 PDF_COL="${PDF_COL:-pdf_type}"          # custom column lookup name (addressed as #pdf_type)
 # detection thresholds

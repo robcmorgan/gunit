@@ -43,7 +43,7 @@ PRUNE_PDFS_VERSION="1"   # bump on every change; echoed at startup (stamp also a
 # =============================================================================
 set -uo pipefail
 
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 CALIBRE_LIBRARY="${CALIBRE_LIBRARY:-/books/Calibre}"
 KEEP_TAG="${KEEP_TAG:-keep-pdf}"
 LOG="${LOG:-${GUNIT_LOG:-$HOME/logs/gunit.log}}"

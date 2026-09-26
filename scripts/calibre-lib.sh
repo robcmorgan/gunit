@@ -66,7 +66,7 @@ if [ -z "${BASH_VERSION:-}" ]; then
 fi
 
 # ---- config -----------------------------------------------------------------
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 CALIBRE_LIBRARY="${CALIBRE_LIBRARY:-/books/Calibre}"
 CALIBRE_USER="${CALIBRE_USER:-2001:2002}"
 

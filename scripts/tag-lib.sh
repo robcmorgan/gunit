@@ -81,7 +81,7 @@ if [ -z "${BASH_VERSION:-}" ]; then
 fi
 
 # config defaults (callers usually set these; defaults keep the lib usable alone)
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 CALIBRE_LIBRARY="${CALIBRE_LIBRARY:-/books/Calibre}"
 CONFIDENCE="${CONFIDENCE:-0.6}"
 ID_SCHEME="${ID_SCHEME:-annas}"

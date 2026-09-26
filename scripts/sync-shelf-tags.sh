@@ -39,8 +39,8 @@ set -uo pipefail
 # --- config ---
 MAPPING="${MAPPING:-/home/robmorgan/gunit/web/users.json}"
 CW_APP_DB="${CW_APP_DB:-/home/robmorgan/cwa_config/app.db}"
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
-CALIBRE_LIB="${CALIBRE_LIB:-/books/Calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
+CALIBRE_LIB="${CALIBRE_LIB:-/calibre-library/Calibre}"
 CALIBRE_USER="${CALIBRE_USER:-2001:2002}"
 REQUIRE_NONEMPTY="${REQUIRE_NONEMPTY:-true}"
 DRY_RUN=0

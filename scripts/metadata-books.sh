@@ -36,7 +36,7 @@ COMMENTS_BOOKS_VERSION="4"   # v4: title+author fallback when ISBN lookup return
 # =============================================================================
 set -uo pipefail
 
-CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre}"
+CALIBRE_CONTAINER="${CALIBRE_CONTAINER:-calibre-web-automated}"
 CALIBRE_LIBRARY="${CALIBRE_LIBRARY:-/books/Calibre}"
 BATCH="${BATCH:-10}"
 CONFIDENCE="${CONFIDENCE:-0.6}"
